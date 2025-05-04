@@ -1,62 +1,64 @@
-
-# Name your project! Project names should contain only lowercase characters
-# and underscores. A good package name should reflect your organization's
-# name or the intended use of these models
 name: 'dbt_pipeline'
 version: '1.0.0'
 config-version: 2
 
-# This setting configures which "profile" dbt uses for this project.
 profile: 'dbt_pipeline'
 
-# These configurations specify where dbt should look for different types of files.
-# The `model-paths` config, for example, states that models in this project can be
-# found in the "models/" directory. You probably won't need to change these!
-model-paths: ["models"]
+model-paths:    ["models"]
 analysis-paths: ["analyses"]
-test-paths: ["tests"]
-seed-paths: ["seeds"]
-macro-paths: ["macros"]
+test-paths:     ["tests"]
+seed-paths:     ["seeds"]
+macro-paths:    ["macros"]
 snapshot-paths: ["snapshots"]
+docs-paths:     ["docs"]
 
-target-path: "target"  # directory which will store compiled SQL files
-clean-targets:         # directories to be removed by `dbt clean`
+dispatch:
+  - macro_namespace: dbt_utils
+    search_order: ["dbt_pipeline", "dbt_utils"]
+
+target-path: "target"
+clean-targets:
   - "target"
   - "dbt_packages"
   - "logs"
 
-# Configuring models
-
 models:
   dbt_pipeline:
     +materialized: ephemeral
+
     staging:
       +materialized: view
-      +schema: stg
-      +tags: ['stg']
+      +database:  dwh
+      +schema:    stg
+      +enabled:   true
+      +tags:      ['stg']
+
     intermediate:
       +materialized: view
-      +schema: int
-      +tags: ['int']      
+      +database:  dwh
+      +schema:    int
+      +enabled:   true
+      +tags:      ['int']
+
     marts:
       +materialized: table
-      +schema: marts
-      +tags: ['marts']
+      +database:  analytics
+      +schema:    marts
+      +enabled:   true
+      +tags:      ['marts']
       +grants:
-        select: ["ANALYST_ROLE"] 
+          select: ["ANALYST_ROLE", "DEV_ROLE"]
+      +severity: error
 
 tests:
   +store_failures: false
-  +severity: warn  # Applies to all raw source data; overridden at marts level
+  +severity:      warn
 
 quoting:
-  database: false
-  schema: false
+  database:   false
+  schema:     false
   identifier: false
 
-seeds:
-  dbt_pipeline:
-    +tags: ['seed']
-
-on-run-start:
-  - "{{ prod_grants() }}"
+# run grants macro after every run, so roles always have the right privileges
+on-run-end:
+  - "{{ grant_privileges() }}"

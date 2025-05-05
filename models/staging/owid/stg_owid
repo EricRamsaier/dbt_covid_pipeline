@@ -1,0 +1,421 @@
+version: 2
+
+sources:
+  - name: owid_covid_data
+    database: raw
+    schema: landing
+    loader: raw_ingest_svc
+    freshness:
+      # OWID publishes this daily
+      warn_after:
+        count: 1
+        period: day
+      error_after:
+        count: 2
+        period: day
+    tables:
+
+##########################################################################################################################
+      - name: owid_covid_data
+        description: "Our World in Data COVID-19 complete daily dataset per location"  
+        meta:
+          source_url: "https://covid.ourworldindata.org/data/owid-covid-data.csv"
+          codebook:   "https://github.com/owid/covid-19-data/blob/master/public/data/owid-covid-codebook.csv"  # :contentReference[oaicite:0]{index=0}
+        columns:
+          - name: iso_code
+            description: "ISO 3166-1 alpha-3 country code"  
+            tests:
+              - not_null
+              - unique
+
+          - name: continent
+            description: "Continent name or OWID region"  
+            tests:
+              - not_null
+
+          - name: location
+            description: "Country or region name"  
+            tests:
+              - not_null
+
+          - name: date
+            description: "Observation date (YYYY-MM-DD)"  
+            tests:
+              - not_null
+
+          - name: total_cases
+            description: "Cumulative confirmed cases"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: new_cases
+            description: "Daily new cases"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: new_cases_smoothed
+            description: "7-day smoothed new cases"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: total_deaths
+            description: "Cumulative confirmed deaths"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: new_deaths
+            description: "Daily new deaths"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: new_deaths_smoothed
+            description: "7-day smoothed new deaths"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: total_cases_per_million
+            description: "Cumulative cases per million"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: new_cases_per_million
+            description: "Daily new cases per million"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: new_cases_smoothed_per_million
+            description: "7-day smoothed new cases per million"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: total_deaths_per_million
+            description: "Cumulative deaths per million"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: new_deaths_per_million
+            description: "Daily new deaths per million"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: new_deaths_smoothed_per_million
+            description: "7-day smoothed new deaths per million"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: reproduction_rate
+            description: "Effective reproduction number (Rₑ)"  
+            tests:
+              - not_null
+
+          - name: icu_patients
+            description: "Patients in intensive care units"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: icu_patients_per_million
+            description: "ICU patients per million"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: hosp_patients
+            description: "Patients in hospital (reported)"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: hosp_patients_per_million
+            description: "Hospital patients per million"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: weekly_icu_admissions
+            description: "Weekly new ICU admissions"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: weekly_icu_admissions_per_million
+            description: "Weekly ICU admissions per million"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: weekly_hosp_admissions
+            description: "Weekly new hospital admissions"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: weekly_hosp_admissions_per_million
+            description: "Weekly hospital admissions per million"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: total_tests
+            description: "Cumulative tests conducted"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: new_tests
+            description: "Daily new tests"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: total_tests_per_thousand
+            description: "Total tests per thousand"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: new_tests_per_thousand
+            description: "Daily new tests per thousand"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: new_tests_smoothed
+            description: "7-day smoothed new tests"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: new_tests_smoothed_per_thousand
+            description: "7-day smoothed new tests per thousand"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: positive_rate
+            description: "Positive test rate (new_cases/new_tests)"  
+            tests:
+              - accepted_values:
+                  values: [">= 0","<= 1"]
+
+          - name: tests_per_case
+            description: "Tests per confirmed case"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: tests_units
+            description: "Units for tests reporting"  
+            tests:
+              - not_null
+
+          - name: total_vaccinations
+            description: "Cumulative vaccine doses administered"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: people_vaccinated
+            description: "Individuals with ≥1 dose"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: people_fully_vaccinated
+            description: "Individuals fully vaccinated"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: total_boosters
+            description: "Additional/booster doses administered"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: new_vaccinations
+            description: "Daily new vaccinations"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: new_vaccinations_smoothed
+            description: "7-day smoothed new vaccinations"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: total_vaccinations_per_hundred
+            description: "Total vaccinations per 100 people"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: people_vaccinated_per_hundred
+            description: "People vaccinated per 100 people"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: people_fully_vaccinated_per_hundred
+            description: "People fully vaccinated per 100 people"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: total_boosters_per_hundred
+            description: "Booster doses per 100 people"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: new_vaccinations_smoothed_per_million
+            description: "7-day smoothed vaccinations per million"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: new_people_vaccinated_smoothed
+            description: "7-day smoothed individuals first vaccinated"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: new_people_vaccinated_smoothed_per_hundred
+            description: "7-day smoothed people vaccinated per 100"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: stringency_index
+            description: "Oxford Government Stringency Index"  
+            tests:
+              - not_null
+
+          - name: population_density
+            description: "People per square kilometre"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: median_age
+            description: "Median age of population"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: aged_65_older
+            description: "% population ≥65 years"  
+            tests:
+              - accepted_values:
+                  values: [">= 0","<= 100"]
+
+          - name: aged_70_older
+            description: "% population ≥70 years"  
+            tests:
+              - accepted_values:
+                  values: [">= 0","<= 100"]
+
+          - name: gdp_per_capita
+            description: "GDP per person (USD)"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: extreme_poverty
+            description: "% population in extreme poverty"  
+            tests:
+              - accepted_values:
+                  values: [">= 0","<= 100"]
+
+          - name: cardiovascular_death_rate
+            description: "Annual CVD deaths per 100k"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: diabetes_prevalence
+            description: "% adults with diabetes"  
+            tests:
+              - accepted_values:
+                  values: [">= 0","<= 100"]
+
+          - name: female_smokers
+            description: "% female smokers"  
+            tests:
+              - accepted_values:
+                  values: [">= 0","<= 100"]
+
+          - name: male_smokers
+            description: "% male smokers"  
+            tests:
+              - accepted_values:
+                  values: [">= 0","<= 100"]
+
+          - name: handwashing_facilities
+            description: "% with basic handwashing"  
+            tests:
+              - accepted_values:
+                  values: [">= 0","<= 100"]
+
+          - name: hospital_beds_per_thousand
+            description: "Hospital beds per 1,000 people"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: life_expectancy
+            description: "Life expectancy at birth (years)"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: human_development_index
+            description: "UN HDI index (0–1)"  
+            tests:
+              - accepted_values:
+                  values: [">= 0","<= 1"]
+
+          - name: population
+            description: "Total population"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: excess_mortality_cumulative_absolute
+            description: "Cumulative excess deaths count"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: excess_mortality_cumulative
+            description: "Cumulative excess mortality fraction"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: excess_mortality
+            description: "Excess mortality this period"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+
+          - name: excess_mortality_cumulative_per_million
+            description: "Excess mortality per million"  
+            tests:
+              - accepted_values:
+                  values: [">= 0"]
+                  
+##########################################################################################################################

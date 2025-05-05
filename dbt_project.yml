@@ -42,12 +42,12 @@ models:
 
     marts:
       +materialized: table
-      +database:  analytics
+      +database:  reporting
       +schema:    marts
       +enabled:   true
       +tags:      ['marts']
       +grants:
-          select: ["ANALYST_ROLE", "DEV_ROLE"]
+          select: ["analyst", "developer"]
       +severity: error
 
 tests:
@@ -59,6 +59,8 @@ quoting:
   schema:     false
   identifier: false
 
-# run grants macro after every run, so roles always have the right privileges
-on-run-end:
-  - "{{ grant_privileges() }}"
+
+on-run-start: []
+
+on-run-end: []
+ 

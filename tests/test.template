@@ -1,0 +1,7 @@
+/*
+  Test:  Values in my_model.status must be one of a known set
+  Purpose:  Prevent unexpected statuses from slipping through
+*/
+select *
+from {{ ref('my_model') }}
+where status not in ('new','pending','complete')

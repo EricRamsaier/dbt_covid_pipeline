@@ -1,16 +1,22 @@
+# enforce a dbt version range so your CI/CD always runs on a known release
+require-dbt-version: [">=1.0.0", "<2.0.0"]
+
 name: 'dbt_pipeline'
 version: '1.0.0'
 config-version: 2
 
 profile: 'dbt_pipeline'
 
-model-paths:    ["models"]
-analysis-paths: ["analyses"]
-test-paths:     ["tests"]
-seed-paths:     ["seeds"]
-macro-paths:    ["macros"]
-snapshot-paths: ["snapshots"]
-docs-paths:     ["docs"]
+# -------------------------------------------------------------------
+#  Paths
+# -------------------------------------------------------------------
+model-paths:        ["models"]
+analysis-paths:     ["analyses"]
+test-paths:         ["tests"]
+seed-paths:         ["seeds"]
+macro-paths:        ["macros"]
+snapshot-paths:     ["snapshots"]
+docs-paths:         ["docs"]
 
 dispatch:
   - macro_namespace: dbt_utils
@@ -22,9 +28,17 @@ clean-targets:
   - "dbt_packages"
   - "logs"
 
+# -------------------------------------------------------------------
+#  Global model defaults
+# -------------------------------------------------------------------
 models:
   dbt_pipeline:
     +materialized: ephemeral
+
+    # Persist docs to the database (relation & column comments)
+    +persist_docs:
+      relation: true
+      columns:  true
 
     staging:
       +materialized: view
@@ -32,6 +46,7 @@ models:
       +schema:    stg
       +enabled:   true
       +tags:      ['stg']
+      +severity:  warn
 
     intermediate:
       +materialized: view
@@ -39,6 +54,7 @@ models:
       +schema:    int
       +enabled:   true
       +tags:      ['int']
+      +severity:  warn
 
     marts:
       +materialized: table
@@ -50,17 +66,39 @@ models:
           select: ["analyst", "developer"]
       +severity: error
 
+# -------------------------------------------------------------------
+#  Seeds (if you ship any CSVs in /seeds)
+# -------------------------------------------------------------------
+seeds:
+  dbt_pipeline:
+    +tags: ['seed']
+    +schema: staging     # or wherever you’d like your seeds loaded
+    +enabled: true
+
+# -------------------------------------------------------------------
+#  Tests
+# -------------------------------------------------------------------
 tests:
   +store_failures: false
-  +severity:      warn
+  +severity:      warn   # baseline for schema tests; overridden in marts above
 
+# -------------------------------------------------------------------
+#  Quoting
+# -------------------------------------------------------------------
 quoting:
   database:   false
   schema:     false
   identifier: false
 
+# -------------------------------------------------------------------
+#  Optional: project-level vars
+# -------------------------------------------------------------------
+vars:
+  default_start_date: '2021-01-01'    # example of a common var
 
+# -------------------------------------------------------------------
+#  Hooks
+# -------------------------------------------------------------------
+# we’re managing all infra outside of dbt, so leave these empty
 on-run-start: []
-
-on-run-end: []
- 
+on-run-end:   []

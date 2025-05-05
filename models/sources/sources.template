@@ -1,0 +1,41 @@
+version: 2
+
+# Note: Tests are performed at stg level
+
+sources:
+  - name: landing
+    database: landing
+    schema:   landing
+    loader:   raw_ingest_svc
+    freshness:
+      warn_after:
+        count: 6
+        period: hour
+      error_after:
+        count: 24
+        period: hour
+    meta:
+      owner:       data_platform
+      team:        analytics
+      source_type: external_csv
+      notes:       "Raw files land here via Snowpipe every hour"
+    tables:
+      - name: owid_covid_data
+        description: "Our World In Data COVID daily statistics"
+        freshness:                    # ← table-level override
+          warn_after:
+            count: 1
+            period: hour
+          error_after:
+            count: 6
+            period: hour
+        meta:
+          pii:          false
+          display_name: "OWID COVID Data"
+        columns:
+          - name: iso_code
+            description: "ISO 3166 alpha-3 country code"
+            meta:
+              glossary_url: "https://glossary.example.com/iso_code"
+          - name: total_cases
+            description: "Cumulative number of cases"

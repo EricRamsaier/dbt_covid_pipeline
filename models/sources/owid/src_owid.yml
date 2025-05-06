@@ -2,6 +2,7 @@ version: 2
 
 sources:
   - name: owid
+    tags: ['external', 'covid', 'owid']
     database: raw
     schema: owid
     freshness:
@@ -13,225 +14,225 @@ sources:
         period: day
     tables:
       - name: owid_covid_data
+        tags: ['daily', 'public', 'owid']
         description: "Our World in Data COVID-19 complete daily dataset per location"
         meta:
           source_url: "https://covid.ourworldindata.org/data/owid-covid-data.csv"
           codebook:   "https://github.com/owid/covid-19-data/blob/master/public/data/owid-covid-codebook.csv"
           loader:     raw_ingest_svc
-
         columns:
           # Identifiers & date
           - name: iso_code
-            description: "ISO 3166-1 alpha-3 country code"
+            description: "{{ doc('owid_iso_code') }}"
             tests:
               - not_null
 
           - name: continent
-            description: "Continent name or OWID region"
+            description: "{{ doc('owid_continent') }}"
 
           - name: location
-            description: "Country or region name"
+            description: "{{ doc('owid_location') }}"
             tests:
               - not_null
 
           - name: date
-            description: "Observation date (YYYY-MM-DD)"
+            description: "{{ doc('owid_date') }}"
             tests:
               - not_null
 
           # Case counts
           - name: total_cases
-            description: "Cumulative confirmed cases"
+            description: "{{ doc('owid_total_cases') }}"
 
           - name: new_cases
-            description: "Daily new cases"
+            description: "{{ doc('owid_new_cases') }}"
 
           - name: new_cases_smoothed
-            description: "7-day smoothed new cases"
+            description: "{{ doc('owid_new_cases_smoothed') }}"
 
           # Death counts
           - name: total_deaths
-            description: "Cumulative confirmed deaths"
+            description: "{{ doc('owid_total_deaths') }}"
 
           - name: new_deaths
-            description: "Daily new deaths"
+            description: "{{ doc('owid_new_deaths') }}"
 
           - name: new_deaths_smoothed
-            description: "7-day smoothed new deaths"
+            description: "{{ doc('owid_new_deaths_smoothed') }}"
 
           # Per-million rates
           - name: total_cases_per_million
-            description: "Cumulative cases per million"
+            description: "{{ doc('owid_total_cases_per_million') }}"
 
           - name: new_cases_per_million
-            description: "Daily new cases per million"
+            description: "{{ doc('owid_new_cases_per_million') }}"
 
           - name: new_cases_smoothed_per_million
-            description: "7-day smoothed new cases per million"
+            description: "{{ doc('owid_new_cases_smoothed_per_million') }}"
 
           - name: total_deaths_per_million
-            description: "Cumulative deaths per million"
+            description: "{{ doc('owid_total_deaths_per_million') }}"
 
           - name: new_deaths_per_million
-            description: "Daily new deaths per million"
+            description: "{{ doc('owid_new_deaths_per_million') }}"
 
           - name: new_deaths_smoothed_per_million
-            description: "7-day smoothed new deaths per million"
+            description: "{{ doc('owid_new_deaths_smoothed_per_million') }}"
 
           # Reproduction & hospital
           - name: reproduction_rate
-            description: "Effective reproduction number (Rₑ)"
+            description: "{{ doc('owid_reproduction_rate') }}"
 
           - name: icu_patients
-            description: "Patients in intensive care units"
+            description: "{{ doc('owid_icu_patients') }}"
 
           - name: icu_patients_per_million
-            description: "ICU patients per million"
+            description: "{{ doc('owid_icu_patients_per_million') }}"
 
           - name: hosp_patients
-            description: "Patients in hospital (reported)"
+            description: "{{ doc('owid_hosp_patients') }}"
 
           - name: hosp_patients_per_million
-            description: "Hospital patients per million"
+            description: "{{ doc('owid_hosp_patients_per_million') }}"
 
           # Weekly admissions
           - name: weekly_icu_admissions
-            description: "Weekly new ICU admissions"
+            description: "{{ doc('owid_weekly_icu_admissions') }}"
 
           - name: weekly_icu_admissions_per_million
-            description: "Weekly ICU admissions per million"
+            description: "{{ doc('owid_weekly_icu_admissions_per_million') }}"
 
           - name: weekly_hosp_admissions
-            description: "Weekly new hospital admissions"
+            description: "{{ doc('owid_weekly_hosp_admissions') }}"
 
           - name: weekly_hosp_admissions_per_million
-            description: "Weekly hospital admissions per million"
+            description: "{{ doc('owid_weekly_hosp_admissions_per_million') }}"
 
           # Testing metrics
           - name: total_tests
-            description: "Cumulative tests conducted"
+            description: "{{ doc('owid_total_tests') }}"
 
           - name: new_tests
-            description: "Daily new tests"
+            description: "{{ doc('owid_new_tests') }}"
 
           - name: total_tests_per_thousand
-            description: "Total tests per thousand"
+            description: "{{ doc('owid_total_tests_per_thousand') }}"
 
           - name: new_tests_per_thousand
-            description: "Daily new tests per thousand"
+            description: "{{ doc('owid_new_tests_per_thousand') }}"
 
           - name: new_tests_smoothed
-            description: "7-day smoothed new tests"
+            description: "{{ doc('owid_new_tests_smoothed') }}"
 
           - name: new_tests_smoothed_per_thousand
-            description: "7-day smoothed new tests per thousand"
+            description: "{{ doc('owid_new_tests_smoothed_per_thousand') }}"
 
           - name: positive_rate
-            description: "Positive test rate (new_cases / new_tests)"
+            description: "{{ doc('owid_positive_rate') }}"
 
           - name: tests_per_case
-            description: "Tests per confirmed case"
+            description: "{{ doc('owid_tests_per_case') }}"
 
           - name: tests_units
-            description: "Units for tests reporting"
+            description: "{{ doc('owid_tests_units') }}"
 
           # Vaccination metrics
           - name: total_vaccinations
-            description: "Cumulative vaccine doses administered"
+            description: "{{ doc('owid_total_vaccinations') }}"
 
           - name: people_vaccinated
-            description: "Individuals with ≥1 dose"
+            description: "{{ doc('owid_people_vaccinated') }}"
 
           - name: people_fully_vaccinated
-            description: "Individuals fully vaccinated"
+            description: "{{ doc('owid_people_fully_vaccinated') }}"
 
           - name: total_boosters
-            description: "Additional/booster doses administered"
+            description: "{{ doc('owid_total_boosters') }}"
 
           - name: new_vaccinations
-            description: "Daily new vaccinations"
+            description: "{{ doc('owid_new_vaccinations') }}"
 
           - name: new_vaccinations_smoothed
-            description: "7-day smoothed new vaccinations"
+            description: "{{ doc('owid_new_vaccinations_smoothed') }}"
 
           - name: total_vaccinations_per_hundred
-            description: "Total vaccinations per 100 people"
+            description: "{{ doc('owid_total_vaccinations_per_hundred') }}"
 
           - name: people_vaccinated_per_hundred
-            description: "People vaccinated per 100 people"
+            description: "{{ doc('owid_people_vaccinated_per_hundred') }}"
 
           - name: people_fully_vaccinated_per_hundred
-            description: "People fully vaccinated per 100 people"
+            description: "{{ doc('owid_people_fully_vaccinated_per_hundred') }}"
 
           - name: total_boosters_per_hundred
-            description: "Booster doses per 100 people"
+            description: "{{ doc('owid_total_boosters_per_hundred') }}"
 
           - name: new_vaccinations_smoothed_per_million
-            description: "7-day smoothed vaccinations per million"
+            description: "{{ doc('owid_new_vaccinations_smoothed_per_million') }}"
 
           - name: new_people_vaccinated_smoothed
-            description: "7-day smoothed individuals first vaccinated"
+            description: "{{ doc('owid_new_people_vaccinated_smoothed') }}"
 
           - name: new_people_vaccinated_smoothed_per_hundred
-            description: "7-day smoothed people vaccinated per 100"
+            description: "{{ doc('owid_new_people_vaccinated_smoothed_per_hundred') }}"
 
           # Socio-economic indicators
           - name: stringency_index
-            description: "Oxford Government Stringency Index"
+            description: "{{ doc('owid_stringency_index') }}"
 
           - name: population_density
-            description: "People per square kilometre"
+            description: "{{ doc('owid_population_density') }}"
 
           - name: median_age
-            description: "Median age of population"
+            description: "{{ doc('owid_median_age') }}"
 
           - name: aged_65_older
-            description: "% population ≥ 65 years"
+            description: "{{ doc('owid_aged_65_older') }}"
 
           - name: aged_70_older
-            description: "% population ≥ 70 years"
+            description: "{{ doc('owid_aged_70_older') }}"
 
           - name: gdp_per_capita
-            description: "GDP per person (USD)"
+            description: "{{ doc('owid_gdp_per_capita') }}"
 
           - name: extreme_poverty
-            description: "% population in extreme poverty"
+            description: "{{ doc('owid_extreme_poverty') }}"
 
           - name: cardiovascular_death_rate
-            description: "Annual CVD deaths per 100 k"
+            description: "{{ doc('owid_cardiovascular_death_rate') }}"
 
           - name: diabetes_prevalence
-            description: "% adults with diabetes"
+            description: "{{ doc('owid_diabetes_prevalence') }}"
 
           - name: female_smokers
-            description: "% female smokers"
+            description: "{{ doc('owid_female_smokers') }}"
 
           - name: male_smokers
-            description: "% male smokers"
+            description: "{{ doc('owid_male_smokers') }}"
 
           - name: handwashing_facilities
-            description: "% with basic handwashing facilities"
+            description: "{{ doc('owid_handwashing_facilities') }}"
 
           - name: hospital_beds_per_thousand
-            description: "Hospital beds per 1 000 people"
+            description: "{{ doc('owid_hospital_beds_per_thousand') }}"
 
           - name: life_expectancy
-            description: "Life expectancy at birth (years)"
+            description: "{{ doc('owid_life_expectancy') }}"
 
           - name: human_development_index
-            description: "UN HDI index (0–1)"
+            description: "{{ doc('owid_human_development_index') }}"
 
           - name: population
-            description: "Total population"
+            description: "{{ doc('owid_population') }}"
 
           - name: excess_mortality_cumulative_absolute
-            description: "Cumulative excess deaths count"
+            description: "{{ doc('owid_excess_mortality_cumulative_absolute') }}"
 
           - name: excess_mortality_cumulative
-            description: "Cumulative excess mortality fraction"
+            description: "{{ doc('owid_excess_mortality_cumulative') }}"
 
           - name: excess_mortality
-            description: "Excess mortality this period"
+            description: "{{ doc('owid_excess_mortality') }}"
 
           - name: excess_mortality_cumulative_per_million
-            description: "Excess mortality per million"
+            description: "{{ doc('owid_excess_mortality_cumulative_per_million') }}"

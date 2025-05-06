@@ -27,3 +27,6 @@ GRANT INSERT,
       SELECT
   ON FUTURE TABLES IN SCHEMA raw.owid
   TO ROLE raw_ingest_svc;
+
+-- In order to speed up daily incremental loads, adding cluster key by (observation) date
+ALTER TABLE RAW.OWID.OWID_COVID_DATA CLUSTER BY (date);

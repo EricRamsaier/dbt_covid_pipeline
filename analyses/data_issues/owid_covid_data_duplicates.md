@@ -13,10 +13,16 @@ Until OWID corrects upstream, we’ll dedupe by keeping the *latest* non-NULL ro
 
 ```sql
 SELECT
-  *,
-  ROW_NUMBER() OVER (
-    PARTITION BY date, location
-    ORDER BY coalesce(total_cases, -1) DESC
-  ) AS row_num
-FROM raw.owid.owid_covid_data
-QUALIFY row_num = 1;
+    stg_data.*,
+    ROW_NUMBER() OVER (
+        PARTITION BY iso_code, observation_dt
+        ORDER BY (
+            /* sum of non-null numerics as proxy for most complete row */
+            coalesce(total_cases, 0)
+        + coalesce(new_cases, 0)
+        + coalesce(new_deaths, 0)
+        ) DESC
+    ) AS rn
+FROM
+    stg_data
+QUALIFY rn = 1

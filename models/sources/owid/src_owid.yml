@@ -198,7 +198,7 @@ sources:
           - name: extreme_poverty
             description: "{{ doc('owid_extreme_poverty') }}"
 
-          - name: cardiovascular_death_rate
+          - name: cardiovasc_death_rate
             description: "{{ doc('owid_cardiovascular_death_rate') }}"
 
           - name: diabetes_prevalence

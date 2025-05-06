@@ -11,7 +11,7 @@ WITH source_data AS (
 
 final AS (
     SELECT
-      iso_code
+      iso_code AS owid_iso_code -- these are not true iso codes
     , continent
     , location
     , date AS observation_dt

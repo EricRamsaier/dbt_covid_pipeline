@@ -4,7 +4,7 @@
 --Do not drop it.
 
 {% macro generate_schema_name(custom_schema_name, node) -%}
-    {% if target.name == 'prod' and custom_schema_name is not none %}
+    {% if target.name in ['prod', 'production'] and custom_schema_name is not none %}
         {{ custom_schema_name }}
     {% else %}
         {{ generate_schema_name_for_env(custom_schema_name, node) }}

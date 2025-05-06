@@ -31,6 +31,12 @@ clean-targets:
 # -------------------------------------------------------------------
 #  Global model defaults
 # -------------------------------------------------------------------
+# Note: Database and schema names below define the *production* targets.
+#       Non-prod runs (dev/stg) will be routed via custom macros:
+#         - generate_database_name(custom_db, node)
+#         - generate_schema_name(custom_schema, node)
+#       These macros override to target.database and target.schema for dev/stg.
+
 models:
   dbt_pipeline:
     +materialized: ephemeral

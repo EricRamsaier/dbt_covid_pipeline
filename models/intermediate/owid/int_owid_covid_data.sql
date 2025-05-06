@@ -15,8 +15,22 @@ WITH stg_data AS (
 
 final AS (
    SELECT
-        stg_data.*,
-        ROW_NUMBER() OVER (
+    -- choosing to use exclude since there are many fields in the source table
+        stg_data.* EXCLUDE (continent)
+
+      , CASE
+            WHEN continent IS NOT NULL                                  THEN continent
+            WHEN continent IS NULL AND location = 'Africa'              THEN location
+            WHEN continent IS NULL AND location = 'Asia'                THEN location
+            WHEN continent IS NULL AND location = 'Europe'              THEN location
+            WHEN continent IS NULL AND location = 'European Union (27)' THEN location
+            WHEN continent IS NULL AND location = 'North America'       THEN location
+            WHEN continent IS NULL AND location = 'South America'       THEN location
+            ELSE 'Unspecified'
+        END AS continent
+
+      -- dedup logic
+      , ROW_NUMBER() OVER (
             PARTITION BY iso_code, observation_dt
             ORDER BY (
                 /* sum of non-null numerics as proxy for most complete row */
@@ -25,6 +39,8 @@ final AS (
             + coalesce(new_deaths, 0)
             ) DESC
         ) AS rn
+      -- end dedup logic
+
     FROM
         stg_data
     QUALIFY rn = 1

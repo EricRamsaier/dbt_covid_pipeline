@@ -96,6 +96,7 @@ final AS (
     , excess_mortality_cumulative
     , excess_mortality
     , excess_mortality_cumulative_per_million
+    , loaded_ts
 
 FROM
     source_data

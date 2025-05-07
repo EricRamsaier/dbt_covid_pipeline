@@ -26,3 +26,15 @@ The timestamp when the record was inserted into the target table.
 Typically populated with the `current_timestamp` function.  
 Useful for audit and troubleshooting unexpected load delays or lags.
 {% enddocs %}
+
+{% docs loaded_ts %}
+Timestamp when the record was **ingested into the warehouse**.  
+Usually set via `current_timestamp()` at load time into the raw or external table.  
+Used for freshness checks, data latency monitoring, and ingestion auditing.
+{% enddocs %}
+
+{% docs updated_ts %}
+Timestamp when the record was **last updated** in the warehouse.  
+This field is optional and typically only present in tables that receive updates.  
+Useful for debugging late-arriving data or slowly changing dimensions (SCDs).
+{% enddocs %}

@@ -213,6 +213,9 @@ models:
   - name: excess_mortality_cumulative_per_million
     description: '{{ doc(''owid_excess_mortality_cumulative_per_million'') }}'
     data_type: NUMBER(38,2)
+  - name: loaded_ts
+    description: '{{ doc("loaded_ts") }}'
+    data_type: TIMESTAMP_LTZ
   - name: dbt_model_name
     description: '{{ doc(''dbt_model_name'') }}'
     data_type: STRING

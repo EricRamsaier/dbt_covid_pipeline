@@ -92,6 +92,7 @@ SELECT
     , excess_mortality_cumulative
     , excess_mortality
     , excess_mortality_cumulative_per_million
+    , loaded_ts
     , {{ standard_audit_columns() }}
 from 
     owid_data

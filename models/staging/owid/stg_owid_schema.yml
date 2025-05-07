@@ -153,3 +153,5 @@ models:
         description: '{{ doc("owid_excess_mortality") }}'
       - name: owid_excess_mortality_cumulative_per_million
         description: '{{ doc("owid_excess_mortality_cumulative_per_million") }}'
+      - name: loaded_ts
+        description: '{{ doc("loaded_ts") }}'

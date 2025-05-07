@@ -85,3 +85,31 @@ GRANT CREATE STREAM                     ON SCHEMA dwh.stg                       
 GRANT USAGE                             ON SCHEMA dwh.stg                        TO ROLE transform_svc_role;
 GRANT SELECT                            ON ALL STREAMS IN SCHEMA dwh.stg         TO ROLE transform_svc_role;
 GRANT SELECT                            ON FUTURE STREAMS IN SCHEMA dwh.stg      TO ROLE transform_svc_role;
+
+
+-- ============================================================================
+--  Audit Table Setup
+--  This table tracks dbt model executions, including row counts and metadata.
+--  Used for auditing, monitoring anomalies, and debugging production pipelines.
+--
+--  Columns:
+--    • model_name        – dbt model name (e.g. fct_owid_covid_data)
+--    • run_ts            – timestamp when the dbt run started
+--    • dbt_invocation_id – unique identifier for the dbt run
+--    • row_count         – number of records produced by the model
+--    • database_name     – database where the model was built
+--    • schema_name       – schema where the model was built
+--    • table_name        – full table name of the materialized model
+-- ============================================================================
+
+CREATE SCHEMA IF NOT EXISTS dwh.audit;
+
+CREATE TABLE IF NOT EXISTS dwh.audit.model_run_log (
+    model_name TEXT,
+    run_ts TIMESTAMP_LTZ,
+    dbt_invocation_id TEXT,
+    row_count INTEGER,
+    database_name TEXT,
+    schema_name TEXT,
+    table_name TEXT
+);

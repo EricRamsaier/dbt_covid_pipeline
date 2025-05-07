@@ -71,6 +71,7 @@ models:
       +grants:
           select: ["analyst", "developer"]
       +severity: error
+      +post-hook: "{{ log_model_run() }}"
 
 # -------------------------------------------------------------------
 #  Seeds (if you ship any CSVs in /seeds)

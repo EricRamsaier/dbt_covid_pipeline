@@ -3,8 +3,10 @@
 -- Recommended in fact and dimension models, especially for incremental builds.
 
 {% macro standard_audit_columns() %}
-      '{{ model.name }}' AS model_name
-    , CURRENT_TIMESTAMP() AS record_loaded_ts
-    , '{{ invocation_id }}' AS dbt_invocation_id
-    , '{{ run_started_at }}' AS dbt_run_ts 
+      '{{ model.name }}'                    AS dbt_model_name
+    , '{{ invocation_id }}'                 AS dbt_invocation_id      
+    , '{{ run_started_at }}'::TIMESTAMP_LTZ AS dbt_run_ts       
+    , CURRENT_TIMESTAMP()::TIMESTAMP_LTZ    AS dbt_record_loaded_ts
+
 {% endmacro %}
+

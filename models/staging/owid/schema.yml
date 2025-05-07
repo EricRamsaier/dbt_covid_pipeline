@@ -1,0 +1,155 @@
+version: 2
+models:
+  - name: stg__owid__covid
+    description: Staging model for OWID COVID-19 data. Cleans, renames, and casts fields from the raw OWID source table.
+    columns:
+      - name: owid_owid_iso_code
+        description: '{{ doc("owid_iso_code") }}'
+      - name: owid_continent
+        description: '{{ doc("owid_continent") }}'
+      - name: owid_location
+        description: '{{ doc("owid_location") }}'
+      - name: owid_observation_dt
+        description: '{{ doc("owid_observation_dt") }}'
+
+      # Case counts
+      - name: owid_total_cases
+        description: '{{ doc("owid_total_cases") }}'
+      - name: owid_new_cases
+        description: '{{ doc("owid_new_cases") }}'
+      - name: owid_new_cases_smoothed
+        description: '{{ doc("owid_new_cases_smoothed") }}'
+
+      # Death counts
+      - name: owid_total_deaths
+        description: '{{ doc("owid_total_deaths") }}'
+      - name: owid_new_deaths
+        description: '{{ doc("owid_new_deaths") }}'
+      - name: owid_new_deaths_smoothed
+        description: '{{ doc("owid_new_deaths_smoothed") }}'
+
+      # Per-million rates
+      - name: owid_total_cases_per_million
+        description: '{{ doc("owid_total_cases_per_million") }}'
+      - name: owid_new_cases_per_million
+        description: '{{ doc("owid_new_cases_per_million") }}'
+      - name: owid_new_cases_smoothed_per_million
+        description: '{{ doc("owid_new_cases_smoothed_per_million") }}'
+      - name: owid_total_deaths_per_million
+        description: '{{ doc("owid_total_deaths_per_million") }}'
+      - name: owid_new_deaths_per_million
+        description: '{{ doc("owid_new_deaths_per_million") }}'
+      - name: owid_new_deaths_smoothed_per_million
+        description: '{{ doc("owid_new_deaths_smoothed_per_million") }}'
+
+      # Reproduction & hospital
+      - name: owid_reproduction_rate
+        description: '{{ doc("owid_reproduction_rate") }}'
+      - name: owid_icu_patients
+        description: '{{ doc("owid_icu_patients") }}'
+      - name: owid_icu_patients_per_million
+        description: '{{ doc("owid_icu_patients_per_million") }}'
+      - name: owid_hosp_patients
+        description: '{{ doc("owid_hosp_patients") }}'
+      - name: owid_hosp_patients_per_million
+        description: '{{ doc("owid_hosp_patients_per_million") }}'
+
+      # Weekly admissions
+      - name: owid_weekly_icu_admissions
+        description: '{{ doc("owid_weekly_icu_admissions") }}'
+      - name: owid_weekly_icu_admissions_per_million
+        description: '{{ doc("owid_weekly_icu_admissions_per_million") }}'
+      - name: owid_weekly_hosp_admissions
+        description: '{{ doc("owid_weekly_hosp_admissions") }}'
+      - name: owid_weekly_hosp_admissions_per_million
+        description: '{{ doc("owid_weekly_hosp_admissions_per_million") }}'
+
+      # Testing
+      - name: owid_total_tests
+        description: '{{ doc("owid_total_tests") }}'
+      - name: owid_new_tests
+        description: '{{ doc("owid_new_tests") }}'
+      - name: owid_total_tests_per_thousand
+        description: '{{ doc("owid_total_tests_per_thousand") }}'
+      - name: owid_new_tests_per_thousand
+        description: '{{ doc("owid_new_tests_per_thousand") }}'
+      - name: owid_new_tests_smoothed
+        description: '{{ doc("owid_new_tests_smoothed") }}'
+      - name: owid_new_tests_smoothed_per_thousand
+        description: '{{ doc("owid_new_tests_smoothed_per_thousand") }}'
+      - name: owid_positive_rate
+        description: '{{ doc("owid_positive_rate") }}'
+      - name: owid_tests_per_case
+        description: '{{ doc("owid_tests_per_case") }}'
+      - name: owid_tests_units
+        description: '{{ doc("owid_tests_units") }}'
+
+      # Vaccinations
+      - name: owid_total_vaccinations
+        description: '{{ doc("owid_total_vaccinations") }}'
+      - name: owid_people_vaccinated
+        description: '{{ doc("owid_people_vaccinated") }}'
+      - name: owid_people_fully_vaccinated
+        description: '{{ doc("owid_people_fully_vaccinated") }}'
+      - name: owid_total_boosters
+        description: '{{ doc("owid_total_boosters") }}'
+      - name: owid_new_vaccinations
+        description: '{{ doc("owid_new_vaccinations") }}'
+      - name: owid_new_vaccinations_smoothed
+        description: '{{ doc("owid_new_vaccinations_smoothed") }}'
+      - name: owid_total_vaccinations_per_hundred
+        description: '{{ doc("owid_total_vaccinations_per_hundred") }}'
+      - name: owid_people_vaccinated_per_hundred
+        description: '{{ doc("owid_people_vaccinated_per_hundred") }}'
+      - name: owid_people_fully_vaccinated_per_hundred
+        description: '{{ doc("owid_people_fully_vaccinated_per_hundred") }}'
+      - name: owid_total_boosters_per_hundred
+        description: '{{ doc("owid_total_boosters_per_hundred") }}'
+      - name: owid_new_vaccinations_smoothed_per_million
+        description: '{{ doc("owid_new_vaccinations_smoothed_per_million") }}'
+      - name: owid_new_people_vaccinated_smoothed
+        description: '{{ doc("owid_new_people_vaccinated_smoothed") }}'
+      - name: owid_new_people_vaccinated_smoothed_per_hundred
+        description: '{{ doc("owid_new_people_vaccinated_smoothed_per_hundred") }}'
+
+      # Socio-economic
+      - name: owid_stringency_index
+        description: '{{ doc("owid_stringency_index") }}'
+      - name: owid_population_density
+        description: '{{ doc("owid_population_density") }}'
+      - name: owid_median_age
+        description: '{{ doc("owid_median_age") }}'
+      - name: owid_aged_65_older
+        description: '{{ doc("owid_aged_65_older") }}'
+      - name: owid_aged_70_older
+        description: '{{ doc("owid_aged_70_older") }}'
+      - name: owid_gdp_per_capita
+        description: '{{ doc("owid_gdp_per_capita") }}'
+      - name: owid_extreme_poverty
+        description: '{{ doc("owid_extreme_poverty") }}'
+      - name: owid_cardiovascular_death_rate
+        description: '{{ doc("owid_cardiovascular_death_rate") }}'
+      - name: owid_diabetes_prevalence
+        description: '{{ doc("owid_diabetes_prevalence") }}'
+      - name: owid_female_smokers
+        description: '{{ doc("owid_female_smokers") }}'
+      - name: owid_male_smokers
+        description: '{{ doc("owid_male_smokers") }}'
+      - name: owid_handwashing_facilities
+        description: '{{ doc("owid_handwashing_facilities") }}'
+      - name: owid_hospital_beds_per_thousand
+        description: '{{ doc("owid_hospital_beds_per_thousand") }}'
+      - name: owid_life_expectancy
+        description: '{{ doc("owid_life_expectancy") }}'
+      - name: owid_human_development_index
+        description: '{{ doc("owid_human_development_index") }}'
+      - name: owid_population
+        description: '{{ doc("owid_population") }}'
+      - name: owid_excess_mortality_cumulative_absolute
+        description: '{{ doc("owid_excess_mortality_cumulative_absolute") }}'
+      - name: owid_excess_mortality_cumulative
+        description: '{{ doc("owid_excess_mortality_cumulative") }}'
+      - name: owid_excess_mortality
+        description: '{{ doc("owid_excess_mortality") }}'
+      - name: owid_excess_mortality_cumulative_per_million
+        description: '{{ doc("owid_excess_mortality_cumulative_per_million") }}'

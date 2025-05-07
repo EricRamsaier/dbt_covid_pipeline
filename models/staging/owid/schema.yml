@@ -1,6 +1,6 @@
 version: 2
 models:
-  - name: stg__owid__covid
+  - name: stg_owid_covid_data
     description: Staging model for OWID COVID-19 data. Cleans, renames, and casts fields from the raw OWID source table.
     columns:
       - name: owid_owid_iso_code

@@ -16,7 +16,7 @@ models:
     description: '{{ doc(''owid_location'') }}'
     data_type: VARCHAR
   - name: observation_dt
-    description: '{{ doc(''owid_date'') }}'
+    description: '{{ doc(''owid_observation_dt'') }}'
     data_type: DATE
   - name: total_cases
     description: '{{ doc(''owid_total_cases'') }}'

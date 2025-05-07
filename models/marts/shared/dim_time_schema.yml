@@ -1,0 +1,35 @@
+version: 2
+
+models:
+  - name: dim_time
+    description: Dimension table representing every minute of the day, with AM/PM and audit metadata.
+    columns:
+      - name: time_ts
+        description: Timestamp for the minute of day (HH:MM:00)
+        tests:
+          - not_null
+          - unique
+
+      - name: hour
+        description: Hour component of the timestamp (0–23)
+
+      - name: minute
+        description: Minute component of the timestamp (0–59)
+
+      - name: second
+        description: Always 0
+
+      - name: am_pm
+        description: Text label for AM/PM
+
+      - name: record_loaded_ts
+        description: Audit column from macro
+
+      - name: dbt_invocation_id
+        description: Audit column from macro
+
+      - name: dbt_run_ts
+        description: Audit column from macro
+
+      - name: model_name
+        description: Audit column from macro

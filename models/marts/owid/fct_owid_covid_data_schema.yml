@@ -5,10 +5,14 @@ models:
   columns:
   - name: sk_owid_covid_data
     description: Auto-generated audit field
-    data_type: NUMBER
+    data_type: VARCHAR
+    constraints:
+      - type: unique
   - name: owid_iso_code
     description: '{{ doc(''owid_iso_code'') }}'
     data_type: VARCHAR
+    constraints:
+      - type: not_null
   - name: continent
     description: '{{ doc(''owid_continent'') }}'
     data_type: VARCHAR
@@ -18,6 +22,8 @@ models:
   - name: observation_dt
     description: '{{ doc(''owid_observation_dt'') }}'
     data_type: DATE
+    constraints:
+      - type: not_null
   - name: total_cases
     description: '{{ doc(''owid_total_cases'') }}'
     data_type: NUMBER(38,0)

@@ -14,7 +14,7 @@ Example Usage:
           severity: warn
 */
 
-{% test no_fallback(model, column_name, fallback='-1') %}
+{% test test_no_fallback(model, column_name, fallback='-1') %}
 select
     {{ column_name }} as invalid_value
 from {{ model }}

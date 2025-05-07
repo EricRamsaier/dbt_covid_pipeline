@@ -1,3 +1,5 @@
+--Data types set correctly at sources layer.
+
 {{
   config(
     tags=['stg', 'owid']

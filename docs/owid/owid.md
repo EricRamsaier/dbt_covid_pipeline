@@ -33,7 +33,7 @@ Continent name or OWID region
 Country or region name
 {% enddocs %}
 
-{% docs owid_date %}
+{% docs owid_observation_dt %}
 Observation date (YYYY-MM-DD)
 {% enddocs %}
 

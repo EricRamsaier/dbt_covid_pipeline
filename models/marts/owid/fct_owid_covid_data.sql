@@ -4,6 +4,8 @@
     unique_key='sk_owid_covid_data',
     incremental_strategy='merge',
     cluster_by = ['observation_dt', 'owid_iso_code'],
+    contract={'enforced': true},
+    on_schema_change='fail',
     tags=['fct','owid']
   )
 }}

@@ -216,6 +216,10 @@ models:
   - name: loaded_ts
     description: '{{ doc("loaded_ts") }}'
     data_type: TIMESTAMP_LTZ
+    tests:
+      - test_freshness_threshold:
+          threshold_hours: 24
+          severity: warn
   - name: dbt_model_name
     description: '{{ doc(''dbt_model_name'') }}'
     data_type: STRING

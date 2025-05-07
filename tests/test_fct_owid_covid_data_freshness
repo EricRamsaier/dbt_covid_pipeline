@@ -1,0 +1,9 @@
+-- Test: Detects stale records in the mart table
+-- Purpose: Ensures that data in the mart layer is not older than 24 hours,
+--          based on the `loaded_ts` ingestion timestamp.
+-- Use Case: Prevents dashboards from showing outdated data due to upstream failures or pipeline lags.
+-- Threshold: Flags any record where `loaded_ts` is more than 24 hours behind the current time.
+
+SELECT *
+FROM {{ ref('fct_owid_covid_data') }}
+WHERE DATEDIFF('hour', loaded_ts, CURRENT_TIMESTAMP()) > 24

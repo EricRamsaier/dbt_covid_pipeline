@@ -9,6 +9,7 @@
 WITH source_data AS (
     SELECT *
     FROM {{ source('owid','owid_covid_data') }}
+    {{ dev_data_filter('date', 7) }}
 ),
 
 final AS (

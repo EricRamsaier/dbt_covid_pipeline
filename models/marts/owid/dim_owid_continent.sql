@@ -1,9 +1,12 @@
--- dim_owid_continent
--- -------------------
--- This dimension model extracts unique continent names from the OWID COVID data.
--- It assigns a surrogate key (sk_continent) to each distinct continent.
--- This model is useful for joining to fact tables and simplifying reporting.
--- NOTE: Continent values are taken as-is; data quality depends on upstream staging logic.
+-- Created:       2024-05-10
+-- Last Modified: 2025-05-10
+-- Creator:       Eric Ramsaier
+-- Model:         {{ this.identifier }}
+-- Purpose:       Extracts unique continent names from OWID COVID data for use in joins and reporting
+-- Notes:
+--   - Assigns surrogate key (sk_continent) to each distinct continent
+--   - Continent values are taken as-is from the source data
+--   - Data quality depends on upstream staging logic
 
 
 {{

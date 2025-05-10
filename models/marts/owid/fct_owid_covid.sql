@@ -1,3 +1,15 @@
+-- Created:       2024-05-05
+-- Last Modified: 2025-05-10
+-- Creator:       Eric Ramsaier
+-- Model:         {{ this.identifier }}
+-- Purpose:       Fact model for OWID COVID metrics, aggregated by country and observation date
+-- Notes:
+--   - Uses surrogate key sk_owid_covid from owid_iso_code + observation_dt
+--   - Includes case, death, testing, and vaccination metrics plus demographic context
+--   - Incremental model using 7-day cutoff for recent updates
+--   - Enforced contract with on_schema_change='fail' for pipeline stability
+
+
 {{
   config(
     materialized='incremental',

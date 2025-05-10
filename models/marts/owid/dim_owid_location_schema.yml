@@ -4,13 +4,13 @@ models:
   description: Dimension model for unique OWID COVID locations. Each location is a named entity such as a country, region,
     or aggregate (e.g. 'France', 'World').
   tags:
-  - dim
-  - owid
+    - dim
+    - owid
   meta:
     owner: "eramsaier@gmail.com"
     team: "analytics_engineering"
     maturity: "high"
-    source: "Our World in Data"
+    source: "OWID daily CSV ingest from public GitHub"
     
   columns:
   - name: sk_location

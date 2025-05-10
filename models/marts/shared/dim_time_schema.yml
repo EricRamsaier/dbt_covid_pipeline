@@ -3,7 +3,14 @@ version: 2
 models:
   - name: dim_time
     description: Dimension table representing every minute of the day, with AM/PM and audit metadata.
-    tags: ['dim', 'owid']
+    tags:
+      - dim
+    meta:
+      owner: "eramsaier@gmail.com"
+      team: "analytics_engineering"
+      maturity: "high"
+      source: "OWID daily CSV ingest from public GitHub"
+      
     columns:
       - name: time_ts
         description: Timestamp for the minute of day (HH:MM:00)

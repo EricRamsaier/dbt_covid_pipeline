@@ -5,6 +5,11 @@ sources:
     tags: ['external', 'covid', 'owid']
     database: raw
     schema: owid
+    meta:
+      owner: "eramsaier@gmail.com"
+      team: "analytics_engineering"
+      maturity: "high"
+      source: "OWID daily CSV ingest from public GitHub"
     freshness:
       warn_after:
         count: 1

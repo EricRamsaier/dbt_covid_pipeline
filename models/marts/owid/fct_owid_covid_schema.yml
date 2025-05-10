@@ -3,17 +3,17 @@ models:
 - name: fct_owid_covid
   description: Fact table for OWID COVID-19 data with historical metrics per country and date.
   tags:
-  - fact
-  - owid
-  - daily
+    - fct
+    - owid
+    - daily
   meta:
     owner: "eramsaier@gmail.com"
     team: "analytics_engineering"
     maturity: "high"
-    source: "Our World in Data"
+    source: "OWID daily CSV ingest from public GitHub"
 
   columns:
-  - name: sk_owid_covid_data
+  - name: sk_owid_covid
     description: Auto-generated audit field
     data_type: VARCHAR
     constraints:

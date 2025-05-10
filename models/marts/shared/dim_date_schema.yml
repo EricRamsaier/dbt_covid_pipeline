@@ -3,7 +3,14 @@ version: 2
 models:
   - name: dim_date
     description: "Date dimension from 2010-01-01 to 2030-12-31, used for joining to event or order dates."
-    tags: ['dim', 'owid']
+    tags:
+      - dim
+    meta:
+      owner: "eramsaier@gmail.com"
+      team: "analytics_engineering"
+      maturity: "high"
+      source: "OWID daily CSV ingest from public GitHub"
+
     columns:
       - name: date_dt
         description: "The actual date (primary key)."

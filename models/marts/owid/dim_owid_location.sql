@@ -14,14 +14,14 @@
 }}
 
 WITH source_data AS (
-    SELECT * FROM {{ ref('int_owid_covid_data') }}
+    SELECT * FROM {{ ref('int_owid_covid') }}
 ),
 
 final AS (
     SELECT DISTINCT
-        {{ dbt_utils.generate_surrogate_key(['owid_iso_code']) }} AS sk_location
+        {{ dbt_utils.generate_surrogate_key(['location']) }} AS sk_location
       , location 
-    FROM {{ ref('int_owid_covid_data') }}
+    FROM source_data
     WHERE location IS NOT NULL
 )
 

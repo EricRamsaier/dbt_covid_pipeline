@@ -14,14 +14,14 @@
 }}
 
 WITH source_data AS (
-    SELECT * FROM {{ ref('int_owid_covid_data') }}
+    SELECT * FROM {{ ref('int_owid_covid') }}
 ),
 
 final AS (
     SELECT DISTINCT
         {{ dbt_utils.generate_surrogate_key(['continent']) }} AS sk_continent
       , continent
-    FROM {{ ref('int_owid_covid_data') }}
+    FROM source_data
     WHERE continent IS NOT NULL
 )
 

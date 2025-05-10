@@ -1,7 +1,7 @@
 {{
   config(
     materialized='incremental',
-    unique_key='sk_owid_covid_data',
+    unique_key='sk_owid_covid',
     incremental_strategy='merge',
     cluster_by = ['observation_dt', 'owid_iso_code'],
     contract={'enforced': true},
@@ -15,7 +15,7 @@ owid_data AS (
   SELECT 
     *
   FROM 
-    {{ ref('int_owid_covid_data') }}
+    {{ ref('int_owid_covid') }}
   {% if is_incremental() %}
   WHERE
     observation_dt >= DATEADD(DAY, -7, CURRENT_DATE)
@@ -24,7 +24,7 @@ owid_data AS (
 
 final as (
 SELECT
-      {{ dbt_utils.generate_surrogate_key( ['owid_iso_code', 'observation_dt'] ) }} AS sk_owid_covid_data
+      {{ dbt_utils.generate_surrogate_key( ['owid_iso_code', 'observation_dt'] ) }} AS sk_owid_covid
     , owid_iso_code
     , continent
     , location

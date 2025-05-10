@@ -1,17 +1,16 @@
-/*
-  Generates a SHA256 surrogate key from a list of input columns.
+-- Generates a SHA256 surrogate key from a list of input columns.
+-- Ensures that all input columns are NOT NULL before generating the key
+-- to avoid producing hashes based on incomplete data.
+--
+-- Usage:
+--   Pass a list of fields in '', comma separated
+--
+-- This macro:
+--   - Raises a compile-time error if no columns are passed
+--   - Produces NULL if any input column is NULL
+--   - Wraps dbt_utils.generate_surrogate_key
 
-  Ensures that all input columns are NOT NULL before generating the key
-  to avoid producing hashes based on incomplete data.
 
-  Usage:
-      {{ generate_surrogate_key(['order_id', 'product_id']) }} AS order_item_sk
-
-  This macro:
-    - Raises a compile-time error if no columns are passed
-    - Produces NULL if any input column is NULL
-    - Wraps dbt_utils.generate_surrogate_key()
-*/
 {% macro generate_surrogate_key(columns) %}
     {% if columns | length == 0 %}
         {{ exceptions.raise_compiler_error("generate_surrogate_key requires at least one column") }}

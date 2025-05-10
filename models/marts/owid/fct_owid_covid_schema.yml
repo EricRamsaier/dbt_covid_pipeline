@@ -1,244 +1,244 @@
 version: 2
 models:
-- name: fct_owid_covid
-  description: Fact table for OWID COVID-19 data with historical metrics per country and date.
-  tags:
-    - fct
-    - owid
-    - daily
-  meta:
-    owner: "eramsaier@gmail.com"
-    team: "analytics_engineering"
-    maturity: "high"
-    source: "OWID daily CSV ingest from public GitHub"
+  - name: fct_owid_covid
+    description: Fact table for OWID COVID-19 data with historical metrics per country and date.
+    tags:
+      - fct
+      - owid
+      - daily
+    meta:
+      owner: "eramsaier@gmail.com"
+      team: "analytics_engineering"
+      maturity: "high"
+      source: "OWID daily CSV ingest from public GitHub"
 
-  columns:
-  - name: sk_owid_covid
-    description: Auto-generated audit field
-    data_type: VARCHAR
-    constraints:
-      - type: unique
-  - name: owid_iso_code
-    description: '{{ doc(''owid_iso_code'') }}'
-    data_type: VARCHAR
-    constraints:
-      - type: not_null
-  - name: continent
-    description: '{{ doc(''owid_continent'') }}'
-    data_type: VARCHAR
-  - name: location
-    description: '{{ doc(''owid_location'') }}'
-    data_type: VARCHAR
-  - name: observation_dt
-    description: '{{ doc(''owid_observation_dt'') }}'
-    data_type: DATE
-    constraints:
-      - type: not_null
-  - name: total_cases
-    description: '{{ doc(''owid_total_cases'') }}'
-    data_type: NUMBER(38,0)
-  - name: new_cases
-    description: '{{ doc(''owid_new_cases'') }}'
-    data_type: NUMBER(38,0)
-  - name: new_cases_smoothed
-    description: '{{ doc(''owid_new_cases_smoothed'') }}'
-    data_type: NUMBER(38,2)
-  - name: total_deaths
-    description: '{{ doc(''owid_total_deaths'') }}'
-    data_type: NUMBER(38,0)
-  - name: new_deaths
-    description: '{{ doc(''owid_new_deaths'') }}'
-    data_type: NUMBER(38,0)
-  - name: new_deaths_smoothed
-    description: '{{ doc(''owid_new_deaths_smoothed'') }}'
-    data_type: NUMBER(38,2)
-  - name: total_cases_per_million
-    description: '{{ doc(''owid_total_cases_per_million'') }}'
-    data_type: NUMBER(38,2)
-  - name: new_cases_per_million
-    description: '{{ doc(''owid_new_cases_per_million'') }}'
-    data_type: NUMBER(38,2)
-  - name: new_cases_smoothed_per_million
-    description: '{{ doc(''owid_new_cases_smoothed_per_million'') }}'
-    data_type: NUMBER(38,2)
-  - name: total_deaths_per_million
-    description: '{{ doc(''owid_total_deaths_per_million'') }}'
-    data_type: NUMBER(38,2)
-  - name: new_deaths_per_million
-    description: '{{ doc(''owid_new_deaths_per_million'') }}'
-    data_type: NUMBER(38,2)
-  - name: new_deaths_smoothed_per_million
-    description: '{{ doc(''owid_new_deaths_smoothed_per_million'') }}'
-    data_type: NUMBER(38,2)
-  - name: reproduction_rate
-    description: '{{ doc(''owid_reproduction_rate'') }}'
-    data_type: NUMBER(38,2)
-  - name: icu_patients
-    description: '{{ doc(''owid_icu_patients'') }}'
-    data_type: NUMBER(38,0)
-  - name: icu_patients_per_million
-    description: '{{ doc(''owid_icu_patients_per_million'') }}'
-    data_type: NUMBER(38,2)
-  - name: hosp_patients
-    description: '{{ doc(''owid_hosp_patients'') }}'
-    data_type: VARCHAR
-  - name: hosp_patients_per_million
-    description: '{{ doc(''owid_hosp_patients_per_million'') }}'
-    data_type: VARCHAR
-  - name: weekly_icu_admissions
-    description: '{{ doc(''owid_weekly_icu_admissions'') }}'
-    data_type: VARCHAR
-  - name: weekly_icu_admissions_per_million
-    description: '{{ doc(''owid_weekly_icu_admissions_per_million'') }}'
-    data_type: VARCHAR
-  - name: weekly_hosp_admissions
-    description: '{{ doc(''owid_weekly_hosp_admissions'') }}'
-    data_type: VARCHAR
-  - name: weekly_hosp_admissions_per_million
-    description: '{{ doc(''owid_weekly_hosp_admissions_per_million'') }}'
-    data_type: VARCHAR
-  - name: total_tests
-    description: '{{ doc(''owid_total_tests'') }}'
-    data_type: NUMBER(38,0)
-  - name: new_tests
-    description: '{{ doc(''owid_new_tests'') }}'
-    data_type: NUMBER(38,0)
-  - name: total_tests_per_thousand
-    description: '{{ doc(''owid_total_tests_per_thousand'') }}'
-    data_type: NUMBER(38,2)
-  - name: new_tests_per_thousand
-    description: '{{ doc(''owid_new_tests_per_thousand'') }}'
-    data_type: NUMBER(38,2)
-  - name: new_tests_smoothed
-    description: '{{ doc(''owid_new_tests_smoothed'') }}'
-    data_type: NUMBER(38,1)
-  - name: new_tests_smoothed_per_thousand
-    description: '{{ doc(''owid_new_tests_smoothed_per_thousand'') }}'
-    data_type: NUMBER(38,2)
-  - name: positive_rate
-    description: '{{ doc(''owid_positive_rate'') }}'
-    data_type: NUMBER(38,2)
-  - name: tests_per_case
-    description: '{{ doc(''owid_tests_per_case'') }}'
-    data_type: NUMBER(38,1)
-  - name: tests_units
-    description: '{{ doc(''owid_tests_units'') }}'
-    data_type: VARCHAR
-  - name: total_vaccinations
-    description: '{{ doc(''owid_total_vaccinations'') }}'
-    data_type: NUMBER(38,0)
-  - name: people_vaccinated
-    description: '{{ doc(''owid_people_vaccinated'') }}'
-    data_type: NUMBER(38,0)
-  - name: people_fully_vaccinated
-    description: '{{ doc(''owid_people_fully_vaccinated'') }}'
-    data_type: NUMBER(38,0)
-  - name: total_boosters
-    description: '{{ doc(''owid_total_boosters'') }}'
-    data_type: NUMBER(38,0)
-  - name: new_vaccinations
-    description: '{{ doc(''owid_new_vaccinations'') }}'
-    data_type: NUMBER(38,0)
-  - name: new_vaccinations_smoothed
-    description: '{{ doc(''owid_new_vaccinations_smoothed'') }}'
-    data_type: NUMBER(38,1)
-  - name: total_vaccinations_per_hundred
-    description: '{{ doc(''owid_total_vaccinations_per_hundred'') }}'
-    data_type: NUMBER(38,2)
-  - name: people_vaccinated_per_hundred
-    description: '{{ doc(''owid_people_vaccinated_per_hundred'') }}'
-    data_type: NUMBER(38,2)
-  - name: people_fully_vaccinated_per_hundred
-    description: '{{ doc(''owid_people_fully_vaccinated_per_hundred'') }}'
-    data_type: NUMBER(38,2)
-  - name: total_boosters_per_hundred
-    description: '{{ doc(''owid_total_boosters_per_hundred'') }}'
-    data_type: NUMBER(38,2)
-  - name: new_vaccinations_smoothed_per_million
-    description: '{{ doc(''owid_new_vaccinations_smoothed_per_million'') }}'
-    data_type: NUMBER(38,1)
-  - name: new_people_vaccinated_smoothed
-    description: '{{ doc(''owid_new_people_vaccinated_smoothed'') }}'
-    data_type: NUMBER(38,1)
-  - name: new_people_vaccinated_smoothed_per_hundred
-    description: '{{ doc(''owid_new_people_vaccinated_smoothed_per_hundred'') }}'
-    data_type: NUMBER(38,2)
-  - name: stringency_index
-    description: '{{ doc(''owid_stringency_index'') }}'
-    data_type: NUMBER(38,2)
-  - name: population_density
-    description: '{{ doc(''owid_population_density'') }}'
-    data_type: NUMBER(38,2)
-  - name: median_age
-    description: '{{ doc(''owid_median_age'') }}'
-    data_type: NUMBER(38,1)
-  - name: aged_65_older
-    description: '{{ doc(''owid_aged_65_older'') }}'
-    data_type: NUMBER(38,2)
-  - name: aged_70_older
-    description: '{{ doc(''owid_aged_70_older'') }}'
-    data_type: NUMBER(38,2)
-  - name: gdp_per_capita
-    description: '{{ doc(''owid_gdp_per_capita'') }}'
-    data_type: NUMBER(38,2)
-  - name: extreme_poverty
-    description: '{{ doc(''owid_extreme_poverty'') }}'
-    data_type: NUMBER(38,1)
-  - name: cardiovascular_death_rate
-    description: '{{ doc(''owid_cardiovascular_death_rate'') }}'
-    data_type: NUMBER(38,2)
-  - name: diabetes_prevalence
-    description: '{{ doc(''owid_diabetes_prevalence'') }}'
-    data_type: NUMBER(38,2)
-  - name: female_smokers
-    description: '{{ doc(''owid_female_smokers'') }}'
-    data_type: NUMBER(38,1)
-  - name: male_smokers
-    description: '{{ doc(''owid_male_smokers'') }}'
-    data_type: NUMBER(38,1)
-  - name: handwashing_facilities
-    description: '{{ doc(''owid_handwashing_facilities'') }}'
-    data_type: NUMBER(38,2)
-  - name: hospital_beds_per_thousand
-    description: '{{ doc(''owid_hospital_beds_per_thousand'') }}'
-    data_type: NUMBER(38,2)
-  - name: life_expectancy
-    description: '{{ doc(''owid_life_expectancy'') }}'
-    data_type: NUMBER(38,2)
-  - name: human_development_index
-    description: '{{ doc(''owid_human_development_index'') }}'
-    data_type: NUMBER(38,2)
-  - name: population
-    description: '{{ doc(''owid_population'') }}'
-    data_type: NUMBER(38,0)
-  - name: excess_mortality_cumulative_absolute
-    description: '{{ doc(''owid_excess_mortality_cumulative_absolute'') }}'
-    data_type: NUMBER(38,2)
-  - name: excess_mortality_cumulative
-    description: '{{ doc(''owid_excess_mortality_cumulative'') }}'
-    data_type: NUMBER(38,2)
-  - name: excess_mortality
-    description: '{{ doc(''owid_excess_mortality'') }}'
-    data_type: NUMBER(38,2)
-  - name: excess_mortality_cumulative_per_million
-    description: '{{ doc(''owid_excess_mortality_cumulative_per_million'') }}'
-    data_type: NUMBER(38,2)
-  - name: loaded_ts
-    description: '{{ doc("loaded_ts") }}'
-    data_type: TIMESTAMP_LTZ
-    tests:
-      - test_freshness_threshold:
-          threshold_hours: 24
-          severity: warn
-  - name: dbt_model_name
-    description: '{{ doc(''dbt_model_name'') }}'
-    data_type: STRING
-  - name: dbt_invocation_id
-    description: '{{ doc(''dbt_invocation_id'') }}'
-    data_type: STRING
-  - name: dbt_run_ts
-    description: '{{ doc(''dbt_run_ts'') }}'
-    data_type: TIMESTAMP_LTZ
-  - name: dbt_record_loaded_ts
-    description: '{{ doc(''dbt_record_loaded_ts'') }}'
-    data_type: TIMESTAMP_LTZ
+    columns:
+    - name: sk_owid_covid
+      description: Auto-generated audit field
+      data_type: VARCHAR
+      constraints:
+        - type: unique
+    - name: owid_iso_code
+      description: '{{ doc(''owid_iso_code'') }}'
+      data_type: VARCHAR
+      constraints:
+        - type: not_null
+    - name: continent
+      description: '{{ doc(''owid_continent'') }}'
+      data_type: VARCHAR
+    - name: location
+      description: '{{ doc(''owid_location'') }}'
+      data_type: VARCHAR
+    - name: observation_dt
+      description: '{{ doc(''owid_observation_dt'') }}'
+      data_type: DATE
+      constraints:
+        - type: not_null
+    - name: total_cases
+      description: '{{ doc(''owid_total_cases'') }}'
+      data_type: NUMBER(38,0)
+    - name: new_cases
+      description: '{{ doc(''owid_new_cases'') }}'
+      data_type: NUMBER(38,0)
+    - name: new_cases_smoothed
+      description: '{{ doc(''owid_new_cases_smoothed'') }}'
+      data_type: NUMBER(38,2)
+    - name: total_deaths
+      description: '{{ doc(''owid_total_deaths'') }}'
+      data_type: NUMBER(38,0)
+    - name: new_deaths
+      description: '{{ doc(''owid_new_deaths'') }}'
+      data_type: NUMBER(38,0)
+    - name: new_deaths_smoothed
+      description: '{{ doc(''owid_new_deaths_smoothed'') }}'
+      data_type: NUMBER(38,2)
+    - name: total_cases_per_million
+      description: '{{ doc(''owid_total_cases_per_million'') }}'
+      data_type: NUMBER(38,2)
+    - name: new_cases_per_million
+      description: '{{ doc(''owid_new_cases_per_million'') }}'
+      data_type: NUMBER(38,2)
+    - name: new_cases_smoothed_per_million
+      description: '{{ doc(''owid_new_cases_smoothed_per_million'') }}'
+      data_type: NUMBER(38,2)
+    - name: total_deaths_per_million
+      description: '{{ doc(''owid_total_deaths_per_million'') }}'
+      data_type: NUMBER(38,2)
+    - name: new_deaths_per_million
+      description: '{{ doc(''owid_new_deaths_per_million'') }}'
+      data_type: NUMBER(38,2)
+    - name: new_deaths_smoothed_per_million
+      description: '{{ doc(''owid_new_deaths_smoothed_per_million'') }}'
+      data_type: NUMBER(38,2)
+    - name: reproduction_rate
+      description: '{{ doc(''owid_reproduction_rate'') }}'
+      data_type: NUMBER(38,2)
+    - name: icu_patients
+      description: '{{ doc(''owid_icu_patients'') }}'
+      data_type: NUMBER(38,0)
+    - name: icu_patients_per_million
+      description: '{{ doc(''owid_icu_patients_per_million'') }}'
+      data_type: NUMBER(38,2)
+    - name: hosp_patients
+      description: '{{ doc(''owid_hosp_patients'') }}'
+      data_type: VARCHAR
+    - name: hosp_patients_per_million
+      description: '{{ doc(''owid_hosp_patients_per_million'') }}'
+      data_type: VARCHAR
+    - name: weekly_icu_admissions
+      description: '{{ doc(''owid_weekly_icu_admissions'') }}'
+      data_type: VARCHAR
+    - name: weekly_icu_admissions_per_million
+      description: '{{ doc(''owid_weekly_icu_admissions_per_million'') }}'
+      data_type: VARCHAR
+    - name: weekly_hosp_admissions
+      description: '{{ doc(''owid_weekly_hosp_admissions'') }}'
+      data_type: VARCHAR
+    - name: weekly_hosp_admissions_per_million
+      description: '{{ doc(''owid_weekly_hosp_admissions_per_million'') }}'
+      data_type: VARCHAR
+    - name: total_tests
+      description: '{{ doc(''owid_total_tests'') }}'
+      data_type: NUMBER(38,0)
+    - name: new_tests
+      description: '{{ doc(''owid_new_tests'') }}'
+      data_type: NUMBER(38,0)
+    - name: total_tests_per_thousand
+      description: '{{ doc(''owid_total_tests_per_thousand'') }}'
+      data_type: NUMBER(38,2)
+    - name: new_tests_per_thousand
+      description: '{{ doc(''owid_new_tests_per_thousand'') }}'
+      data_type: NUMBER(38,2)
+    - name: new_tests_smoothed
+      description: '{{ doc(''owid_new_tests_smoothed'') }}'
+      data_type: NUMBER(38,1)
+    - name: new_tests_smoothed_per_thousand
+      description: '{{ doc(''owid_new_tests_smoothed_per_thousand'') }}'
+      data_type: NUMBER(38,2)
+    - name: positive_rate
+      description: '{{ doc(''owid_positive_rate'') }}'
+      data_type: NUMBER(38,2)
+    - name: tests_per_case
+      description: '{{ doc(''owid_tests_per_case'') }}'
+      data_type: NUMBER(38,1)
+    - name: tests_units
+      description: '{{ doc(''owid_tests_units'') }}'
+      data_type: VARCHAR
+    - name: total_vaccinations
+      description: '{{ doc(''owid_total_vaccinations'') }}'
+      data_type: NUMBER(38,0)
+    - name: people_vaccinated
+      description: '{{ doc(''owid_people_vaccinated'') }}'
+      data_type: NUMBER(38,0)
+    - name: people_fully_vaccinated
+      description: '{{ doc(''owid_people_fully_vaccinated'') }}'
+      data_type: NUMBER(38,0)
+    - name: total_boosters
+      description: '{{ doc(''owid_total_boosters'') }}'
+      data_type: NUMBER(38,0)
+    - name: new_vaccinations
+      description: '{{ doc(''owid_new_vaccinations'') }}'
+      data_type: NUMBER(38,0)
+    - name: new_vaccinations_smoothed
+      description: '{{ doc(''owid_new_vaccinations_smoothed'') }}'
+      data_type: NUMBER(38,1)
+    - name: total_vaccinations_per_hundred
+      description: '{{ doc(''owid_total_vaccinations_per_hundred'') }}'
+      data_type: NUMBER(38,2)
+    - name: people_vaccinated_per_hundred
+      description: '{{ doc(''owid_people_vaccinated_per_hundred'') }}'
+      data_type: NUMBER(38,2)
+    - name: people_fully_vaccinated_per_hundred
+      description: '{{ doc(''owid_people_fully_vaccinated_per_hundred'') }}'
+      data_type: NUMBER(38,2)
+    - name: total_boosters_per_hundred
+      description: '{{ doc(''owid_total_boosters_per_hundred'') }}'
+      data_type: NUMBER(38,2)
+    - name: new_vaccinations_smoothed_per_million
+      description: '{{ doc(''owid_new_vaccinations_smoothed_per_million'') }}'
+      data_type: NUMBER(38,1)
+    - name: new_people_vaccinated_smoothed
+      description: '{{ doc(''owid_new_people_vaccinated_smoothed'') }}'
+      data_type: NUMBER(38,1)
+    - name: new_people_vaccinated_smoothed_per_hundred
+      description: '{{ doc(''owid_new_people_vaccinated_smoothed_per_hundred'') }}'
+      data_type: NUMBER(38,2)
+    - name: stringency_index
+      description: '{{ doc(''owid_stringency_index'') }}'
+      data_type: NUMBER(38,2)
+    - name: population_density
+      description: '{{ doc(''owid_population_density'') }}'
+      data_type: NUMBER(38,2)
+    - name: median_age
+      description: '{{ doc(''owid_median_age'') }}'
+      data_type: NUMBER(38,1)
+    - name: aged_65_older
+      description: '{{ doc(''owid_aged_65_older'') }}'
+      data_type: NUMBER(38,2)
+    - name: aged_70_older
+      description: '{{ doc(''owid_aged_70_older'') }}'
+      data_type: NUMBER(38,2)
+    - name: gdp_per_capita
+      description: '{{ doc(''owid_gdp_per_capita'') }}'
+      data_type: NUMBER(38,2)
+    - name: extreme_poverty
+      description: '{{ doc(''owid_extreme_poverty'') }}'
+      data_type: NUMBER(38,1)
+    - name: cardiovascular_death_rate
+      description: '{{ doc(''owid_cardiovascular_death_rate'') }}'
+      data_type: NUMBER(38,2)
+    - name: diabetes_prevalence
+      description: '{{ doc(''owid_diabetes_prevalence'') }}'
+      data_type: NUMBER(38,2)
+    - name: female_smokers
+      description: '{{ doc(''owid_female_smokers'') }}'
+      data_type: NUMBER(38,1)
+    - name: male_smokers
+      description: '{{ doc(''owid_male_smokers'') }}'
+      data_type: NUMBER(38,1)
+    - name: handwashing_facilities
+      description: '{{ doc(''owid_handwashing_facilities'') }}'
+      data_type: NUMBER(38,2)
+    - name: hospital_beds_per_thousand
+      description: '{{ doc(''owid_hospital_beds_per_thousand'') }}'
+      data_type: NUMBER(38,2)
+    - name: life_expectancy
+      description: '{{ doc(''owid_life_expectancy'') }}'
+      data_type: NUMBER(38,2)
+    - name: human_development_index
+      description: '{{ doc(''owid_human_development_index'') }}'
+      data_type: NUMBER(38,2)
+    - name: population
+      description: '{{ doc(''owid_population'') }}'
+      data_type: NUMBER(38,0)
+    - name: excess_mortality_cumulative_absolute
+      description: '{{ doc(''owid_excess_mortality_cumulative_absolute'') }}'
+      data_type: NUMBER(38,2)
+    - name: excess_mortality_cumulative
+      description: '{{ doc(''owid_excess_mortality_cumulative'') }}'
+      data_type: NUMBER(38,2)
+    - name: excess_mortality
+      description: '{{ doc(''owid_excess_mortality'') }}'
+      data_type: NUMBER(38,2)
+    - name: excess_mortality_cumulative_per_million
+      description: '{{ doc(''owid_excess_mortality_cumulative_per_million'') }}'
+      data_type: NUMBER(38,2)
+    - name: loaded_ts
+      description: '{{ doc("loaded_ts") }}'
+      data_type: TIMESTAMP_LTZ
+      tests:
+        - test_freshness_threshold:
+            threshold_hours: 24
+            severity: warn
+    - name: dbt_model_name
+      description: '{{ doc(''dbt_model_name'') }}'
+      data_type: STRING
+    - name: dbt_invocation_id
+      description: '{{ doc(''dbt_invocation_id'') }}'
+      data_type: STRING
+    - name: dbt_run_ts
+      description: '{{ doc(''dbt_run_ts'') }}'
+      data_type: TIMESTAMP_LTZ
+    - name: dbt_record_loaded_ts
+      description: '{{ doc(''dbt_record_loaded_ts'') }}'
+      data_type: TIMESTAMP_LTZ

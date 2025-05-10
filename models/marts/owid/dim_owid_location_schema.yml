@@ -1,19 +1,19 @@
 version: 2
 models:
-- name: dim_owid_location
-  description: Dimension model for unique OWID COVID locations. Each location is a named entity such as a country, region,
-    or aggregate (e.g. 'France', 'World').
-  tags:
-    - dim
-    - owid
-  meta:
-    owner: "eramsaier@gmail.com"
-    team: "analytics_engineering"
-    maturity: "high"
-    source: "OWID daily CSV ingest from public GitHub"
-    
-  columns:
-  - name: sk_location
-    description: Surrogate key for location (based on the `location` field).
-  - name: location
-    description: '{{ doc(''owid_location'') }}'
+  - name: dim_owid_location
+    description: Dimension model for unique OWID COVID locations. Each location is a named entity such as a country, region,
+      or aggregate (e.g. 'France', 'World').
+    tags:
+      - dim
+      - owid
+    meta:
+      owner: "eramsaier@gmail.com"
+      team: "analytics_engineering"
+      maturity: "high"
+      source: "OWID daily CSV ingest from public GitHub"
+      
+    columns:
+    - name: sk_location
+      description: Surrogate key for location (based on the `location` field).
+    - name: location
+      description: '{{ doc(''owid_location'') }}'

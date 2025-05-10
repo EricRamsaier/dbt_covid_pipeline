@@ -2,6 +2,16 @@ version: 2
 models:
   - name: stg_owid_covid_data
     description: Staging model for OWID COVID-19 data. Cleans, renames, and casts fields from the raw OWID source table.
+    tags:
+      - fct
+      - owid
+      - daily
+    meta:
+      owner: "eramsaier@gmail.com"
+      team: "analytics_engineering"
+      maturity: "high"
+      source: "OWID daily CSV ingest from public GitHub"
+      
     columns:
       - name: owid_owid_iso_code
         description: '{{ doc("owid_iso_code") }}'

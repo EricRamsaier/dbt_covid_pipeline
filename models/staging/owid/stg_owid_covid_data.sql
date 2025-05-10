@@ -1,4 +1,13 @@
---Data types set correctly at sources layer.
+-- Created:       2024-04-30
+-- Last Modified: 2025-05-10
+-- Creator:       Eric Ramsaier
+-- Model:         {{ this.identifier }}
+-- Purpose:       Staging model for OWID COVID-19 data. Cleans, renames, and casts fields from the raw OWID source table.
+-- Notes:
+--   - Renames fields for clarity (e.g., iso_code → owid_iso_code, date → observation_dt)
+--   - Filters source data in development using {{ dev_data_filter() }}
+--   - Data types are enforced at the sources layer; this model performs light reshaping only
+
 
 {{
   config(

@@ -1,6 +1,6 @@
 version: 2
 models:
-- name: fct_owid_covid_data
+- name: fct_owid_covid
   tags: ['fact', 'owid', 'daily']
   description: Fact table for OWID COVID-19 data with historical metrics per country and date.
   meta:

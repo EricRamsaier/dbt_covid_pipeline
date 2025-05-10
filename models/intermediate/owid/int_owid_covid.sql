@@ -23,7 +23,8 @@ WITH stg_data AS (
 final AS (
    SELECT
         -- choosing to use exclude since there are many fields in the source table
-        stg_data.* EXCLUDE (continent)
+        stg_data.* 
+        EXCLUDE (continent)
 
         -- adding clear continents when possible for NULL when the location is a continent
       , CASE
@@ -40,7 +41,7 @@ final AS (
       , ROW_NUMBER() OVER (
             PARTITION BY owid_iso_code, observation_dt
             ORDER BY (
-                /* sum of non-null numerics as proxy for most complete row */
+                --sum of non-null numerics as proxy for most complete row
               COALESCE(total_cases, 0)
             + COALESCE(new_cases, 0)
             + COALESCE(new_deaths, 0)
@@ -54,6 +55,7 @@ final AS (
 )
 
 SELECT 
-    final.* EXCLUDE (rn)
+    final.* 
+    EXCLUDE (rn)
 FROM 
     final

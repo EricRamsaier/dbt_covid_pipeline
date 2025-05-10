@@ -17,7 +17,7 @@ SELECT
     ROW_NUMBER() OVER (
         PARTITION BY iso_code, observation_dt
         ORDER BY (
-            /* sum of non-null numerics as proxy for most complete row */
+            --sum of non-null numerics as proxy for most complete row
             coalesce(total_cases, 0)
         + coalesce(new_cases, 0)
         + coalesce(new_deaths, 0)

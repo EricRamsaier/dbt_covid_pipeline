@@ -2,9 +2,12 @@ version: 2
 
 sources:
   - name: owid
-    tags: ['external', 'covid', 'owid']
     database: raw
     schema: owid
+    tags:
+      - external
+      - covid
+      - owid
     meta:
       owner: "eramsaier@gmail.com"
       team: "analytics_engineering"
@@ -19,7 +22,10 @@ sources:
         period: day
     tables:
       - name: owid_covid_data
-        tags: ['daily', 'public', 'owid']
+        tags:
+          - external
+          - covid
+          - owid
         description: "Our World in Data COVID-19 complete daily dataset per location"
         loaded_at_field: loaded_ts
         meta:

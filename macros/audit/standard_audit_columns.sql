@@ -1,9 +1,6 @@
 -- Adds standard audit metadata fields to the SELECT list of a model.
 -- Includes the model name, invocation ID, run start timestamp, and record load timestamp.
 --
--- Usage:
---   {{ standard_audit_columns() }}
---
 -- Recommended for use in fact and dimension models to support:
 --   • Traceability of model execution
 --   • Auditing and lineage tracking

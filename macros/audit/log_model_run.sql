@@ -6,8 +6,7 @@
 --   Intended to be called as a post-hook for fact/dimension models in production.
 --
 -- Usage:
---   Add this to dbt_project.yml under a model path with:
---     +post-hook: "{{ log_model_run() }}"
+--   Add this to dbt_project.yml under a model path via post-hook
 --
 -- Requirements:
 --   The target table `dwh.audit.model_run_log` must exist.

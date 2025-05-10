@@ -1,0 +1,53 @@
+version: 2
+
+models:
+  - name: agg_owid_covid_year
+    description: >
+      Aggregated OWID COVID metrics by country and year.
+      Includes total and new case, death, test, and vaccination metrics.
+
+    meta:
+      owner: "eramsaier@gmail.com"
+      team: "analytics_engineering"
+      maturity: "medium"
+      source: "fct_owid_covid"
+
+    tags:
+      - agg
+      - owid
+      - covid
+
+    columns:
+      - name: owid_iso_code
+        description: "{{ doc('owid_iso_code') }}"
+        data_type: string
+      - name: observation_month
+        description: "Observation month (YYYY-MM)"
+        data_type: date
+      - name: total_cases
+        description: "{{ doc('owid_total_cases') }}"
+        data_type: number
+      - name: new_cases
+        description: "{{ doc('owid_new_cases') }}"
+        data_type: number
+      - name: total_deaths
+        description: "{{ doc('owid_total_deaths') }}"
+        data_type: number
+      - name: new_deaths
+        description: "{{ doc('owid_new_deaths') }}"
+        data_type: number
+      - name: total_tests
+        description: "{{ doc('owid_total_tests') }}"
+        data_type: number
+      - name: new_tests
+        description: "{{ doc('owid_new_tests') }}"
+        data_type: number
+      - name: total_vaccinations
+        description: "{{ doc('owid_total_vaccinations') }}"
+        data_type: number
+      - name: new_vaccinations
+        description: "{{ doc('owid_new_vaccinations') }}"
+        data_type: number
+      - name: population
+        description: "{{ doc('owid_population') }}"
+        data_type: number

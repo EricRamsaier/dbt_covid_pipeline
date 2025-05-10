@@ -23,7 +23,8 @@ exposures:
     description: >
       Internal dashboard used by analysts to track COVID-19 trends by continent on a weekly basis.
       Powered by aggregated metrics from the OWID data mart.
-    # Add depends_on fct_owid_covid_weekly once the model is built
+    depends_on:
+      - ref('fct_owid_covid_data') # Update this to weekly once created.
     owner:
       name: Eric Ramsaier
       email: eramsaier@gmail.com

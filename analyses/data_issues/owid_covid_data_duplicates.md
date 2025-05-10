@@ -1,7 +1,7 @@
 # OWID COVID Data: Duplicate Date/Location Rows
 
 **Description:**  
-We’re seeing multiple records for the same (date, location).  
+We’re seeing multiple records for the same (date, iso_code).  
 This likely happens when OWID splits metrics across two partial uploads.
 
 **Impact:**  
@@ -9,7 +9,7 @@ This likely happens when OWID splits metrics across two partial uploads.
 —  Tests on primary keys will always fail  
 
 **Workaround:**  
-Until OWID corrects upstream, we’ll dedupe by keeping the *latest* non-NULL row per (date, location) in our staging model:
+Until OWID corrects upstream, we’ll dedupe by keeping the *latest* non-NULL row per (date, iso_code) in our staging model:
 
 ```sql
 SELECT

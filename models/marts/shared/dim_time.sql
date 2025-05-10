@@ -1,7 +1,7 @@
 -- Created:         2024-05-01
 -- Last Modified:   2025-05-10
 -- Creator:         Eric Ramsaier
--- Model:           {{ this.identifier }}
+-- Model:           dim_time
 -- Purpose:         Generate a time-of-day dimension with one row per minute (24h × 60min)
 -- Notes:
 --   - Uses Snowflake's GENERATOR to simulate 1440-minute range

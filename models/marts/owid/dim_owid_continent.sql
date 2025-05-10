@@ -1,7 +1,7 @@
 -- Created:       2024-05-10
 -- Last Modified: 2025-05-10
 -- Creator:       Eric Ramsaier
--- Model:         {{ this.identifier }}
+-- Model:         dim_owid_continent
 -- Purpose:       Extracts unique continent names from OWID COVID data for use in joins and reporting
 -- Notes:
 --   - Assigns surrogate key (sk_continent) to each distinct continent

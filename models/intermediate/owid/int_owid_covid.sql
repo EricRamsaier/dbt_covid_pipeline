@@ -1,7 +1,7 @@
 -- Created:       2024-05-01
 -- Last Modified: 2025-05-10
 -- Creator:       Eric Ramsaier
--- Model:         {{ this.identifier }}
+-- Model:         int_owid_covid
 -- Purpose:       Resolve duplicate records in the OWID COVID dataset by keeping the most complete row per (owid_iso_code, observation_dt)
 -- Notes:
 --   - Applies a completeness heuristic using row_number over key metrics

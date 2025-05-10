@@ -1,7 +1,7 @@
 -- Created:       2024-05-05
 -- Last Modified: 2025-05-10
 -- Creator:       Eric Ramsaier
--- Model:         {{ this.identifier }}
+-- Model:         fct_owid_covid
 -- Purpose:       Fact model for OWID COVID metrics, aggregated by country and observation date
 -- Notes:
 --   - Uses surrogate key sk_owid_covid from owid_iso_code + observation_dt

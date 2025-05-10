@@ -1,7 +1,7 @@
 -- Created:         2024-05-01
 -- Last Modified:   2025-05-10
 -- Creator:         Eric Ramsaier
--- Model:           {{ this.identifier }}
+-- Model:           dim_date
 -- Purpose:         Date dimension table from 2010 to 2030
 --   - Adds derived fields such as year, quarter, month, weekday
 --   - Includes placeholder `is_holiday` field for future enrichment

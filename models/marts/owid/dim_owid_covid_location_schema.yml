@@ -1,0 +1,46 @@
+version: 2
+
+models:
+  - name: dim_owid_covid_location
+    description: >
+      Dimension model mapping OWID ISO codes to location names and continents.
+      Used to normalize geographic data and support surrogate key joins from fact tables.
+
+    meta:
+      owner: "eramsaier@gmail.com"
+      team: "analytics_engineering"
+      maturity: "high"
+      source: "OWID daily CSV ingest from public GitHub"
+
+    tags:
+      - dim
+      - owid
+      - covid
+
+    config:
+      contract:
+        enforced: true
+
+    columns:
+      - name: sk_owid_iso_code
+        description: "Surrogate key for the OWID ISO code entity"
+        data_type: string
+        tests:
+          - not_null
+          - unique
+
+      - name: owid_iso_code
+        description: "{{ doc('owid_iso_code') }}"
+        data_type: string
+        tests:
+          - not_null
+
+      - name: location
+        description: "{{ doc('owid_location') }}"
+        data_type: string
+        tests:
+          - not_null
+
+      - name: continent
+        description: "{{ doc('owid_continent') }}"
+        data_type: string

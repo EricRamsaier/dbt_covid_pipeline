@@ -13,7 +13,7 @@
 {{
   config(
     materialized='incremental',
-    unique_key='sk_owid_covid',
+    unique_key='sk_owid_iso_code',
     incremental_strategy='merge',
     cluster_by = ['observation_dt', 'owid_iso_code'],
     contract={'enforced': true},
@@ -36,10 +36,8 @@ owid_data AS (
 
 final as (
 SELECT
-      {{ dbt_utils.generate_surrogate_key( ['owid_iso_code', 'observation_dt'] ) }} AS sk_owid_covid
+      {{ dbt_utils.generate_surrogate_key( ['owid_iso_code', 'observation_dt'] ) }} AS sk_owid_iso_code
     , owid_iso_code
-    , continent
-    , location
     , observation_dt
     , total_cases
     , new_cases

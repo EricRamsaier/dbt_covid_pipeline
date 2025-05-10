@@ -1,14 +1,15 @@
-/*
-Creator: Eric Ramsaier
-Model: {{ this.identifier }}
-Purpose: Date dimension table from 2010 to 2030
-         - Adds derived fields such as year, quarter, month, weekday
-         - Includes placeholder `is_holiday` field for future enrichment
-Notes:
-  - Uses Snowflake GENERATOR for row creation (~21 years)
-  - Aligned to calendar use in reporting and joins
-  - Tagged as shared calendar dimension
-*/
+-- Created:         2024-05-01
+-- Last Modified:   2025-05-10
+-- Creator:         Eric Ramsaier
+-- Model:           {{ this.identifier }}
+-- Purpose:         Date dimension table from 2010 to 2030
+--   - Adds derived fields such as year, quarter, month, weekday
+--   - Includes placeholder `is_holiday` field for future enrichment
+-- Notes:
+--   - Uses Snowflake GENERATOR for row creation (~21 years)
+--   - Aligned to calendar use in reporting and joins
+--   - Tagged as shared calendar dimension
+
 
 {{
   config(

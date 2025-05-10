@@ -1,7 +1,14 @@
--- This intermediate model resolves duplicate rows in the OWID COVID dataset
--- by selecting the most complete record per (iso_code, observation_dt).
--- For full background on the duplication issue, see:
--- analyses/data_issues/owid_covid_data_duplicates.md
+-- Created:       2024-05-01
+-- Last Modified: 2025-05-10
+-- Creator:       Eric Ramsaier
+-- Model:         {{ this.identifier }}
+-- Purpose:       Resolve duplicate records in the OWID COVID dataset by keeping the most complete row per (owid_iso_code, observation_dt)
+-- Notes:
+--   - Applies a completeness heuristic using row_number over key metrics
+--   - Normalizes continent values where missing or inconsistent
+--   - Source data may contain multiple rows per day due to OWID updates
+--   - See background in: analyses/data_issues/owid_covid_data_duplicates.md
+
 
 {{
   config(

@@ -24,7 +24,6 @@
 
 {% macro dev_data_filter(column_name, dev_days_of_data=3) %}
   {%- if target.name == 'dev' -%}
-    /* limit to last {{ dev_days_of_data }} days in dev */
     WHERE {{ column_name }}
       >= dateadd('day', -{{ dev_days_of_data }}, current_date)
   {%- endif -%}

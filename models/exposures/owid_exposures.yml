@@ -4,27 +4,37 @@ exposures:
   - name: covid_dashboard
     label: OWID COVID Dashboard
     type: dashboard
-    maturity: low
+    maturity: medium
     url: https://your-bi-tool/dashboard/owid-covid
     description: >
-      This dashboard displays key COVID-19 metrics by country and date,
-      using the fct_owid_covid_data fact model as the primary data source.
+      Public-facing dashboard displaying key COVID-19 metrics by country and date.
+      Metrics include case counts, death rates, and vaccination trends sourced from the OWID COVID fact model.
     depends_on:
-      - ref('fct_owid_covid_data')
+      - ref('fct_owid_covid')
     owner:
       name: Eric Ramsaier
       email: eramsaier@gmail.com
+    meta:
+      team: "analytics_engineering"
+      business_owner: "health_insights@yourcompany.com"
+      source: "OWID daily CSV ingest"
+      visibility: "external"
 
   - name: covid_weekly_dashboard
     label: OWID COVID Weekly Continent Dashboard
     type: dashboard
-    maturity: low
+    maturity: medium
     url: https://my-bi-tool.com/owid_weekly_dashboard
     description: >
-      Internal dashboard used by analysts to track COVID-19 trends by continent on a weekly basis.
-      Powered by aggregated metrics from the OWID data mart.
+      Internal dashboard used by analysts to monitor weekly COVID-19 trends by continent.
+      Aggregates case and death metrics from the OWID data mart for reporting consistency.
     depends_on:
-      - ref('fct_owid_covid_data') # Update this to weekly once created.
+      - ref('fct_owid_covid')  # Update to weekly mart once available
     owner:
       name: Eric Ramsaier
       email: eramsaier@gmail.com
+    meta:
+      team: "analytics_engineering"
+      business_owner: "health_insights@yourcompany.com"
+      source: "OWID daily CSV ingest"
+      visibility: "internal"

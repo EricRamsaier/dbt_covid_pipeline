@@ -1,10 +1,19 @@
 version: 2
 models:
-- name: dim_owid_continent
-  description: Dimension model for unique continent names extracted from OWID COVID data.
-  tags: ['fact', 'owid', 'daily']
-  columns:
-  - name: sk_continent
-    description: Surrogate key for continent (deterministically generated).
-  - name: continent
-    description: '{{ doc(''owid_continent'') }}'
+  - name: dim_owid_continent
+    description: Dimension model for unique continent names extracted from OWID COVID data.
+    tags:
+      - dim
+      - owid
+      - daily
+    meta:
+      owner: "eramsaier@gmail.com"
+      team: "analytics_engineering"
+      maturity: "high"
+      source: "OWID daily CSV ingest from public GitHub"
+
+    columns:
+    - name: sk_continent
+      description: Surrogate key for continent (deterministically generated).
+    - name: continent
+      description: '{{ doc(''owid_continent'') }}'

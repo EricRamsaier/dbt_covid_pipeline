@@ -1,7 +1,7 @@
 -- Created:       2024-05-10
 -- Last Modified: 2025-05-10
 -- Creator:       Eric Ramsaier
--- Model:         {{ this.identifier }}
+-- Model:         dim_owid_location
 -- Purpose:       Extracts unique OWID locations including countries, regions, and aggregates (e.g. "World", "EU")
 -- Notes:
 --   - Assigns surrogate key (sk_location) to each distinct `location`

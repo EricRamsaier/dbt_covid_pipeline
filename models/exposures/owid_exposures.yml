@@ -2,7 +2,7 @@ version: 2
 
 exposures:
   - name: covid_dashboard
-    label: OWID COVID Dashboard
+    label: "OWID COVID Dashboard"
     type: dashboard
     maturity: medium
     url: https://your-bi-tool/dashboard/owid-covid
@@ -20,16 +20,16 @@ exposures:
       source: "OWID daily CSV ingest"
       visibility: "external"
 
-  - name: covid_weekly_dashboard
-    label: OWID COVID Weekly Continent Dashboard
+  - name: covid_yearly_dashboard
+    label: "OWID COVID Yearly Dashboard"
     type: dashboard
     maturity: medium
-    url: https://my-bi-tool.com/owid_weekly_dashboard
+    url: https://my-bi-tool.com/owid_yearly_dashboard
     description: >
-      Internal dashboard used by analysts to monitor weekly COVID-19 trends by continent.
+      Internal dashboard used by analysts to monitor yearly COVID-19 trends.
       Aggregates case and death metrics from the OWID data mart for reporting consistency.
     depends_on:
-      - ref('fct_owid_covid')  # Update to weekly mart once available
+      - ref('agg_owid_covid_year')
     owner:
       name: Eric Ramsaier
       email: eramsaier@gmail.com

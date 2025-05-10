@@ -71,6 +71,7 @@ models:
       +grants:
           select: ["analyst", "developer"]
       +severity: error
+      +post-hook: "{{ log_model_run() }}"
 
 # -------------------------------------------------------------------
 #  Seeds (if you ship any CSVs in /seeds)
@@ -107,4 +108,7 @@ vars:
 # -------------------------------------------------------------------
 # we’re managing all infra outside of dbt, so leave these empty
 on-run-start: []
-on-run-end:   []
+on-run-end:
+  - "{% if target.name == 'prod' %}{{ grant_select_to_role(target_role='analyst_role') }}{% endif %}"
+  - "{% if target.name == 'prod' %}{{ grant_select_to_role(target_role='developer_role') }}{% endif %}"
+

@@ -1,7 +1,13 @@
 version: 2
 models:
 - name: fct_owid_covid_data
+  tags: ['fact', 'owid', 'daily']
   description: Fact table for OWID COVID-19 data with historical metrics per country and date.
+  meta:
+    owner: "eramsaier@gmail.com"
+    team: "analytics_engineering"
+    maturity: "high"
+    source: "Our World in Data"
   columns:
   - name: sk_owid_covid_data
     description: Auto-generated audit field
@@ -216,6 +222,10 @@ models:
   - name: loaded_ts
     description: '{{ doc("loaded_ts") }}'
     data_type: TIMESTAMP_LTZ
+    tests:
+      - test_freshness_threshold:
+          threshold_hours: 24
+          severity: warn
   - name: dbt_model_name
     description: '{{ doc(''dbt_model_name'') }}'
     data_type: STRING

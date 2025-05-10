@@ -16,7 +16,7 @@
     
       select *
       from raw.my_source.my_table
-      /* limit to last 7 days in dev */
+      -- limit to last 7 days in dev
       where created_at >= dateadd('day', -7, current_timestamp)
     
     On other targets (e.g. prod), it injects nothing.

@@ -38,3 +38,22 @@ exposures:
       business_owner: "health_insights@yourcompany.com"
       source: "OWID daily CSV ingest"
       visibility: "internal"
+
+  - name: covid_monthly_dashboard
+    label: "OWID COVID Monthly Dashboard"
+    type: dashboard
+    maturity: medium
+    url: https://my-bi-tool.com/owid_monthly_dashboard
+    description: >
+      Internal dashboard used by analysts to monitor monthly COVID-19 trends.
+      Aggregates case and death metrics from the OWID data mart for reporting consistency.
+    depends_on:
+      - ref('agg_owid_covid_month')
+    owner:
+      name: Eric Ramsaier
+      email: eramsaier@gmail.com
+    meta:
+      team: "analytics_engineering"
+      business_owner: "health_insights@yourcompany.com"
+      source: "OWID daily CSV ingest"
+      visibility: "internal"

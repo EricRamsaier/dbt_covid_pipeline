@@ -6,6 +6,12 @@ models:
   tags:
   - dim
   - owid
+  meta:
+    owner: "eramsaier@gmail.com"
+    team: "analytics_engineering"
+    maturity: "high"
+    source: "Our World in Data"
+    
   columns:
   - name: sk_location
     description: Surrogate key for location (based on the `location` field).

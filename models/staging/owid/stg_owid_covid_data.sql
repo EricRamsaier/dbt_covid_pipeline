@@ -5,7 +5,7 @@
 -- Purpose:       Staging model for OWID COVID-19 data. Cleans, renames, and casts fields from the raw OWID source table.
 -- Notes:
 --   - Renames fields for clarity (e.g., iso_code → owid_iso_code, date → observation_dt)
---   - Filters source data in development using {{ dev_data_filter() }}
+--   - Filters source data in development using dev_data_filter macro
 --   - Data types are enforced at the sources layer; this model performs light reshaping only
 
 

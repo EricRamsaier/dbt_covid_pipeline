@@ -16,13 +16,13 @@
         {{ exceptions.raise_compiler_error("generate_surrogate_key requires at least one column") }}
     {% endif %}
 
-    /* Build a condition to ensure no input columns are null */
+    --Build a condition to ensure no input columns are null
     {% set not_null_condition = columns | map('string') | join(' IS NOT NULL AND ') ~ ' IS NOT NULL' %}
 
-    /* Use dbt_utils to build the SHA256 hash expression */
+    --Use dbt_utils to build the SHA256 hash expression 
     {% set surrogate_expr = dbt_utils.generate_surrogate_key(columns) %}
 
-    /* Return the key only when all input values are present */
+    --Return the key only when all input values are present
     CASE
         WHEN {{ not_null_condition }} THEN {{ surrogate_expr }}
         ELSE NULL

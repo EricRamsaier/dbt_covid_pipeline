@@ -1,16 +1,19 @@
--- ========================================================================
--- Macro: log_model_run
--- Description:
---   Logs metadata about each dbt model run to the audit table.
---   Captures model name, run timestamp, invocation ID, row count, and table path.
---   Intended to be called as a post-hook for fact/dimension models in production.
+-- Created:       2024-04-30
+-- Last Modified: 2025-05-10
+-- Creator:       Eric Ramsaier
+-- Macro:         log_model_run
+-- Purpose:
+--   - Logs metadata about each dbt model execution to the audit table.
+--   - Captures model name, run timestamp, invocation ID, row count, and table location.
 --
 -- Usage:
---   Add this to dbt_project.yml under a model path via post-hook
+--   - Intended to be used as a post-hook for fact or dimension models.
+--   - Configure in dbt_project.yml using a +post-hook reference.
 --
 -- Requirements:
---   The target table `dwh.audit.model_run_log` must exist.
--- ========================================================================
+--   - The target audit table must exist: dwh.audit.model_run_log
+--   - Ensure proper permissions are in place for INSERT statements on that table.
+
 
 {% macro log_model_run() %}
     INSERT INTO dwh.audit.model_run_log (

@@ -1,10 +1,15 @@
--- Adds standard audit metadata fields to the SELECT list of a model.
--- Includes the model name, invocation ID, run start timestamp, and record load timestamp.
+-- Created:       2024-04-30
+-- Last Modified: 2025-05-10
+-- Creator:       Eric Ramsaier
+-- Macro:         standard_audit_columns
+-- Purpose:
+--   - Appends standard audit metadata fields to a model's SELECT list.
+--   - Includes model name, invocation ID, run start timestamp, and record load timestamp.
 --
--- Recommended for use in fact and dimension models to support:
---   • Traceability of model execution
---   • Auditing and lineage tracking
---   • Debugging data freshness and timing issues
+-- Recommended Usage:
+--   - Add to SELECT statements in fact and dimension models.
+--   - Supports traceability, auditability, and debugging of data freshness or timing issues.
+
 
 
 {% macro standard_audit_columns(include_loaded_ts=true) %}

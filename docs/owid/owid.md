@@ -19,6 +19,13 @@ After updating this file, run `dbt docs generate` to rebuild the documentation s
 
 ---
 
+{#
+  Centralized documentation for all OWID COVID-19 fields.
+  Referenced via `doc()` blocks in schema.yml files for reuse and consistency.
+#}
+
+
+
 ## Identifiers & Date
 
 {% docs owid_iso_code %}

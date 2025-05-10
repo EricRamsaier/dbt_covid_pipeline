@@ -1,13 +1,16 @@
--- Macro: grant_select_to_role
--- Description:
---   Grants SELECT privileges on all tables in the current dbt target schema to a specified role.
---   Useful for ensuring downstream tools (e.g., BI platforms) or analyst roles have access after builds.
+-- Created:       2024-04-30
+-- Last Modified: 2025-05-10
+-- Creator:       Eric Ramsaier
+-- Macro:         grant_select_to_role
+-- Purpose:
+--   - Grants SELECT privileges on all tables in the current dbt target schema to a specified role.
+--   - Ensures downstream tools or analyst roles have access to all newly built models.
 --
--- Usage:
---   dbt run-operation grant_select_to_role --args '{"target_role": "ANALYST_ROLE"}'
---
--- Example:
---   This will run GRANT SELECT ON TABLE ... TO ROLE ANALYST_ROLE; for each dbt model in the schema.
+-- Notes:
+--   - Intended for use with `dbt run-operation`.
+--   - Requires a `target_role` argument specifying the role to receive privileges.
+--   - Useful for enabling BI access in production or staging environments.
+
 
 {% macro grant_select_to_role(target_role) %}
   -- Get the target database and schema for the current dbt environment

@@ -13,7 +13,7 @@ models:
       source: "OWID daily CSV ingest from public GitHub"
 
     columns:
-    - name: sk_owid_covid
+    - name: sk_owid_iso_code
       description: Auto-generated audit field
       data_type: VARCHAR
       constraints:

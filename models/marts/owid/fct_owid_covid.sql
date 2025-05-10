@@ -36,7 +36,7 @@ owid_data AS (
 
 final as (
 SELECT
-      {{ dbt_utils.generate_surrogate_key( ['owid_iso_code', 'observation_dt'] ) }} AS sk_owid_covid
+      {{ dbt_utils.generate_surrogate_key( ['owid_iso_code', 'observation_dt'] ) }} AS sk_owid_iso_code
     , owid_iso_code
     , continent
     , location

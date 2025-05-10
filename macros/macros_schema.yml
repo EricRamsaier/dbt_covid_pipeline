@@ -1,0 +1,93 @@
+version: 2
+
+macros:
+  - name: dev_data_filter
+    description: >
+      Injects a `WHERE` clause in development builds to limit data
+      to the most recent N days based on a given date column.
+    arguments:
+      - name: column_name
+        description: "The date or timestamp column to filter on."
+      - name: dev_days_of_data
+        description: "Number of days of data to include in dev (default: 3)."
+    returns: "A SQL `WHERE` clause when `target.name == 'dev'`, otherwise empty."
+
+  - name: to_timestamp_ltz
+    description: >
+      Casts a given date or timestamp expression to `TIMESTAMP_LTZ`
+      for consistent UTC‐based timestamps with session‐local display.
+    arguments:
+      - name: date_column
+        description: "The date or timestamp expression to cast."
+    returns: "A `TIMESTAMP_LTZ` expression."
+
+  - name: to_currency
+    description: >
+      Converts a varchar column representing currency into a `DECIMAL(10,2)`,
+      ensuring numeric storage for financial calculations.
+    arguments:
+      - name: column
+        description: "The varchar column containing currency values."
+    returns: "A `DECIMAL(10,2)` expression."
+
+  - name: sk_fallback
+    description: >
+      Wraps a surrogate key expression in `COALESCE(..., default)` to guard
+      against `NULL` values and provide a fallback.
+    arguments:
+      - name: sk_column
+        description: "The surrogate‐key expression or column to guard."
+      - name: default
+        description: "Optional fallback value when `sk_column` is `NULL`."
+    returns: "A `COALESCE` expression matching the type of `sk_column`."
+
+  - name: grant_select_to_role
+    description: >
+      Generates SQL to grant `SELECT` privileges on all models in the current
+      target schema to a specified role.
+    arguments:
+      - name: target_role
+        description: "The name of the role to which `SELECT` will be granted."
+    returns: "A series of `GRANT SELECT ON TABLE ... TO ROLE <target_role>;` statements."
+
+  - name: generate_database_name
+    description: >
+      Overrides the default database for models:
+      - Uses `custom_database_name` in production environments  
+      - Falls back to `target.database` in all other environments
+    arguments:
+      - name: None
+        description: "No arguments; behavior controlled by `target.name` and project config."
+    returns: "The resolved database name for materializations."
+
+  - name: generate_schema_name
+    description: >
+      Overrides the default schema for models:
+      - Uses `custom_schema_name` in production environments  
+      - Falls back to `target.schema` in all other environments
+      - Allows per-folder overrides via `+schema` config
+    arguments:
+      - name: None
+        description: "No arguments; behavior controlled by `target.name`, `custom_schema_name`, and `dbt_project.yml`."
+    returns: "The resolved schema name for materializations."
+
+  - name: log_model_run
+    description: >
+      Emits a post‐hook SQL snippet to log metadata about each model run
+      (model name, run timestamp, invocation ID, row count) to an audit table.
+    arguments:
+      - name: None
+        description: "No arguments; intended for use as a post‐hook in `dbt_project.yml`."
+    returns: "A SQL `INSERT` into the audit table capturing model run details."
+
+  - name: standard_audit_columns
+    description: >
+      Adds standard audit metadata columns to a model’s `SELECT` list:
+      - `dbt_model_name`  
+      - `dbt_run_ts`  
+      - `dbt_record_loaded_ts`  
+      - `dbt_invocation_id`
+    arguments:
+      - name: None
+        description: "No arguments; automatically uses `this.identifier` and run context."
+    returns: "A set of literal columns for auditing and lineage tracking."

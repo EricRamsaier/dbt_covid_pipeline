@@ -23,12 +23,6 @@ models:
       data_type: VARCHAR
       constraints:
         - type: not_null
-    - name: continent
-      description: '{{ doc(''owid_continent'') }}'
-      data_type: VARCHAR
-    - name: location
-      description: '{{ doc(''owid_location'') }}'
-      data_type: VARCHAR
     - name: observation_dt
       description: '{{ doc(''owid_observation_dt'') }}'
       data_type: DATE

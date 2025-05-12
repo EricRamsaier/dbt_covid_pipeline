@@ -68,8 +68,6 @@ models:
       +schema:    marts
       +enabled:   true
       +tags:      ['marts']
-      +grants:
-          select: ["analyst", "developer"]
       +severity: error
       +post-hook: "{{ log_model_run() }}"
 
@@ -101,14 +99,23 @@ quoting:
 #  Optional: project-level vars
 # -------------------------------------------------------------------
 vars:
-  default_start_date: '2021-01-01'    # example of a common var
+  analyst_role: analyst_role
+  developer_role: developer_role
+  raw_ingest_svc_role: raw_ingest_svc_role
+  reporting_svc_role: reporting_svc_role
+  transform_svc_role: transform_svc_role
 
+  read_roles:
+    - "{{ var('analyst_role') }}"
+    - "{{ var('developer_role') }}"
+ 
 # -------------------------------------------------------------------
 #  Hooks
 # -------------------------------------------------------------------
 # we’re managing all infra outside of dbt, so leave these empty
 on-run-start: []
 on-run-end:
-  - "{% if target.name == 'prod' %}{{ grant_select_to_role(target_role='analyst_role') }}{% endif %}"
-  - "{% if target.name == 'prod' %}{{ grant_select_to_role(target_role='developer_role') }}{% endif %}"
+  - "{% if target.name == 'prod' %}{{ grant_select_to_role(target_role=var('analyst_role')) }}{% endif %}"
+  - "{% if target.name == 'prod' %}{{ grant_select_to_role(target_role=var('developer_role')) }}{% endif %}"
+
 

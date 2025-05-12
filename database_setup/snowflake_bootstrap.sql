@@ -104,9 +104,9 @@ GRANT SELECT                            ON FUTURE STREAMS IN SCHEMA dwh.stg     
 
 CREATE SCHEMA IF NOT EXISTS dwh.audit;
 
-CREATE TABLE IF NOT EXISTS dwh.audit.model_run_log (
+CREATE OR REPLACE TABLE IF NOT EXISTS dwh.audit.model_run_log (
     model_name TEXT,
-    run_ts TIMESTAMP_LTZ,
+    run_ts TIMESTAMP_TZ,
     dbt_invocation_id TEXT,
     row_count INTEGER,
     database_name TEXT,

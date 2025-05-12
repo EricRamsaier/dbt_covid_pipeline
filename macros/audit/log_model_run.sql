@@ -27,7 +27,7 @@
     )
     SELECT
         '{{ this.identifier }}',
-        '{{ run_started_at }}'::TIMESTAMP_LTZ,
+        CAST('{{ run_started_at }}' AS TIMESTAMP_TZ),
         '{{ invocation_id }}',
         (SELECT COUNT(*) FROM {{ this }}),
         '{{ this.database }}',

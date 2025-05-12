@@ -12,7 +12,7 @@ macros:
         description: "Number of days of data to include in dev (default: 3)."
     returns: "A SQL `WHERE` clause when `target.name == 'dev'`, otherwise empty."
 
-  - name: to_timestamp_ltz
+  - name: to_timestamp
     description: >
       Casts a given date or timestamp expression to `TIMESTAMP_LTZ`
       for consistent UTC‐based timestamps with session‐local display.
@@ -29,17 +29,6 @@ macros:
       - name: column
         description: "The varchar column containing currency values."
     returns: "A `DECIMAL(10,2)` expression."
-
-  - name: sk_fallback
-    description: >
-      Wraps a surrogate key expression in `COALESCE(..., default)` to guard
-      against `NULL` values and provide a fallback.
-    arguments:
-      - name: sk_column
-        description: "The surrogate‐key expression or column to guard."
-      - name: default
-        description: "Optional fallback value when `sk_column` is `NULL`."
-    returns: "A `COALESCE` expression matching the type of `sk_column`."
 
   - name: grant_select_to_role
     description: >

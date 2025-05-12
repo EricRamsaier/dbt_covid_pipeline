@@ -10,10 +10,10 @@ Built on Snowflake, this project provides a clean, tested, and documented set of
 - **Source**: `raw.owid.owid_covid_data` (CSV from OWID public GitHub)  
 - **Staging**: `models/staging/owid/stg_owid_covid_data`  
 - **Intermediate**: `models/intermediate/owid/int_owid_covid_data`  
-- **Dimensions**:  
-  - `dim_owid_continent`  
-  - `dim_owid_iso_code` (with `location` & `continent`)  
-- **Fact**: `fct_owid_covid`  
+- **Dimension**:
+  - `dim_owid_covid_location` (with `location` & `continent`)  
+- **Fact**: 
+  - `fct_owid_covid`  
 - **Aggregates**:  
   - `agg_owid_covid_day`  
   - `agg_owid_covid_month`  
@@ -27,12 +27,26 @@ Built on Snowflake, this project provides a clean, tested, and documented set of
 
 ---
 
+## ⚛️ Data Ingestion Pipeline (Snowflake S3)
+
+This project uses a controlled ingestion pattern from a public OWID CSV file into Snowflake:
+
+- **Landing layer**: External stage defined at `landing_ext.s3.owid_stage`
+- **Raw table**: `raw.owid.owid_covid_data` defined with all columns as VARCHAR for flexible parsing
+- **Ingestion method**: manual `COPY INTO` from stage, using a fixed file pattern and casted timestamp for `loaded_ts`
+- **File format**: generic CSV with header row, null handling, and space trimming
+
+The ingestion logic is defined in `snowflake_landing_ext_setup.sql`, and roles are managed via `snowflake_bootstrap.sql`.
+
+Future automation via GitHub Actions can refresh the OWID CSV and re-trigger the pipeline.
+
+---
+
 ## 📋 Prerequisites
 
-- **dbt** ≥ 1.4 (tested on 2025.5.7)  
+- **dbt Cloud** (preferred) or **dbt Core** ≥ 1.4 (tested on 2025.5.7)  
 - **Snowflake** account & role with permissions to `CREATE`/`SELECT` in your target schemas  
-- **Python** (for any pre-commit linting or custom scripts)  
-- (Optional) **SQLFluff** for style checks  
+- (Optional for Core) **Python**, **SQLFluff** for style/linting  
 
 ---
 
@@ -44,19 +58,18 @@ Built on Snowflake, this project provides a clean, tested, and documented set of
    cd dbt_covid_pipeline
    ```
 
-2. **Install dependencies**  
+2. **Install dependencies** *(dbt Core only)*  
    ```bash
    pip install dbt-core dbt-snowflake
-   # (or run your project’s `requirements.txt` if you have one)
    ```
 
-3. **Configure profiles**  
-   Edit `~/.dbt/profiles.yml` to add a `dbt_covid_pipeline` profile that points at your Snowflake account.
+3. **Configure profile** *(dbt Core only)*  
+   Edit `~/.dbt/profiles.yml` to define the `dbt_covid_pipeline` profile.
 
-4. **Initialize the project**  
+4. **Install packages and initialize**  
    ```bash
    dbt deps
-   dbt seed    # if you have any seeds
+   dbt seed  # if applicable
    ```
 
 ---
@@ -68,14 +81,13 @@ Built on Snowflake, this project provides a clean, tested, and documented set of
   dbt clean
   dbt build
   ```
-  This will run all models, snapshots, tests, and then package your documentation.
 
-- **Run Tests Only**  
+- **Test only**  
   ```bash
   dbt test
   ```
 
-- **Parse & Compile Only**  
+- **Parse & Compile**  
   ```bash
   dbt parse
   dbt compile
@@ -86,12 +98,12 @@ Built on Snowflake, this project provides a clean, tested, and documented set of
   dbt source freshness
   ```
 
-- **Docs Generation & Preview**  
+- **Docs Generation**  
   ```bash
   dbt docs generate
   dbt docs serve
   ```
-  Browse to `http://localhost:8080` and look under **Models**, **Snapshots**, **Exposures** (and **Metrics**, if/when enabled).
+  Visit: http://localhost:8080
 
 ---
 
@@ -104,7 +116,7 @@ Built on Snowflake, this project provides a clean, tested, and documented set of
 │   ├── staging/owid/           ← raw-to-staging transformations
 │   ├── intermediate/owid/      ← cleaning, deduplication
 │   ├── marts/owid/             ← dims, facts, aggregates
-│   └── metrics/                 ← (optional) semantic metrics YAMLs
+│   └── metrics/                ← (optional) semantic metrics YAMLs
 ├── snapshots/owid/             ← snapshot definitions
 ├── tests/                      ← custom schema or data tests
 ├── docs/                       ← supplemental Markdown docs
@@ -116,32 +128,34 @@ Built on Snowflake, this project provides a clean, tested, and documented set of
 
 ## 🔒 Governance & Best Practices
 
-- **Contracts**: all marts models use `on_schema_change='fail'` and `contract={'enforced':true}`  
-- **Tags**: consistent use of `tags: ['stg','int','dim','fct','agg','owid']` for grouping  
-- **YAML Tests**: `not_null`, `unique`, and `relationships` tests defined in `schema.yml` files  
-- **Commenting**: `-- Created` / `-- Last Modified` headers in SQL files, plus clear purpose/notes blocks  
-- **CI/CD**: recommended via GitHub Actions or similar to run `dbt build` on PRs and auto-publish docs  
+- **Contracts**: all marts models use `on_schema_change='fail'` and `contract: {enforced: true}`  
+- **Tags**: consistent use of `tags: ['stg','int','dim','fct','agg','owid']`  
+- **YAML Tests**: `not_null`, `unique`, and `relationships` tests defined  
+- **Header Commenting**: `-- Created` / `-- Last Modified` per model  
+- **CI/CD**: recommended using dbt Cloud or GitHub Actions  
 
 ---
 
-## 📈 CI/CD & Deployment
+## 📊 CI/CD & Deployment
 
 1. **On Pull Request**  
-   - `dbt deps && dbt parse && dbt compile && dbt test`  
-   - Lint with SQLFluff (optional)  
+   - `dbt deps && dbt parse && dbt compile && dbt test`
+   - SQLFluff lint (optional)
+
 2. **On Merge to `main`**  
-   - `dbt build`  
-   - `dbt docs generate` → publish to S3 or GitHub Pages  
+   - `dbt build`
+   - `dbt docs generate` → deploy docs site
+
 3. **Alerts**  
-   - Configure Slack/email notifications on test or freshness failures.
+   - Slack/email hooks for test/freshness failures (via dbt Cloud or GitHub Actions)
 
 ---
 
 ## 🤝 Contributing
 
-1. Branch off of `main` for each feature/fix.  
-2. Submit PR against `main` with changes to models, tests, docs, or readme.  
-3. Ensure all checks pass (build, tests, lint).  
+1. Create a new branch from `main`
+2. Open a PR after changes
+3. Verify tests, docs, and builds pass
 
 ---
 
@@ -152,4 +166,4 @@ Built on Snowflake, this project provides a clean, tested, and documented set of
 
 ---
 
-_Last updated: 2025-05-10_
+_Last updated: 2025-05-12_

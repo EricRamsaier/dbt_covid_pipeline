@@ -1,11 +1,12 @@
 -- ============================================================================
---  Snowflake Setup: 3 Databases & 5 Roles
+--  Snowflake Setup: 4 Databases & 5 Roles
 -- ============================================================================
 
 -- 1) Create databases if they don’t exist
 CREATE DATABASE IF NOT EXISTS raw;
 CREATE DATABASE IF NOT EXISTS dwh;
 CREATE DATABASE IF NOT EXISTS reporting;
+CREATE DATABASE IF NOT EXISTS landing_ext;
 
 -- 2) Create service and human roles
 CREATE ROLE IF NOT EXISTS raw_ingest_svc_role;
@@ -15,17 +16,19 @@ CREATE ROLE IF NOT EXISTS analyst_role;
 CREATE ROLE IF NOT EXISTS reporting_svc_role;
 
 -- 3) Create schemas if they don’t exist
-CREATE SCHEMA IF NOT EXISTS raw.landing;
+CREATE SCHEMA IF NOT EXISTS landing_ext.s3;
 CREATE SCHEMA IF NOT EXISTS dwh.stg;
 CREATE SCHEMA IF NOT EXISTS dwh.int;
 CREATE SCHEMA IF NOT EXISTS reporting.marts;
 
 -- 4) RAW_INGEST_SVC_ROLE: least‐privilege grants for raw ingestion
-GRANT USAGE, CREATE SCHEMA                             ON DATABASE raw                  TO ROLE raw_ingest_svc_role;
-GRANT USAGE, CREATE STAGE, CREATE FILE FORMAT          ON SCHEMA raw.landing            TO ROLE raw_ingest_svc_role;
-GRANT USAGE, CREATE TABLE                              ON ALL SCHEMAS IN DATABASE raw   TO ROLE raw_ingest_svc_role;
-GRANT INSERT, UPDATE, DELETE, SELECT                   ON ALL TABLES IN DATABASE raw    TO ROLE raw_ingest_svc_role;
-GRANT INSERT, UPDATE, DELETE, SELECT                   ON FUTURE TABLES IN DATABASE raw TO ROLE raw_ingest_svc_role;
+GRANT USAGE, CREATE SCHEMA                                  ON DATABASE landing_ext          TO ROLE raw_ingest_svc_role;
+GRANT USAGE, CREATE STAGE, CREATE FILE FORMAT               ON SCHEMA landing_ext.s3         TO ROLE raw_ingest_svc_role;
+
+GRANT USAGE, CREATE SCHEMA                                  ON DATABASE raw                  TO ROLE raw_ingest_svc_role;
+GRANT USAGE, CREATE TABLE                                   ON ALL SCHEMAS IN DATABASE raw   TO ROLE raw_ingest_svc_role;
+GRANT INSERT, UPDATE, DELETE, SELECT                        ON ALL TABLES IN DATABASE raw    TO ROLE raw_ingest_svc_role;
+GRANT INSERT, UPDATE, DELETE, SELECT                        ON FUTURE TABLES IN DATABASE raw TO ROLE raw_ingest_svc_role;
 
 -- 5) TRANSFORM_SVC_ROLE: builds staging, intermediate, and marts
 -- 5a) Read access on raw

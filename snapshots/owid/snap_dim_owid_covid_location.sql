@@ -22,7 +22,7 @@ SELECT
     owid_iso_code,
     location,
     continent,
-    {{ to_timestamp_ltz("CURRENT_TIMESTAMP()") }} AS dbt_snapshot_ts
+    {{ to_timestamp("CURRENT_TIMESTAMP()") }} AS dbt_snapshot_ts
 FROM {{ ref('dim_owid_covid_location') }}
 
 {% endsnapshot %}

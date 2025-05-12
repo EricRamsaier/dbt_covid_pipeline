@@ -13,8 +13,8 @@
 
 
 {% macro standard_audit_columns(include_loaded_ts=true) %}
-      '{{ model.name }}'                    AS dbt_model_name
-    , '{{ invocation_id }}'                 AS dbt_invocation_id
-    , '{{ run_started_at }}'::TIMESTAMP_LTZ AS dbt_run_ts
-    , CURRENT_TIMESTAMP()::TIMESTAMP_LTZ    AS dbt_record_loaded_ts
+      '{{ model.name }}'                            AS dbt_model_name
+    , '{{ invocation_id }}'                         AS dbt_invocation_id
+    , CAST('{{ run_started_at }}' AS TIMESTAMP_TZ)  AS dbt_run_ts
+    , CAST(CURRENT_TIMESTAMP()    AS TIMESTAMP_TZ)  AS dbt_record_loaded_ts
 {% endmacro %}

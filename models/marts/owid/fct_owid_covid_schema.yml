@@ -221,7 +221,7 @@ models:
       data_type: NUMBER(38,2)
     - name: loaded_ts
       description: '{{ doc("loaded_ts") }}'
-      data_type: TIMESTAMP_LTZ
+      data_type: TIMESTAMP_TZ
       tests:
         - test_freshness_threshold:
             threshold_hours: 24
@@ -234,7 +234,7 @@ models:
       data_type: STRING
     - name: dbt_run_ts
       description: '{{ doc(''dbt_run_ts'') }}'
-      data_type: TIMESTAMP_LTZ
+      data_type: TIMESTAMP_TZ
     - name: dbt_record_loaded_ts
       description: '{{ doc(''dbt_record_loaded_ts'') }}'
-      data_type: TIMESTAMP_LTZ
+      data_type: TIMESTAMP_TZ

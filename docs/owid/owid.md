@@ -9,12 +9,6 @@ This file centralizes all field documentation for the `owid_covid_data` source a
 
 _To use these definitions, reference a field’s description in your YAML like so:_
 
-```yaml
-columns:
-  - name: order_id
-    description: "{{ doc('owid_order_id') }}"
-```
-
 After updating this file, run `dbt docs generate` to rebuild the documentation site.
 
 ---

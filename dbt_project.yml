@@ -46,6 +46,9 @@ models:
       relation: true
       columns:  true
 
+    # These match the top folder names in the models folder
+
+    # ─ Staging overrides ────────────────────────────────────────
     staging:
       +materialized: view
       +database:  dwh
@@ -54,6 +57,7 @@ models:
       +tags:      ['stg']
       +severity:  warn
 
+    # ─ Intermediate overrides ───────────────────────────────────
     intermediate:
       +materialized: view
       +database:  dwh
@@ -62,6 +66,7 @@ models:
       +tags:      ['int']
       +severity:  warn
 
+    # ─ Marts overrides ──────────────────────────────────────────
     marts:
       +materialized: table
       +database:  reporting

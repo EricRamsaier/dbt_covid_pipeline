@@ -35,5 +35,4 @@
       "GRANT SELECT ON ALL VIEWS IN SCHEMA " ~ db ~ "." ~ schema ~ " TO ROLE " ~ target_role
   ) %}
 
-  {{ return("Permissions granted to role `" ~ target_role ~ "` on " ~ db ~ "." ~ schema) }}
 {% endmacro %}

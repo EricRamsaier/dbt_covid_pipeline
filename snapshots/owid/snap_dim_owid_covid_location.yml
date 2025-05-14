@@ -4,6 +4,14 @@ snapshots:
   - name: snap_dim_owid_covid_location
     description: "History of changes to the OWID ISO code dimension."
     columns:
+
+      - name: sk_owid_iso_code
+        description: "{{ doc('sk_owid_iso_code') }}"
+        data_type: VARCHAR
+        tests:
+          - not_null
+          - unique
+
       - name: owid_iso_code
         description: "{{ doc('owid_iso_code') }}"
         tests:
@@ -17,4 +25,4 @@ snapshots:
         description: "{{ doc('owid_continent') }}"
 
       - name: dbt_snapshot_ts
-        description: "Timestamp when this snapshot record was captured."
+        description: "{{ doc('dbt_snapshot_ts') }}"

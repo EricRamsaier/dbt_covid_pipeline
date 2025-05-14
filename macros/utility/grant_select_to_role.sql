@@ -11,26 +11,29 @@
 --   - Requires a `target_role` argument specifying the role to receive privileges.
 --   - Useful for enabling BI access in production or staging environments.
 
+-- macros/grants.sql
 
 {% macro grant_select_to_role(target_role) %}
-  -- Get the target database and schema for the current dbt environment
-  {% set database = target.database %}
+  {#–
+    Grant SELECT on ALL TABLE and VIEW objects in the target schema
+    to the given Snowflake role.
+  –#}
+
+  {% set db = target.database %}
   {% set schema = target.schema %}
 
-  -- Fetch a list of all tables in the target schema
-  {% set results = run_query("SHOW TABLES IN SCHEMA " ~ database ~ "." ~ schema) %}
+  {% do run_query(
+      "GRANT USAGE ON DATABASE " ~ db ~ " TO ROLE " ~ target_role
+  ) %}
+  {% do run_query(
+      "GRANT USAGE ON SCHEMA " ~ db ~ "." ~ schema ~ " TO ROLE " ~ target_role
+  ) %}
+  {% do run_query(
+      "GRANT SELECT ON ALL TABLES IN SCHEMA " ~ db ~ "." ~ schema ~ " TO ROLE " ~ target_role
+  ) %}
+  {% do run_query(
+      "GRANT SELECT ON ALL VIEWS IN SCHEMA " ~ db ~ "." ~ schema ~ " TO ROLE " ~ target_role
+  ) %}
 
-  -- Loop through the table list and grant SELECT on each one
-  {% for row in results %}
-    {% set table_name = row['name'] %}
-
-    -- Construct GRANT statement
-    {% set sql %}
-      GRANT SELECT ON TABLE {{ database }}.{{ schema }}.{{ table_name }} TO ROLE {{ target_role }};
-    {% endset %}
-
-    -- Execute the GRANT and log the action
-    {% do run_query(sql) %}
-    {% do log("Granted SELECT on " ~ table_name ~ " to role " ~ target_role, info=True) %}
-  {% endfor %}
+  {{ return("Permissions granted to role `" ~ target_role ~ "` on " ~ db ~ "." ~ schema) }}
 {% endmacro %}

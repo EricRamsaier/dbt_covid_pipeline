@@ -19,7 +19,7 @@ jobs:
           # these three must be set as GitHub secrets:
           dbt_cloud_account_id: ${{ secrets.DBT_CLOUD_ACCOUNT_ID }}
           dbt_cloud_api_key:    ${{ secrets.DBT_CLOUD_API_KEY }}
-          job_definition_id:    ${{ secrets.DBT_CLOUD_JOB_ID }}
+          job_definition_id:    ${{ secrets.DBT_CLOUD_PR_CI_JOB_ID }}
 
           # optionally wait for the job to finish before marking the Action as success/failure
           wait_for_completion: true

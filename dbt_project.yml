@@ -130,7 +130,7 @@ vars:
 # we’re managing all infra outside of dbt, so leave these empty
 on-run-start: []
 on-run-end:
-  - "{% if target.name == 'prod' %}{{ grant_select_to_role(target_role=var('analyst_role')) }}{% endif %}"
-  - "{% if target.name == 'prod' %}{{ grant_select_to_role(target_role=var('developer_role')) }}{% endif %}"
-
-
+  {% if target.name == 'prod' %}
+  - "{{ grant_select_to_role(target_role=var('analyst_role')) }}"
+  - "{{ grant_select_to_role(target_role=var('developer_role')) }}"
+  {% endif %}

@@ -18,7 +18,7 @@ sources:
       - covid
       - owid
     meta:
-      owner: "eramsaier@gmail.com"
+      owner: "eramsaier@gmail.com" 
       team: "analytics_engineering"
       maturity: "high"
       source: "OWID daily CSV ingest from public GitHub"

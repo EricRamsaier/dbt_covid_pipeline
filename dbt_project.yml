@@ -80,8 +80,8 @@ models:
 snapshots:
   dbt_pipeline:
     +database: dwh
-    +schema: snapshots
-    +enabled: "{{ target.name == 'prod' }}"
+    +schema: snapshots 
+    +enabled: false
 
 # -------------------------------------------------------------------
 #  Tests

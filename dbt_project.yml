@@ -79,11 +79,13 @@ models:
 # ──────────────────────────────────────────────────────────────────────────────
 snapshots:
   dbt_pipeline:
+    {% if target.name == 'prod' %}
     +database: dwh
     +schema: snapshots
     +enabled: true
-    +tags: ['snapshot']
-    +severity: warn
+    {% else %}
+    +enabled: false
+    {% endif %}
 
 # -------------------------------------------------------------------
 #  Tests

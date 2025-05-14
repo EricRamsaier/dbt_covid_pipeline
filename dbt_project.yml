@@ -58,18 +58,18 @@ models:
 
     intermediate:
       +materialized: view
-      +database:  dwh
-      +schema:    int
-      +enabled:   true
-      +tags:      ['int']
-      +severity:  warn
+      +database: dwh
+      +schema: int
+      +enabled: true
+      +tags: ['int']
+      +severity: warn
 
     marts:
       +materialized: table
-      +database:  reporting
-      +schema:    marts
-      +enabled:   true
-      +tags:      ['marts']
+      +database: reporting
+      +schema: marts
+      +enabled: true
+      +tags: ['marts']
       +severity: error
       +post-hook: "{{ log_model_run() }}"
 
@@ -78,29 +78,17 @@ models:
 #  SNAPSHOTS
 # ──────────────────────────────────────────────────────────────────────────────
 snapshots:
-  # applies to all snapshots in this project
-  dbt_covid_pipeline:
+  dbt_pipeline:
     +database: dwh
     +schema: snapshots
-    +enabled: true
-    +tags: ['snapshot']
-    +severity: warn
-
-# -------------------------------------------------------------------
-#  Seeds (if you ship any CSVs in /seeds)
-# -------------------------------------------------------------------
-seeds:
-  dbt_pipeline:
-    +tags: ['seed']
-    +schema: staging     # or wherever you’d like your seeds loaded
-    +enabled: false
+    +enabled: "{{ target.name == 'prod' }}"
 
 # -------------------------------------------------------------------
 #  Tests
 # -------------------------------------------------------------------
 tests:
   +store_failures: false
-  +severity:      warn   # baseline for schema tests; overridden in marts above
+  +severity: warn
 
 # -------------------------------------------------------------------
 #  Quoting

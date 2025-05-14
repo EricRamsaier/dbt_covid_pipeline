@@ -78,22 +78,12 @@ models:
 #  SNAPSHOTS
 # ──────────────────────────────────────────────────────────────────────────────
 snapshots:
-  # applies to all snapshots in this project
   dbt_pipeline:
     +database: dwh
     +schema: snapshots
     +enabled: true
     +tags: ['snapshot']
     +severity: warn
-
-# -------------------------------------------------------------------
-#  Seeds (if you ship any CSVs in /seeds)
-# -------------------------------------------------------------------
-seeds:
-  dbt_pipeline:
-    +tags: ['seed']
-    +schema: staging     # or wherever you’d like your seeds loaded
-    +enabled: false
 
 # -------------------------------------------------------------------
 #  Tests

@@ -79,7 +79,7 @@ models:
 # ──────────────────────────────────────────────────────────────────────────────
 snapshots:
   # applies to all snapshots in this project
-  dbt_covid_pipeline:
+  dbt_pipeline:
     +database: dwh
     +schema: snapshots
     +enabled: true

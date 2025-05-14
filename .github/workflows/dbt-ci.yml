@@ -1,0 +1,25 @@
+name: dbt Cloud CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  trigger-dbt-cloud:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Run dbt job in Cloud
+        uses: dbt-labs/dbt-cloud-action@v1
+        with:
+          # these three must be set as GitHub secrets:
+          dbt_cloud_account_id: ${{ secrets.DBT_CLOUD_ACCOUNT_ID }}
+          dbt_cloud_api_key:    ${{ secrets.DBT_CLOUD_API_KEY }}
+          job_definition_id:    ${{ secrets.DBT_CLOUD_PR_CI_JOB_ID }}
+
+          # optionally wait for the job to finish before marking the Action as success/failure
+          wait_for_completion: true

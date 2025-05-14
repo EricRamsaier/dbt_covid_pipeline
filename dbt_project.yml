@@ -46,9 +46,8 @@ models:
       relation: true
       columns:  true
 
-    # These match the top folder names in the models folder
+    # Model schemas are for Prod runs. The generate macros will override if not running in Prod and put into target schema.
 
-    # ─ Staging overrides ────────────────────────────────────────
     staging:
       +materialized: view
       +database:  dwh
@@ -57,7 +56,6 @@ models:
       +tags:      ['stg']
       +severity:  warn
 
-    # ─ Intermediate overrides ───────────────────────────────────
     intermediate:
       +materialized: view
       +database:  dwh
@@ -66,7 +64,6 @@ models:
       +tags:      ['int']
       +severity:  warn
 
-    # ─ Marts overrides ──────────────────────────────────────────
     marts:
       +materialized: table
       +database:  reporting
@@ -76,6 +73,19 @@ models:
       +severity: error
       +post-hook: "{{ log_model_run() }}"
 
+
+# ──────────────────────────────────────────────────────────────────────────────
+#  SNAPSHOTS
+# ──────────────────────────────────────────────────────────────────────────────
+snapshots:
+  # applies to all snapshots in this project
+  dbt_covid_pipeline:
+    +database: dwh
+    +schema: snapshots
+    +enabled: true
+    +tags: ['snapshot']
+    +severity: warn
+
 # -------------------------------------------------------------------
 #  Seeds (if you ship any CSVs in /seeds)
 # -------------------------------------------------------------------
@@ -83,7 +93,7 @@ seeds:
   dbt_pipeline:
     +tags: ['seed']
     +schema: staging     # or wherever you’d like your seeds loaded
-    +enabled: true
+    +enabled: false
 
 # -------------------------------------------------------------------
 #  Tests

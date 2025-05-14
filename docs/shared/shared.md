@@ -38,3 +38,7 @@ Timestamp when the record was **last updated** in the warehouse.
 This field is optional and typically only present in tables that receive updates.  
 Useful for debugging late-arriving data or slowly changing dimensions (SCDs).
 {% enddocs %}
+
+{% docs dbt_snapshot_ts %}
+Timestamp when the snapshot was **last updated** in the warehouse.
+{% enddocs %}

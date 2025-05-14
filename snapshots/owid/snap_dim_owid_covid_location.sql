@@ -2,15 +2,14 @@
 -- Last Modified: 2025-05-10
 -- Creator:       Eric Ramsaier
 -- Snapshot:      snap_dim_owid_covid_location
--- Purpose:       Track changes to OWID ISO code dimension over time
+-- Purpose:       Track changes to OWID covid location dimension over time
 -- Notes:
 --   - Uses a check strategy to detect updates to location or continent
 --   - Records a history of any changes to descriptive attributes
 
-{% snapshot snap_dim_owid_covid_iso_code %}
+{% snapshot snap_dim_owid_covid_location %}
 {{
   config(
-    target_schema='snapshots',
     unique_key='owid_iso_code',
     strategy='check',
     check_cols=['location', 'continent'],
@@ -19,6 +18,7 @@
 }}
 
 SELECT
+    sk_owid_iso_code,
     owid_iso_code,
     location,
     continent,

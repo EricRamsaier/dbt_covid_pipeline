@@ -18,8 +18,8 @@ models:
       data_type: VARCHAR
       tests:
         - relationships:
-              to: ref('dim_owid_iso_code')
-              field: owid_iso_code
+              to: ref('dim_owid_covid_location')
+              field: sk_owid_iso_code
     - name: owid_iso_code
       description: '{{ doc(''owid_iso_code'') }}'
       data_type: VARCHAR

@@ -20,7 +20,7 @@ docs-paths:         ["docs"]
 
 dispatch:
   - macro_namespace: dbt_utils
-    search_order: ["dbt_pipeline", "dbt_utils"]
+    search_order: ["dbt_pipeline", "dbt_utils", "dbt"]
 
 target-path: "target"
 clean-targets:

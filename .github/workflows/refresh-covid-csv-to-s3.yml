@@ -20,12 +20,12 @@ jobs:
       - name: Download latest OWID COVID dataset
         run: |
           mkdir -p data
-          curl -sSL -o data/owid-covid-data_tmp.csv https://covid.ourworldindata.org/data/owid-covid-data.csv
+          curl -sSL -o data/owid-covid-data.csv https://covid.ourworldindata.org/data/owid-covid-data.csv
 
       - name: Sync to S3
         uses: jakejarvis/s3-sync-action@master
         with:
-          args: --acl bucket-owner-full-control --delete
+          args: --acl bucket-owner-full-control --exclude "*" --include "owid-covid-data.csv"
         env:
           AWS_S3_BUCKET: ramsaier-covid-data-us-east
           AWS_REGION: us-east-1

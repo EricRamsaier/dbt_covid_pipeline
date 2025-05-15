@@ -1,5 +1,3 @@
-# .github/workflows/generate-dbt-docs.yml
-
 name: Generate dbt Docs
 
 on:
@@ -24,7 +22,7 @@ jobs:
       - name: Install dbt and dependencies
         run: |
           pip install dbt-core dbt-snowflake
-          dbt deps --no-profile
+          dbt deps
 
       - name: Generate docs
         run: dbt docs generate --no-profile

@@ -1,3 +1,4 @@
+# .github/workflows/refresh-covid-csv-to-s3.yml
 name: Refresh OWID COVID Data to S3
 
 on:
@@ -13,6 +14,8 @@ jobs:
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: us-east-1
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -20,14 +23,12 @@ jobs:
       - name: Download latest OWID COVID dataset
         run: |
           mkdir -p data
-          curl -sSL -o data/owid-covid-data.csv https://covid.ourworldindata.org/data/owid-covid-data.csv
+          curl -sSL -o data/owid-covid-data.csv \
+            https://covid.ourworldindata.org/data/owid-covid-data.csv
 
-      - name: Sync to S3
-        uses: jakejarvis/s3-sync-action@master
-        with:
-          args: --acl bucket-owner-full-control --exclude "*" --include "owid-covid-data.csv"
-        env:
-          AWS_S3_BUCKET: ramsaier-covid-data-us-east
-          AWS_REGION: us-east-1
-          SOURCE_DIR: data/
-          DEST_DIR: owid/
+      - name: Upload OWID CSV to S3
+        run: |
+          aws s3 cp \
+            data/owid-covid-data.csv \
+            s3://ramsaier-covid-data-us-east/owid/owid-covid-data.csv \
+            --acl bucket-owner-full-control

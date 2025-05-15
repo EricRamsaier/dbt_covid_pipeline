@@ -54,20 +54,23 @@ jobs:
 
       - name: Prepare site folder
         run: |
-          # see exactly what's in target (to debug folder names)
-          ls -R target/
-
-          # blow away any old site
           rm -rf site
           mkdir site
 
-          # move the HTML (always there)
-          mv target/index.html site/index.html
+          # pick whichever HTML you want:
+          # full‐site:   mv target/index.html  site/index.html
+          # static‐only: mv target/static_index.html site/index.html
 
-          # move the assets directory only if it exists
+          mv target/static_index.html site/index.html
+
+          # the assets directory (includes your JS/CSS)
           if [ -d target/assets ]; then
             mv target/assets site/assets
           fi
+
+          # copy the JSON data files that dbt generated
+          cp target/catalog.json   site/catalog.json
+          cp target/manifest.json  site/manifest.json
 
 
       - name: Deploy to GitHub Pages

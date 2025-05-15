@@ -6,6 +6,11 @@ on:
       - main
   workflow_dispatch:
 
+permissions:
+  contents: read        # read your code
+  pages: write          # write to GitHub Pages
+  id-token: write       # if you ever need it for OIDC / peaceiris
+
 jobs:
   publish:
     runs-on: ubuntu-latest

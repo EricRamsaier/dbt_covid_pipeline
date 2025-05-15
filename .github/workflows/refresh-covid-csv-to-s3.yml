@@ -1,0 +1,33 @@
+name: Refresh OWID COVID Data to S3
+
+on:
+  schedule:
+    # Every Sunday at 01:00 UTC
+    - cron: '0 1 * * 0'
+  workflow_dispatch: {}
+
+jobs:
+  refresh-csv:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15    # cancel the job if it runs longer than 15 min
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Download latest OWID COVID dataset
+        run: |
+          mkdir -p data
+          curl -sS -o data/owid-covid-data.csv https://covid.ourworldindata.org/data/owid-covid-data.csv
+
+      - name: Sync to S3
+        uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --acl bucket-owner-full-control --delete
+        env:
+          AWS_S3_BUCKET: ramsaier-covid-data-us-east
+          AWS_REGION: us-east-1
+          SOURCE_DIR: data/
+          DEST_DIR: owid/

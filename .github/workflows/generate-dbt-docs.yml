@@ -24,8 +24,27 @@ jobs:
           pip install dbt-core dbt-snowflake
           dbt deps
 
+      - name: Create dummy profiles.yml
+        run: |
+          mkdir -p ~/.dbt
+          cat <<EOF > ~/.dbt/profiles.yml
+default:
+  target: dummy
+  outputs:
+    dummy:
+      type: snowflake         # or whatever adapter you're using
+      account: fake
+      user: fake
+      password: fake
+      role: fake
+      database: fake
+      warehouse: fake
+      schema: fake
+EOF
+
       - name: Generate docs
         run: dbt docs generate
 
       - name: List generated docs files
-        run: ls -R target/
+        run: |
+          ls -R target/

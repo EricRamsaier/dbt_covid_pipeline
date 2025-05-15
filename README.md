@@ -1,169 +1,223 @@
-# dbt COVID Pipeline
+*This README documents the full pipeline—ingest to transform—in a dbt Cloud + Snowflake environment.*
 
-A dbt-based ELT pipeline that models and documents COVID-19 metrics from Our World in Data (OWID).  
-Built on Snowflake, this project provides a clean, tested, and documented set of staging, intermediate, fact, dimension, and aggregate models, plus automated snapshots and exposures.
+# End-to-End Automated Data Pipeline
+
+**Motivation:** Demonstrate a fully automated, end-to-end data pipeline running on a weekly cadence. This project ingests the Our World in Data (OWID) COVID dataset, stages it in S3, reads it in Snowflake via an external table, and transforms it in dbt Cloud.
 
 ---
 
-## 🚀 Project Overview
+## Source Data: OWID COVID-19
 
-- **Source**: `raw.owid.owid_covid_data` (CSV from OWID public GitHub)  
-- **Staging**: `models/staging/owid/stg_owid_covid_data`  
-- **Intermediate**: `models/intermediate/owid/int_owid_covid_data`  
+* **URL:** [https://covid.ourworldindata.org/data/owid-covid-data.csv](https://covid.ourworldindata.org/data/owid-covid-data.csv)
+* **Contents:** Global daily COVID-19 metrics (cases, deaths, tests, vaccinations) by country.
+* **Refresh cadence:** Weekly, automated via GitHub Action to S3.
+
+---
+
+## Project Overview
+
+- **Source**: 
+  -  raw.owid.owid_covid_data
+- **Staging**: 
+  -  stg_owid_covid_data
+- **Intermediate**: 
+  -  int_owid_covid_data  
 - **Dimension**:
-  - `dim_owid_covid_location` (with `location` & `continent`)  
+  - dim_owid_covid_location  
 - **Fact**: 
-  - `fct_owid_covid`  
+  - fct_owid_covid  
 - **Aggregates**:  
-  - `agg_owid_covid_day`  
-  - `agg_owid_covid_month`  
-  - `agg_owid_covid_year`  
+  - agg_owid_covid_day  
+  - agg_owid_covid_month  
+  - agg_owid_covid_year  
 - **Snapshots**:  
-  - `snap_dim_owid_iso_code`  
+  - snap_dim_owid_iso_code  
 - **Exposures**:  
-  - `covid_dashboard`  
-  - `covid_yearly_dashboard`  
+  - covid_dashboard  
+  - covid_yearly_dashboard  
 - **Macros**: audit columns, dev filters, RLS grants, etc.
 
 ---
 
-## ⚛️ Data Ingestion Pipeline (Snowflake S3)
+## Architecture Overview
 
-This project uses a controlled ingestion pattern from a public OWID CSV file into Snowflake:
-
-- **Landing layer**: External stage defined at `landing_ext.s3.owid_stage`
-- **Raw table**: `raw.owid.owid_covid_data` defined with all columns as VARCHAR for flexible parsing
-- **Ingestion method**: manual `COPY INTO` from stage, using a fixed file pattern and casted timestamp for `loaded_ts`
-- **File format**: generic CSV with header row, null handling, and space trimming
-
-The ingestion logic is defined in `snowflake_landing_ext_setup.sql`, and roles are managed via `snowflake_bootstrap.sql`.
-
-Future automation via GitHub Actions can refresh the OWID CSV and re-trigger the pipeline.
-
----
-
-## 📋 Prerequisites
-
-- **dbt Cloud** (preferred) or **dbt Core** ≥ 1.4 (tested on 2025.5.7)  
-- **Snowflake** account & role with permissions to `CREATE`/`SELECT` in your target schemas  
-- (Optional for Core) **Python**, **SQLFluff** for style/linting  
-
----
-
-## 🛠️ Setup
-
-1. **Clone the repo**  
-   ```bash
-   git clone git@github.com:yourorg/dbt_covid_pipeline.git
-   cd dbt_covid_pipeline
-   ```
-
-2. **Install dependencies** *(dbt Core only)*  
-   ```bash
-   pip install dbt-core dbt-snowflake
-   ```
-
-3. **Configure profile** *(dbt Core only)*  
-   Edit `~/.dbt/profiles.yml` to define the `dbt_covid_pipeline` profile.
-
-4. **Install packages and initialize**  
-   ```bash
-   dbt deps
-   dbt seed  # if applicable
-   ```
-
----
-
-## ⚡ Usage
-
-- **Compile & Build**  
-  ```bash
-  dbt clean
-  dbt build
-  ```
-
-- **Test only**  
-  ```bash
-  dbt test
-  ```
-
-- **Parse & Compile**  
-  ```bash
-  dbt parse
-  dbt compile
-  ```
-
-- **Source Freshness**  
-  ```bash
-  dbt source freshness
-  ```
-
-- **Docs Generation**  
-  ```bash
-  dbt docs generate
-  dbt docs serve
-  ```
-  Visit: http://localhost:8080
-
----
-
-## 🌲 Folder Structure
-
-```
-├── analysis/                   ← ad-hoc analyses (not deployed)
-├── macros/                     ← reusable macro functions
-├── models/
-│   ├── staging/owid/           ← raw-to-staging transformations
-│   ├── intermediate/owid/      ← cleaning, deduplication
-│   ├── marts/owid/             ← dims, facts, aggregates
-│   └── metrics/                ← (optional) semantic metrics YAMLs
-├── snapshots/owid/             ← snapshot definitions
-├── tests/                      ← custom schema or data tests
-├── docs/                       ← supplemental Markdown docs
-├── dbt_project.yml             ← project configuration
-└── README.md                   ← this file
+```text
+dbt_covid_pipeline/
+├── .github/
+│   └── workflows/                       # GitHub Action workflows
+├── analyses/                            # Ad-hoc analyses and notebooks
+├── data/                                # Local data folder (seeds, samples)
+├── docs/                                # Documentation artifacts and reference files
+├── external_application_setup/          # External application setup scripts/configs
+├── macros/                              # dbt macros definitions
+├── models/                              # dbt models (sources, staging, marts)
+├── snapshots/                           # dbt snapshots definitions
+├── tests/                               # Custom tests and test data
+├── dbt_project.yml                      # Core dbt configuration
+└── README.md                            # Project overview (this file)
 ```
 
----
-
-## 🔒 Governance & Best Practices
-
-- **Contracts**: all marts models use `on_schema_change='fail'` and `contract: {enforced: true}`  
-- **Tags**: consistent use of `tags: ['stg','int','dim','fct','agg','owid']`  
-- **YAML Tests**: `not_null`, `unique`, and `relationships` tests defined  
-- **Header Commenting**: `-- Created` / `-- Last Modified` per model  
-- **CI/CD**: recommended using dbt Cloud or GitHub Actions  
+*Note:* the `docs/` folder contains repeatable reference artifacts (e.g. `macros_schema.yml`) used for consistent documentation.
 
 ---
 
-## 📊 CI/CD & Deployment
+## Setup Instructions
 
-1. **On Pull Request**  
-   - `dbt deps && dbt parse && dbt compile && dbt test`
-   - SQLFluff lint (optional)
+This section outlines the basic steps to get the project running locally or in a new environment.
 
-2. **On Merge to `main`**  
-   - `dbt build`
-   - `dbt docs generate` → deploy docs site
+1. **Clone the repository**
 
-3. **Alerts**  
-   - Slack/email hooks for test/freshness failures (via dbt Cloud or GitHub Actions)
+   ```bash
+   git clone <repo-url> && cd dbt_covid_pipeline
+   ```
+2. **Configure GitHub Actions secrets**
+
+   * `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` for `dbt-ingest-user` in your repository settings.
+3. **Install prerequisites**
+
+   * [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+   * [dbt Core](https://docs.getdbt.com/docs/installation)
+   * [SnowSQL](https://docs.snowflake.com/en/user-guide/snowsql.html) (optional for manual testing)
+4. **Set up local profiles.yml** (if running locally)
+
+   ```yaml
+   your_profile:
+     target: ci
+     outputs:
+       ci:
+         type: snowflake
+         account: <account_identifier>
+         user: <user>
+         role: <CI_role>
+         database: <database>
+         warehouse: <warehouse>
+         schema: <schema>  # e.g. DBT_CLOUD_PR_<PR>_<RUN>
+   ```
+5. **Install Python dependencies** (if any custom macros require packages)
+
+   ```bash
+   pip install -r requirements.txt  # optional
+   ```
+6. **Verify CI workflow manually**
+
+   * In GitHub, under **Actions**, run the **Refresh OWID CSV** workflow.
 
 ---
 
-## 🤝 Contributing
+## AWS Setup
 
-1. Create a new branch from `main`
-2. Open a PR after changes
-3. Verify tests, docs, and builds pass
+### S3 Bucket
+
+* **Name:** `<bucket-name>`
+* **Versioning:** Enabled to retain past weekly snapshots.
+* **Prefixes:**
+
+  * Live: `owid/owid-covid-data.csv`
+  * Backups: `backups/owid/` (archived original files)
+
+### IAM Identities & Policies
+
+**IAM User: `dbt-ingest-user`**
+
+* **Use:** GitHub Action runner
+* **Policy (`dbt-ingest-s3-policy`):** grants `ListBucket`, `GetObject`, `PutObject`, `DeleteObject` on S3 bucket/prefix.
+
+**IAM Role: `SnowflakeCovidDataReader`**
+
+* **Use:** Snowflake Storage Integration
+* **Trust:** Allows Snowflake principal (account ID + ExternalId) to assume.
+* **Policy (`SnowflakeCovidDataReadPolicy`):** grants `ListBucket`, `GetObject` on bucket/prefix.
+
+*All policies are customer-managed JSON for auditability.*
 
 ---
 
-## 📞 Support
+## Snowflake Setup
 
-- **Owner**: eramsaier@gmail.com  
-- **Team**: analytics_engineering@yourcompany.com  
+**File format & storage integration (in `landing_ext`):**
+
+```sql
+CREATE OR REPLACE FILE FORMAT landing_ext.s3.csv_generic_format ...;
+CREATE OR REPLACE STORAGE INTEGRATION landing_ext.s3_owid_integration ...;
+```
+
+**Stage & external table:**
+
+```sql
+CREATE OR REPLACE STAGE landing_ext.s3.owid_stage ...;
+CREATE OR REPLACE EXTERNAL TABLE landing_ext.reporting.owid_covid ...;
+```
 
 ---
 
-_Last updated: 2025-05-12_
+## Database Environments & Roles
+
+**Databases:** `raw`, `dwh`, `reporting`, `landing_ext`
+**Roles:** `raw_ingest_svc_role`, `transform_svc_role`, `developer_role`, `analyst_role`, `reporting_svc_role`
+
+```sql
+CREATE DATABASE IF NOT EXISTS raw; ...
+CREATE ROLE IF NOT EXISTS raw_ingest_svc_role; ...
+```
+
+---
+
+## dbt Cloud CI/CD Setup
+
+* **Environments:** `CI` for PR builds, `Production` for merges to `main`.
+* **PR Builds:** each PR runs in an isolated schema and is auto-dropped on close.
+* **Prod Builds:** deploy to named schemas via `dbt_project.yml` overrides.
+
+**Dynamic naming macros:** `generate_schema_name` & `generate_database_name` drive environment-specific schema/database resolution.
+
+---
+
+## Weekly S3 Update Workflow
+
+**GitHub Action:** `.github/workflows/refresh-covid-csv-to-s3.yml`
+
+```yaml
+name: Refresh OWID CSV
+on: schedule: '0 1 * * 0', workflow_dispatch: {}
+jobs:
+  refresh-csv:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          mkdir -p data
+          curl -sSL -o data/owid-covid-data.csv https://.../owid-covid-data.csv
+      - run: |
+          aws s3 cp data/owid-covid-data.csv s3://<bucket-name>/owid/owid-covid-data.csv --acl bucket-owner-full-control
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: us-east-1
+```
+
+*Uses `cp` for focused overwrite; versioning retains history.*
+
+---
+
+## dbt Models & Tests
+
+**Sources & tests (in `schema.yml`):** not\_null, unique, freshness.
+**Snapshots:** capture point-in-time state.
+**Models:** `fct_covid_metrics`, `dim_date`, `dim_country`.
+
+---
+
+## CI/CD Pipeline Details
+
+### GitHub Actions
+
+* **Workflow:** `.github/workflows/refresh-covid-csv-to-s3.yml` runs every Sunday at 01:00 UTC (and can be triggered manually).
+* **Secrets:** Uses `AWS_ACCESS_KEY_ID` & `AWS_SECRET_ACCESS_KEY` for `dbt-ingest-user` to upload the OWID CSV via `aws s3 cp`.
+* **Versioning:** S3 bucket versioning retains past payloads; workflow uses a single-file `cp` for targeted overwrites.
+
+### dbt Cloud
+
+* **CI Environment:** Triggered on every pull request, runs under an isolated schema (`DBT_CLOUD_PR_*`), and automatically drops it when the PR closes.
+* **Prod Environment:** Triggered on merges to `main`, writes to production schemas as defined in `dbt_project.yml`.
+* **Jobs:** Separate jobs configured for PR builds and production runs; both use the same repository and macros but different targets and schema/database naming conventions.
+* **Notifications & Logging:** Build results and logs are visible in the dbt Cloud UI; failures can be configured to alert via Slack or email.

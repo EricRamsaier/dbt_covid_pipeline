@@ -1,14 +1,11 @@
-# File: .github/workflows/publish-dbt-docs.yml
+name: Generate dbt docs
 
-name: Publish dbt Docs
-
-# fire on pushes to main, and also allow manual kick-off
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
   workflow_dispatch:
 
-# with the minimal required permissions for Pages
 permissions:
   contents: read
   pages: write
@@ -17,26 +14,23 @@ permissions:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    steps:
 
-      # 1) grab your code
+    steps:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0          # full history so we can push to gh-pages
+          fetch-depth: 0
 
-      # 2) set up Python & install dbt + DuckDB adapter
       - name: Set up Python & install dbt
         uses: actions/setup-python@v4
         with:
           python-version: '3.9'
+
       - name: Install dbt and dependencies
         run: |
           pip install dbt-core dbt-duckdb
           dbt deps
 
-      # 3) write out a dummy ~/.dbt/profiles.yml whose profile name
-      #    matches the `profile:` in your dbt_project.yml (in this case 'dbt_pipeline')
       - name: Create dummy profiles.yml
         run: |
           mkdir -p ~/.dbt
@@ -50,11 +44,9 @@ dbt_pipeline:
       threads: 1
 EOF
 
-      # 4) generate a fully-static site
       - name: Generate static docs
         run: dbt docs generate --static
 
-      # 5) move the generated HTML & assets into a clean “site” folder
       - name: Prepare site folder
         run: |
           rm -rf site
@@ -62,10 +54,9 @@ EOF
           mv target/static_index.html site/index.html
           mv target/assets          site/assets
 
-      # 6) publish “site/” to the gh-pages branch
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: site
           publish_branch: gh-pages
+          publish_dir: site

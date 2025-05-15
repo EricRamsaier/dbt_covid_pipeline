@@ -1,4 +1,4 @@
-name: Generate dbt Docs
+name: Publish dbt Docs to GitHub Pages
 
 on:
   push:
@@ -7,43 +7,34 @@ on:
   workflow_dispatch:
 
 jobs:
-  docs:
+  publish:
     runs-on: ubuntu-latest
+    permissions:
+      pages: write   # allow pushing to gh-pages
+      id-token: write
+      contents: read
 
     steps:
-      - name: Check out code
+      - name: Check out repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0    # so gh-pages pushes have full history
 
-      - name: Set up Python
+      - name: Set up Python & dbt
         uses: actions/setup-python@v4
         with:
           python-version: '3.9'
 
-      - name: Install dbt and dependencies
-        run: |
-          pip install dbt-core dbt-snowflake
-          dbt deps
+      - name: Run dbt deps, generate, and compile docs
+        uses: dbt-labs/dbt-action@v1
+        with:
+          project-dir: .          # your dbt project root
+          install-deps: true      # runs `dbt deps` for you
+          args: docs generate     # runs `dbt docs generate`
 
-      - name: Create dummy profiles.yml
-        run: |
-          mkdir -p ~/.dbt
-          cat <<EOF > ~/.dbt/profiles.yml
-default:
-  target: dummy
-  outputs:
-    dummy:
-      type: snowflake         # or your adapter
-      account: fake
-      user: fake
-      password: fake
-      role: fake
-      database: fake
-      warehouse: fake
-      schema: fake
-EOF
-
-      - name: Generate docs
-        run: dbt docs generate
-
-      - name: List generated docs files
-        run: ls -R target/
+      - name: Publish to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./target   # dbt writes your docs site here
+          publish_branch: gh-pages

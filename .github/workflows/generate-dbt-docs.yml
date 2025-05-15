@@ -10,7 +10,7 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     permissions:
-      pages: write   # allow pushing to gh-pages
+      pages: write
       id-token: write
       contents: read
 
@@ -18,7 +18,7 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0    # so gh-pages pushes have full history
+          fetch-depth: 0
 
       - name: Set up Python & dbt
         uses: actions/setup-python@v4
@@ -26,15 +26,15 @@ jobs:
           python-version: '3.9'
 
       - name: Run dbt deps, generate, and compile docs
-        uses: dbt-labs/dbt-action@v1
+        uses: dbt-labs/action@v2
         with:
-          project-dir: .          # your dbt project root
-          install-deps: true      # runs `dbt deps` for you
-          args: docs generate     # runs `dbt docs generate`
+          project-dir: .
+          install-deps: true
+          args: docs generate
 
       - name: Publish to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./target   # dbt writes your docs site here
+          publish_dir: ./target
           publish_branch: gh-pages

@@ -54,10 +54,21 @@ jobs:
 
       - name: Prepare site folder
         run: |
+          # see exactly what's in target (to debug folder names)
+          ls -R target/
+
+          # blow away any old site
           rm -rf site
           mkdir site
-          mv target/index.html    site/index.html
-          mv target/assets        site/assets
+
+          # move the HTML (always there)
+          mv target/index.html site/index.html
+
+          # move the assets directory only if it exists
+          if [ -d target/assets ]; then
+            mv target/assets site/assets
+          fi
+
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4

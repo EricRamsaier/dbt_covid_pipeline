@@ -8,6 +8,12 @@ on:
 jobs:
   publish-docs:
     runs-on: ubuntu-latest
+    
+    permissions:
+      pages: write      # allow this job to deploy to GitHub Pages
+      id-token: write   # required by newer actions
+      contents: read    # read your repo contents
+    
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3

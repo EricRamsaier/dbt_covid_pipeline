@@ -117,7 +117,6 @@ CREATE OR REPLACE TABLE RAW.OWID.OWID_COVID_DATA (
     LOADED_TS                                TIMESTAMP_TZ     -- 68
 );
 
---truncate table RAW.OWID.OWID_COVID_DATA
 -- 7) Load from your S3 stage into that table, mapping each file column and adding loaded_ts
 COPY INTO RAW.OWID.OWID_COVID_DATA (
     ISO_CODE                                 -- 1

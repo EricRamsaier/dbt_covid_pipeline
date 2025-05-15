@@ -81,15 +81,6 @@ macros:
         description: "No arguments; automatically uses `this.identifier` and run context."
     returns: "A set of literal columns for auditing and lineage tracking."
 
-  - name: grant_select_to_role
-    description: >
-      Grants USAGE on the current database and schema, and SELECT on all tables
-      and views in the target schema, to the specified role.
-    arguments:
-      - name: target_role
-        description: The name of the role to grant privileges to.
-    returns: None
-
   - name: expression_is_true
     description: >
       A reusable dbt test that asserts the given boolean SQL expression

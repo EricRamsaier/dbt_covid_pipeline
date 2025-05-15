@@ -80,3 +80,38 @@ macros:
       - name: None
         description: "No arguments; automatically uses `this.identifier` and run context."
     returns: "A set of literal columns for auditing and lineage tracking."
+
+  - name: grant_select_to_role
+    description: >
+      Grants USAGE on the current database and schema, and SELECT on all tables
+      and views in the target schema, to the specified role.
+    arguments:
+      - name: target_role
+        description: The name of the role to grant privileges to.
+    returns: None
+
+  - name: expression_is_true
+    description: >
+      A reusable dbt test that asserts the given boolean SQL expression
+      evaluates to TRUE for every row in a model.
+    arguments:
+      - name: model
+        description: The model being tested (e.g. `ref('my_model')`).
+      - name: expression
+        description: A SQL boolean expression (as text) to evaluate for each row.
+    returns: A set of rows for which the expression is FALSE.
+
+  - name: test_freshness_threshold
+    description: >
+      A reusable freshness test that fails if any record’s timestamp is older
+      than the specified number of hours.
+    arguments:
+      - name: model
+        description: The model being tested (e.g. `ref('my_model')`).
+      - name: column_name
+        description: The timestamp column to compare (unquoted).
+      - name: threshold_hours
+        description: Maximum allowed age in hours, relative to CURRENT_TIMESTAMP().
+      - name: warn_if
+        description: If `true`, issues a warning instead of an error when the test fails.
+    returns: A set of rows older than the given threshold.

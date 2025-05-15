@@ -98,7 +98,7 @@ final AS (
     , CAST(excess_mortality_cumulative AS NUMBER(38,2)) AS excess_mortality_cumulative         -- 65
     , CAST(excess_mortality AS NUMBER(38,2))            AS excess_mortality                    -- 66
     , CAST(excess_mortality_cumulative_per_million AS NUMBER(38,2)) AS excess_mortality_cumulative_per_million -- 67
-    , CAST(loaded_ts AS TIMESTAMP_TZ)                   AS loaded_ts                           -- 68
+    , {{ to_timestamp('loaded_ts') }}                   AS loaded_ts                           -- 68
     FROM source_data
 )
 

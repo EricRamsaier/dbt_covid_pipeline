@@ -35,14 +35,14 @@ jobs:
         run: |
           mkdir -p ~/.dbt
           cat <<EOF > ~/.dbt/profiles.yml
-dbt_pipeline:
-  target: dummy
-  outputs:
-    dummy:
-      type: duckdb
-      path: ":memory:"
-      threads: 1
-EOF
+          dbt_pipeline:
+            target: dummy
+            outputs:
+              dummy:
+                type: duckdb
+                path: ":memory:"
+                threads: 1
+          EOF
 
       - name: Generate static docs
         run: dbt docs generate --static

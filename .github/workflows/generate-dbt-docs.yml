@@ -38,14 +38,9 @@ jobs:
             target: dummy
             outputs:
               dummy:
-                type: snowflake
-                account: fake
-                user: fake
-                password: fake
-                role: fake
-                database: fake
-                warehouse: fake
-                schema: fake
+                type: duckdb
+                path: ":memory:"
+                threads: 1
           EOF
 
       - name: Generate static docs

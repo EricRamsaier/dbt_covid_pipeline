@@ -32,7 +32,7 @@ default:
   target: dummy
   outputs:
     dummy:
-      type: snowflake         # or whatever adapter you're using
+      type: snowflake         # or your adapter
       account: fake
       user: fake
       password: fake
@@ -46,5 +46,4 @@ EOF
         run: dbt docs generate
 
       - name: List generated docs files
-        run: |
-          ls -R target/
+        run: ls -R target/

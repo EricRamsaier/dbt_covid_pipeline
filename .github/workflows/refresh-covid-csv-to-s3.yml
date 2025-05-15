@@ -20,7 +20,7 @@ jobs:
       - name: Download latest OWID COVID dataset
         run: |
           mkdir -p data
-          curl -sS -o data/owid-covid-data.csv https://covid.ourworldindata.org/data/owid-covid-data.csv
+          curl -sS -o data/owid-covid-data_tmp.csv https://covid.ourworldindata.org/data/owid-covid-data.csv
 
       - name: Sync to S3
         uses: jakejarvis/s3-sync-action@master

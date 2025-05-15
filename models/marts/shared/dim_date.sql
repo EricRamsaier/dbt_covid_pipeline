@@ -10,7 +10,7 @@
 --   - Aligned to calendar use in reporting and joins
 --   - Tagged as shared calendar dimension
 
-
+ 
 {{
   config(
     tags = ['shared', 'calendar', 'dim']

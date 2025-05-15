@@ -1,4 +1,4 @@
-name: Publish dbt Docs to GitHub Pages
+name: Publish dbt Docs
 
 on:
   push:
@@ -6,40 +6,58 @@ on:
       - main
   workflow_dispatch:
 
-permissions:
-  pages: write
-  id-token: write
-  contents: read
-
 jobs:
   publish:
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      contents: read
+      id-token: write
 
     steps:
-      - name: Check out repository
+      - name: Check out code
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
-      - name: Set up Python & dbt
+      - name: Set up Python & install dbt
         uses: actions/setup-python@v4
         with:
           python-version: '3.9'
 
-      - name: Install dbt & adapter
+      - name: Install dbt & deps
         run: |
           pip install dbt-core dbt-snowflake
+          dbt deps
 
-      - name: Run dbt deps, generate, and compile docs
-        uses: dbt-labs/dbt-action@v1
-        with:
-          project-dir: .
-          install-deps: true
-          args: docs generate
+      - name: Create dummy profiles.yml
+        run: |
+          mkdir -p ~/.dbt
+          cat <<EOF > ~/.dbt/profiles.yml
+          default:
+            target: dummy
+            outputs:
+              dummy:
+                type: snowflake
+                account: fake
+                user: fake
+                password: fake
+                role: fake
+                database: fake
+                warehouse: fake
+                schema: fake
+          EOF
 
-      - name: Publish to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
+      - name: Generate static docs
+        run: dbt docs generate --static
+
+      - name: Prepare site folder
+        run: |
+          mkdir site
+          mv target/static_index.html site/index.html
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./target
-          publish_branch: gh-pages
+          branch: gh-pages
+          folder: site

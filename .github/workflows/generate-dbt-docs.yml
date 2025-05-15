@@ -25,7 +25,7 @@ jobs:
           dbt deps
 
       - name: Generate docs
-        run: dbt docs generate --no-profile
+        run: dbt docs generate
 
       - name: List generated docs files
         run: ls -R target/

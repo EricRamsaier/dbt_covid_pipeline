@@ -25,9 +25,9 @@ jobs:
         with:
           python-version: '3.9'
 
-      - name: Install dbt & deps
+      - name: Install dbt + DuckDB adapter & deps
         run: |
-          pip install dbt-core dbt-snowflake
+          pip install dbt-core dbt-duckdb
           dbt deps
 
       - name: Create dummy profiles.yml

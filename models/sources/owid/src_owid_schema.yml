@@ -35,10 +35,141 @@ sources:
           source_url: "https://covid.ourworldindata.org/data/owid-covid-data.csv"
           codebook:   "https://github.com/owid/covid-19-data/blob/master/public/data/owid-covid-codebook.csv"
           loader:     raw_ingest_svc
+
         columns:
           - name: iso_code
-            tests:
-              - not_null
+            description: '{{ doc("owid_iso_code") }}'
+          - name: continent
+            description: '{{ doc("owid_continent") }}'
+          - name: location
+            description: '{{ doc("owid_location") }}'
           - name: date
-            tests:
-              - not_null
+            description: '{{ doc("owid_observation_dt") }}'
+          - name: total_cases
+            description: '{{ doc("owid_total_cases") }}'
+          - name: new_cases
+            description: '{{ doc("owid_new_cases") }}'
+          - name: new_cases_smoothed
+            description: '{{ doc("owid_new_cases_smoothed") }}'
+          - name: total_deaths
+            description: '{{ doc("owid_total_deaths") }}'
+          - name: new_deaths
+            description: '{{ doc("owid_new_deaths") }}'
+          - name: new_deaths_smoothed
+            description: '{{ doc("owid_new_deaths_smoothed") }}'
+          - name: total_cases_per_million
+            description: '{{ doc("owid_total_cases_per_million") }}'
+          - name: new_cases_per_million
+            description: '{{ doc("owid_new_cases_per_million") }}'
+          - name: new_cases_smoothed_per_million
+            description: '{{ doc("owid_new_cases_smoothed_per_million") }}'
+          - name: total_deaths_per_million
+            description: '{{ doc("owid_total_deaths_per_million") }}'
+          - name: new_deaths_per_million
+            description: '{{ doc("owid_new_deaths_per_million") }}'
+          - name: new_deaths_smoothed_per_million
+            description: '{{ doc("owid_new_deaths_smoothed_per_million") }}'
+          - name: reproduction_rate
+            description: '{{ doc("owid_reproduction_rate") }}'
+          - name: icu_patients
+            description: '{{ doc("owid_icu_patients") }}'
+          - name: icu_patients_per_million
+            description: '{{ doc("owid_icu_patients_per_million") }}'
+          - name: hosp_patients
+            description: '{{ doc("owid_hosp_patients") }}'
+          - name: hosp_patients_per_million
+            description: '{{ doc("owid_hosp_patients_per_million") }}'
+          - name: weekly_icu_admissions
+            description: '{{ doc("owid_weekly_icu_admissions") }}'
+          - name: weekly_icu_admissions_per_million
+            description: '{{ doc("owid_weekly_icu_admissions_per_million") }}'
+          - name: weekly_hosp_admissions
+            description: '{{ doc("owid_weekly_hosp_admissions") }}'
+          - name: weekly_hosp_admissions_per_million
+            description: '{{ doc("owid_weekly_hosp_admissions_per_million") }}'
+          - name: total_tests
+            description: '{{ doc("owid_total_tests") }}'
+          - name: new_tests
+            description: '{{ doc("owid_new_tests") }}'
+          - name: total_tests_per_thousand
+            description: '{{ doc("owid_total_tests_per_thousand") }}'
+          - name: new_tests_per_thousand
+            description: '{{ doc("owid_new_tests_per_thousand") }}'
+          - name: new_tests_smoothed
+            description: '{{ doc("owid_new_tests_smoothed") }}'
+          - name: new_tests_smoothed_per_thousand
+            description: '{{ doc("owid_new_tests_smoothed_per_thousand") }}'
+          - name: positive_rate
+            description: '{{ doc("owid_positive_rate") }}'
+          - name: tests_per_case
+            description: '{{ doc("owid_tests_per_case") }}'
+          - name: tests_units
+            description: '{{ doc("owid_tests_units") }}'
+          - name: total_vaccinations
+            description: '{{ doc("owid_total_vaccinations") }}'
+          - name: people_vaccinated
+            description: '{{ doc("owid_people_vaccinated") }}'
+          - name: people_fully_vaccinated
+            description: '{{ doc("owid_people_fully_vaccinated") }}'
+          - name: total_boosters
+            description: '{{ doc("owid_total_boosters") }}'
+          - name: new_vaccinations
+            description: '{{ doc("owid_new_vaccinations") }}'
+          - name: new_vaccinations_smoothed
+            description: '{{ doc("owid_new_vaccinations_smoothed") }}'
+          - name: total_vaccinations_per_hundred
+            description: '{{ doc("owid_total_vaccinations_per_hundred") }}'
+          - name: people_vaccinated_per_hundred
+            description: '{{ doc("owid_people_vaccinated_per_hundred") }}'
+          - name: people_fully_vaccinated_per_hundred
+            description: '{{ doc("owid_people_fully_vaccinated_per_hundred") }}'
+          - name: total_boosters_per_hundred
+            description: '{{ doc("owid_total_boosters_per_hundred") }}'
+          - name: new_vaccinations_smoothed_per_million
+            description: '{{ doc("owid_new_vaccinations_smoothed_per_million") }}'
+          - name: new_people_vaccinated_smoothed
+            description: '{{ doc("owid_new_people_vaccinated_smoothed") }}'
+          - name: new_people_vaccinated_smoothed_per_hundred
+            description: '{{ doc("owid_new_people_vaccinated_smoothed_per_hundred") }}'
+          - name: stringency_index
+            description: '{{ doc("owid_stringency_index") }}'
+          - name: population_density
+            description: '{{ doc("owid_population_density") }}'
+          - name: median_age
+            description: '{{ doc("owid_median_age") }}'
+          - name: aged_65_older
+            description: '{{ doc("owid_aged_65_older") }}'
+          - name: aged_70_older
+            description: '{{ doc("owid_aged_70_older") }}'
+          - name: gdp_per_capita
+            description: '{{ doc("owid_gdp_per_capita") }}'
+          - name: extreme_poverty
+            description: '{{ doc("owid_extreme_poverty") }}'
+          - name: cardiovasc_death_rate
+            description: '{{ doc("owid_cardiovascular_death_rate") }}'
+          - name: diabetes_prevalence
+            description: '{{ doc("owid_diabetes_prevalence") }}'
+          - name: female_smokers
+            description: '{{ doc("owid_female_smokers") }}'
+          - name: male_smokers
+            description: '{{ doc("owid_male_smokers") }}'
+          - name: handwashing_facilities
+            description: '{{ doc("owid_handwashing_facilities") }}'
+          - name: hospital_beds_per_thousand
+            description: '{{ doc("owid_hospital_beds_per_thousand") }}'
+          - name: life_expectancy
+            description: '{{ doc("owid_life_expectancy") }}'
+          - name: human_development_index
+            description: '{{ doc("owid_human_development_index") }}'
+          - name: population
+            description: '{{ doc("owid_population") }}'
+          - name: excess_mortality_cumulative_absolute
+            description: '{{ doc("owid_excess_mortality_cumulative_absolute") }}'
+          - name: excess_mortality_cumulative
+            description: '{{ doc("owid_excess_mortality_cumulative") }}'
+          - name: excess_mortality
+            description: '{{ doc("owid_excess_mortality") }}'
+          - name: excess_mortality_cumulative_per_million
+            description: '{{ doc("owid_excess_mortality_cumulative_per_million") }}'
+          - name: loaded_ts
+            description: '{{ doc("loaded_ts") }}'

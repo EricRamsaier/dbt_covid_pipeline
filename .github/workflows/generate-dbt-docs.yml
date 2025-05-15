@@ -2,17 +2,23 @@ name: Generate dbt docs
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
   contents: read
-  pages:   write
+  pages: write
   id-token: write
 
 jobs:
   publish:
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
 
     steps:
       - name: Check out code
@@ -25,21 +31,23 @@ jobs:
         with:
           python-version: '3.9'
 
-      - name: Install dbt and deps
+      - name: Install dbt core, adapter, deps
         run: |
           pip install dbt-core dbt-duckdb
           dbt deps
 
-      - name: Create dummy profiles.yml via echo
+      - name: Create dummy profiles.yml
         run: |
           mkdir -p ~/.dbt
-          echo "dbt_pipeline:
-  target: dummy
-  outputs:
-    dummy:
-      type: duckdb
-      path: ':memory:'
-      threads: 1" > ~/.dbt/profiles.yml
+          cat <<EOF > ~/.dbt/profiles.yml
+          dbt_pipeline:
+            target: dummy
+            outputs:
+              dummy:
+                type: duckdb
+                path: ":memory:"
+                threads: 1
+          EOF
 
       - name: Generate static docs
         run: dbt docs generate --static
@@ -48,8 +56,8 @@ jobs:
         run: |
           rm -rf site
           mkdir site
-          mv target/index.html site/index.html
-          mv target/assets     site/assets
+          mv target/index.html    site/index.html
+          mv target/assets        site/assets
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4

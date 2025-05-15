@@ -1,0 +1,37 @@
+name: Publish dbt docs to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0       # needed for gh-pages branch pushes
+
+      - name: Set up Python & install dbt
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dbt
+        run: |
+          pip install dbt-core dbt-snowflake  # adjust adapter as needed
+
+      - name: dbt deps
+        run: dbt deps
+
+      - name: Generate docs
+        run: dbt docs generate
+
+      - name: Publish to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GH_PAGES_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./target

@@ -34,7 +34,7 @@ jobs:
         run: |
           mkdir -p ~/.dbt
           cat <<EOF > ~/.dbt/profiles.yml
-          dbt_covid_pipeline:
+          dbt_pipeline:
             target: dummy
             outputs:
               dummy:

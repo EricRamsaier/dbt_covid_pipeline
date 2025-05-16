@@ -81,17 +81,6 @@ macros:
         description: "No arguments; automatically uses `this.identifier` and run context."
     returns: "A set of literal columns for auditing and lineage tracking."
 
-  - name: expression_is_true
-    description: >
-      A reusable dbt test that asserts the given boolean SQL expression
-      evaluates to TRUE for every row in a model.
-    arguments:
-      - name: model
-        description: The model being tested (e.g. `ref('my_model')`).
-      - name: expression
-        description: A SQL boolean expression (as text) to evaluate for each row.
-    returns: A set of rows for which the expression is FALSE.
-
   - name: test_freshness_threshold
     description: >
       A reusable freshness test that fails if any record’s timestamp is older

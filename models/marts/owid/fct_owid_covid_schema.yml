@@ -1,14 +1,7 @@
 version: 2
-
 models:
   - name: fct_owid_covid
     description: Fact table for OWID COVID-19 data with historical metrics per country and date.
-    tests:
-      - test_freshness_threshold:
-          column_name: loaded_ts
-          threshold_hours: 192
-          severity: warn
-
     tags:
       - fct
       - owid
@@ -229,6 +222,10 @@ models:
     - name: loaded_ts
       description: '{{ doc("loaded_ts") }}'
       data_type: TIMESTAMP_TZ
+      tests:
+        - test_freshness_threshold:
+            threshold_hours: 24
+            severity: warn
     - name: dbt_model_name
       description: '{{ doc(''dbt_model_name'') }}'
       data_type: STRING

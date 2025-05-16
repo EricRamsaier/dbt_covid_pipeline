@@ -39,16 +39,12 @@ sources:
         columns:
           - name: iso_code
             description: '{{ doc("owid_iso_code") }}'
-            tests:
-              - not_null
           - name: continent
             description: '{{ doc("owid_continent") }}'
           - name: location
             description: '{{ doc("owid_location") }}'
           - name: date
             description: '{{ doc("owid_observation_dt") }}'
-            tests:
-              - not_null       
           - name: total_cases
             description: '{{ doc("owid_total_cases") }}'
           - name: new_cases

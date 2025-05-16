@@ -81,7 +81,7 @@ macros:
         description: "No arguments; automatically uses `this.identifier` and run context."
     returns: "A set of literal columns for auditing and lineage tracking."
 
-  - name: test_table_freshness
+  - name: test_freshness_threshold
     description: >
       A reusable freshness test that fails if any record’s timestamp is older
       than the specified number of hours.

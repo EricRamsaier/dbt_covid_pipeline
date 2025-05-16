@@ -4,7 +4,7 @@ models:
   - name: fct_owid_covid
     description: Fact table for OWID COVID-19 data with historical metrics per country and date.
     tests:
-      - test_table_freshness:
+      - test_freshness_threshold:
           column_name: loaded_ts
           threshold_hours: 192
           severity: warn

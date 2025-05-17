@@ -4,5 +4,5 @@ logs/
 
 .DS_Store
 
-packages-lock.yml
-packages-lock.json
+package-lock.yml
+package-lock.json

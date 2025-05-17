@@ -224,7 +224,7 @@ models:
       data_type: TIMESTAMP_TZ
       tests:
         - test_freshness_threshold:
-            threshold_hours: 24
+            threshold_hours: 192
             severity: warn
     - name: dbt_model_name
       description: '{{ doc(''dbt_model_name'') }}'

@@ -1,0 +1,1 @@
+select "{{ get_thresholds_v2('owid_covid_data').warn_after }}" 

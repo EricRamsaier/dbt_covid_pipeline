@@ -73,6 +73,16 @@ models:
       +severity: error
       +post-hook: "{{ log_model_run() }}"
 
+# ──────────────────────────────────────────────────────────────────────────────
+#  SEEDS
+# ──────────────────────────────────────────────────────────────────────────────
+seeds:
+  dbt_pipeline:
+    +database: dwh    
+    +schema: seed
+    freshness_thresholds:
+      header: true
+      quote_columns: true
 
 # ──────────────────────────────────────────────────────────────────────────────
 #  SNAPSHOTS

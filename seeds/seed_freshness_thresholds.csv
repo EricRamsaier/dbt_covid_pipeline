@@ -1,0 +1,3 @@
+resource_name,warn_after,error_after
+owid_covid_data,"7 days","14 days"
+fct_owid_covid,"7 days","14 days"

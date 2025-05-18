@@ -11,13 +11,16 @@
 
 
 {% macro grant_reporting_access() %}
-  {% set sql %}
-    GRANT USAGE ON SCHEMA REPORTING.MARTS TO ROLE analyst_role;
-    GRANT SELECT ON ALL TABLES IN SCHEMA REPORTING.MARTS TO ROLE analyst_role;
-    GRANT SELECT ON FUTURE TABLES IN SCHEMA REPORTING.MARTS TO ROLE analyst_role;
-    GRANT USAGE ON SCHEMA REPORTING.MARTS TO ROLE developer_role;
-    GRANT SELECT ON ALL TABLES IN SCHEMA REPORTING.MARTS TO ROLE developer_role;
-    GRANT SELECT ON FUTURE TABLES IN SCHEMA REPORTING.MARTS TO ROLE developer_role;
-  {% endset %}
-  {% do run_query(sql) %}
+  {% if target.name == 'prod' %}
+    {% set sql %}
+      GRANT USAGE ON SCHEMA REPORTING.MARTS TO ROLE {{ var('analyst_role') }};
+      GRANT SELECT ON ALL TABLES IN SCHEMA REPORTING.MARTS TO ROLE {{ var('analyst_role') }};
+      GRANT SELECT ON FUTURE TABLES IN SCHEMA REPORTING.MARTS TO ROLE {{ var('analyst_role') }};
+      GRANT USAGE ON SCHEMA REPORTING.MARTS TO ROLE {{ var('developer_role') }};
+      GRANT SELECT ON ALL TABLES IN SCHEMA REPORTING.MARTS TO ROLE {{ var('developer_role') }};
+      GRANT SELECT ON FUTURE TABLES IN SCHEMA REPORTING.MARTS TO ROLE {{ var('developer_role') }};
+    {% endset %}
+    {% do run_query(sql) %}
+  {% endif %}
 {% endmacro %}
+

@@ -5,7 +5,10 @@ models:
     tags:
       - fct
       - owid
-      - daily
+      - covid
+    config:
+      contract: {enforced: true}
+      on_schema_change: fail
     meta:
       owner: "eramsaier@gmail.com"
       team: "analytics_engineering"

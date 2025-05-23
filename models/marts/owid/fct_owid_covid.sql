@@ -1,5 +1,5 @@
 -- Created:       2024-05-05
--- Last Modified: 2025-05-10
+-- Last Modified: 2025-05-23
 -- Creator:       Eric Ramsaier
 -- Model:         fct_owid_covid
 -- Purpose:       Fact model for OWID COVID metrics, aggregated by country and observation date
@@ -15,10 +15,7 @@
     materialized='incremental',
     unique_key='sk_owid_iso_code',
     incremental_strategy='merge',
-    cluster_by = ['observation_dt', 'owid_iso_code'],
-    contract={'enforced': true},
-    on_schema_change='fail',
-    tags=['fct','owid']
+    cluster_by = ['observation_dt', 'owid_iso_code']
   )
 }}
 

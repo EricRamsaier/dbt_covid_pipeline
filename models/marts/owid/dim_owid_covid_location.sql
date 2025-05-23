@@ -1,5 +1,5 @@
 -- Created:       2024-05-10
--- Last Modified: 2025-05-10
+-- Last Modified: 2025-05-23
 -- Creator:       Eric Ramsaier
 -- Model:         dim_owid_iso_code
 -- Purpose:       Provides a unique list of OWID ISO codes with associated location and continent
@@ -9,8 +9,7 @@
 
 {{
   config(
-    unique_key='sk_owid_iso_code',
-    tags=['dim', 'owid']
+    unique_key='sk_owid_iso_code'
   )
 }}
 

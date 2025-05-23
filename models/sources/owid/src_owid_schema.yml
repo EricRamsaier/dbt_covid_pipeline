@@ -30,7 +30,8 @@ sources:
           - owid
         description: "Our World in Data COVID-19 complete daily dataset per location"
         loaded_at_field: loaded_ts
-        freshness: *default_freshness
+        config:
+          freshness: *default_freshness
         meta:
           source_url: "https://covid.ourworldindata.org/data/owid-covid-data.csv"
           codebook:   "https://github.com/owid/covid-19-data/blob/master/public/data/owid-covid-codebook.csv"

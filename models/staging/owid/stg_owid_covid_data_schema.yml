@@ -3,9 +3,9 @@ models:
   - name: stg_owid_covid_data
     description: Staging model for OWID COVID-19 data. Cleans, renames, and casts fields from the raw OWID source table.
     tags:
-      - fct
+      - stg
       - owid
-      - daily
+      - covid
     meta:
       owner: "eramsaier@gmail.com"
       team: "analytics_engineering"

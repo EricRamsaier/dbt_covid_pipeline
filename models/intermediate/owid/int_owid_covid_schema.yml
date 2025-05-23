@@ -1,0 +1,9 @@
+version: 2
+
+models:
+  - name: int_owid_covid
+    description: "Intermediate transformations on OWID COVID staging"
+    tags:
+      - int
+      - covid
+      - owid

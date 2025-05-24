@@ -72,7 +72,10 @@ models:
       +tags: ['marts']
       +severity: error
       +post-hook: "{% if target.name == 'prod' %}{{ log_model_run() }}{% endif %}"
-
+      +grants:
+        select:
+          - analyst_role
+          - developer_role
 
 # ──────────────────────────────────────────────────────────────────────────────
 #  SNAPSHOTS
@@ -117,5 +120,4 @@ vars:
 # -------------------------------------------------------------------
 # we’re managing all infra outside of dbt, so leave these empty
 on-run-start: []
-on-run-end:
-  - "{{ grant_reporting_access() }}"
+on-run-end:   []

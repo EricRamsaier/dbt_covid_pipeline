@@ -42,6 +42,7 @@ final AS (
             ) DESC
         ) AS rn
       -- end dedup logic
+      , {{ dbt_utils.generate_surrogate_key(['owid_iso_code', 'observation_dt']) }} AS sk_owid_iso_code
 
     FROM
         stg_data

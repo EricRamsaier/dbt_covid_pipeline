@@ -18,20 +18,15 @@ int_data AS (
     SELECT * FROM {{ ref('int_owid_covid') }}
 ),
 
-fct_data AS (
-    SELECT * FROM {{ ref('fct_owid_covid') }}
-),
-
 final AS (
     SELECT DISTINCT
-        iso.sk_owid_iso_code
-      , int.owid_iso_code
-      , int.location
-      , int.continent
-    FROM int_data AS int
-    LEFT JOIN fct_data AS iso
-      ON int.owid_iso_code = iso.owid_iso_code
-    WHERE int.owid_iso_code IS NOT NULL
+        sk_owid_iso_code
+      , owid_iso_code
+      , location
+      , continent
+    FROM 
+        int_data
+
 )
 
 SELECT * FROM final

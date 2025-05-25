@@ -1,4 +1,9 @@
-*This README documents the full pipeline—ingest to transform—in a dbt Cloud + Snowflake environment.*
+*This project documents a full pipeline—from ingestion to transformation—using dbt Cloud and Snowflake. It captures the entire arc of building a production-grade dbt project, including missteps, refactors, and iteration. This isn’t a sanitized tutorial; it reflects the real process of learning, troubleshooting, and iteratively applying best practices over time.
+
+While the core modeling and transformation work aligned closely with analytics engineering best practices, the ingestion layer (AWS S3, Snowflake external tables, IAM permissions, versioning, and GitHub Actions) presented notable complexity. These are traditionally data engineering concerns. Managing and troubleshooting these layers — especially around CI workflows, docs hosting, and credential handling — added real-world friction that isn't visible in the models alone.
+
+This project reflects both the strengths and challenges of solo-building a modern data stack end to end — and highlights where boundaries between AE and DE often blur in practice.
+*
 
 # End-to-End Automated Data Pipeline
 

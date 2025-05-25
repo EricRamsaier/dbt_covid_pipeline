@@ -30,15 +30,6 @@ macros:
         description: "The varchar column containing currency values."
     returns: "A `DECIMAL(10,2)` expression."
 
-  - name: grant_select_to_role
-    description: >
-      Generates SQL to grant `SELECT` privileges on all models in the current
-      target schema to a specified role.
-    arguments:
-      - name: target_role
-        description: "The name of the role to which `SELECT` will be granted."
-    returns: "A series of `GRANT SELECT ON TABLE ... TO ROLE <target_role>;` statements."
-
   - name: generate_database_name
     description: >
       Overrides the default database for models:

@@ -1,15 +1,3 @@
--- Created:       2024-05-01
--- Last Modified: 2025-05-23
--- Creator:       Eric Ramsaier
--- Model:         int_owid_covid
--- Purpose:       Resolve duplicate records in the OWID COVID dataset by keeping the most complete row per (owid_iso_code, observation_dt)
--- Notes:
---   - Applies a completeness heuristic using row_number over key metrics
---   - Normalizes continent values where missing or inconsistent
---   - Source data may contain multiple rows per day due to OWID updates
---   - See background in: analyses/data_issues/owid_covid_data_duplicates.md
-
-
 WITH stg_data AS (
     SELECT * FROM {{ ref('stg_owid_covid_data') }}
 ),

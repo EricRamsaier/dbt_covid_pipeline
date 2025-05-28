@@ -2,15 +2,7 @@ version: 2
 
 models:
   - name: dim_owid_covid_location
-    description: |
-      **Dimension model** providing a unique list of OWID ISO codes with associated location and continent.
-
-      **Created**:        2024-05-10  
-      **Last modified**:  2025-05-28  
-      **Creator**:        Eric Ramsaier
-
-      **Notes**:  
-      - Only includes ISO codes that appear in the source data
+    description: Dimension model providing a unique list of OWID ISO codes with associated location and continent.
 
     meta:
       owner: "eramsaier@gmail.com"

@@ -4,19 +4,17 @@ models:
   - name: int_owid_covid
 
     description: |
-      **Intermediate model** to resolve duplicate records in the OWID COVID dataset by keeping the most complete row per (`owid_iso_code`, `observation_dt`).
-
-      **Created**:        2024-05-01  
-      **Last modified**:  2025-05-23  
-      **Creator**:        Eric Ramsaier
-
-      **Notes**:  
-      - Applies a completeness heuristic using `row_number` over key metrics  
-      - Normalizes continent values where missing or inconsistent  
-      - Source data may contain multiple rows per day due to OWID updates  
-      - See background in: `analyses/data_issues/owid_covid_data_duplicates.md`
+      Intermediate staging model that resolves duplicate OWID COVID records by keeping
+      the most complete observation per (owid_iso_code, observation_dt), and normalizes
+      continent values.
 
     tags:
       - int
       - covid
       - owid
+
+    meta:
+      owner: "eramsaier@gmail.com"
+      team: "analytics_engineering"
+      maturity: "high"
+      source: "OWID daily CSV ingest from public GitHub"

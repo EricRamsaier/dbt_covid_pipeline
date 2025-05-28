@@ -3,11 +3,6 @@ models:
   - name: fct_owid_covid
     description: |
       **Fact model** for OWID COVID metrics, aggregated by country and observation date.
-
-      **Created**:        2024-05-05  
-      **Last modified**:  2025-05-28  
-      **Creator**:        Eric Ramsaier
-
       **Notes**:  
       - Uses surrogate key `sk_owid_covid` from `owid_iso_code` + `observation_dt`  
       - Includes case, death, testing, and vaccination metrics plus demographic context  

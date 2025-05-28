@@ -1,14 +1,3 @@
--- Created:       2024-05-12
--- Last Modified: 2025-05-23
--- Creator:       Eric Ramsaier
--- Model:         stg_owid_covid_data
--- Purpose:       Staging model for OWID COVID-19 data. Cleans, renames, and casts fields from the raw OWID source table.
--- Notes:
---   - Renames fields for clarity (e.g., iso_code → owid_iso_code, date → observation_dt)
---   - Filters source data in development using dev_data_filter macro
---   - Data types are enforced at the sources layer; this model performs light reshaping only
-
-
 WITH source_data AS (
     SELECT *
     FROM {{ source('owid','owid_covid_data') }}

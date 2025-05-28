@@ -1,14 +1,3 @@
--- Created:       2025-05-10
--- Last Modified: 2025-05-23
--- Creator:       Eric Ramsaier
--- Model:         agg_owid_covid_month
--- Purpose:       Aggregates COVID metrics by continent and observation date
--- Notes:
---   - Source is fct_owid_covid, which is contract-enforced and complete
---   - Aggregates key metrics like cases, deaths, and tests at the continent/month grain
---   - Excludes rows where continent is NULL
-
-
 WITH base AS (
     SELECT *
     FROM {{ ref('fct_owid_covid') }}

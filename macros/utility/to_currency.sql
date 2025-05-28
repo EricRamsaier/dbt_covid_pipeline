@@ -1,7 +1,3 @@
--- Created:       2024-04-30
--- Last Modified: 2025-05-10
--- Creator:       Eric Ramsaier
--- Macro:         to_currency
 -- Purpose:
 --   - Converts a VARCHAR currency string to DECIMAL(10, 2).
 --   - Standardizes numeric formatting for financial fields across models.

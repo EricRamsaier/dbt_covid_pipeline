@@ -1,7 +1,3 @@
--- Created:       2024-04-30
--- Last Modified: 2025-05-10
--- Creator:       Eric Ramsaier
--- Macro:         dev_data_filter
 -- Purpose:
 --   - Injects a WHERE clause to limit rows in the dev environment to the last N days.
 --   - Helps reduce query size and execution time in development.

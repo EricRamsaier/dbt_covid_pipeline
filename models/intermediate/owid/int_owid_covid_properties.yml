@@ -2,8 +2,19 @@ version: 2
 
 models:
   - name: int_owid_covid
-    description: "Intermediate transformations on OWID COVID staging"
+
+    description: |
+      Intermediate staging model that resolves duplicate OWID COVID records by keeping
+      the most complete observation per (owid_iso_code, observation_dt), and normalizes
+      continent values.
+
     tags:
       - int
       - covid
       - owid
+
+    meta:
+      owner: "eramsaier@gmail.com"
+      team: "analytics_engineering"
+      maturity: "high"
+      source: "OWID daily CSV ingest from public GitHub"

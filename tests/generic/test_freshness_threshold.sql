@@ -1,4 +1,3 @@
--- Macro: test_freshness_threshold
 -- Description:
 --   A reusable dbt test macro to validate that records in a model are fresh.
 --   It checks if the difference between a specified timestamp column and the current timestamp exceeds a threshold.

@@ -1,7 +1,3 @@
--- Created:       2024-04-30
--- Last Modified: 2025-05-10
--- Creator:       Eric Ramsaier
--- Macro:         standard_audit_columns
 -- Purpose:
 --   - Appends standard audit metadata fields to a model's SELECT list.
 --   - Includes model name, invocation ID, run start timestamp, and record load timestamp.

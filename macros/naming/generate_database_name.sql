@@ -1,7 +1,3 @@
--- Created:       2024-04-30
--- Last Modified: 2025-05-10
--- Creator:       Eric Ramsaier
--- Macro:         generate_database_name
 -- Purpose:
 --   - Overrides default dbt behavior for database selection.
 --   - In production targets ("prod" or "production"), uses the configured custom_database_name.

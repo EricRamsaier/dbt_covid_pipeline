@@ -52,9 +52,21 @@ macros:
     returns: "The resolved schema name for materializations."
 
   - name: log_model_run
-    description: >
-      Emits a post‐hook SQL snippet to log metadata about each model run
-      (model name, run timestamp, invocation ID, row count) to an audit table.
+    description: |
+      Logs metadata about each dbt model execution to the audit table, capturing:
+       - model name  
+       - run timestamp  
+       - invocation ID  
+       - row count  
+       - table location  
+
+      **Usage:**  
+      Intended as a `post-hook` for fact or dimension models; configure in `dbt_project.yml` under `+post-hook`.  
+
+      **Requirements:**  
+      - The audit table `dwh.audit.model_run_log` must already exist.  
+      - The executing role needs INSERT permissions on that table.
+ 
     arguments:
       - name: None
         description: "No arguments; intended for use as a post‐hook in `dbt_project.yml`."

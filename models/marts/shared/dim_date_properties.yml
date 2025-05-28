@@ -2,9 +2,21 @@ version: 2
 
 models:
   - name: dim_date
-    description: "Date dimension from 2010-01-01 to 2030-12-31, used for joining to event or order dates."
+    description: |
+      **Date dimension table** from 2010 to 2030, adding derived fields such as year, quarter, month, weekday, and including a placeholder `is_holiday` field for future enrichment.
+
+      **Created**: 2024-05-01  
+      **Last modified**: 2025-05-10  
+      **Creator**: Eric Ramsaier
+
+      **Notes**:  
+      - Uses Snowflake `GENERATOR` for row creation (~21 years)  
+      - Aligned to calendar use in reporting and joins  
+      - Tagged as shared calendar dimension
     tags:
       - dim
+      - shared
+      - calendar
     meta:
       owner: "eramsaier@gmail.com"
       team: "analytics_engineering"

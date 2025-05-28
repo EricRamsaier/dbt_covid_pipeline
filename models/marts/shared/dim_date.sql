@@ -1,22 +1,3 @@
--- Created:         2024-05-01
--- Last Modified:   2025-05-10
--- Creator:         Eric Ramsaier
--- Model:           dim_date
--- Purpose:         Date dimension table from 2010 to 2030
---   - Adds derived fields such as year, quarter, month, weekday
---   - Includes placeholder `is_holiday` field for future enrichment
--- Notes:
---   - Uses Snowflake GENERATOR for row creation (~21 years)
---   - Aligned to calendar use in reporting and joins
---   - Tagged as shared calendar dimension
-
- 
-{{
-  config(
-    tags = ['shared', 'calendar', 'dim']
-  )
-}}
-
 WITH date_range AS (
   SELECT
       DATEADD(DAY, seq4(), DATE '2010-01-01')   AS date_dt

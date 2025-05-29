@@ -39,55 +39,43 @@ clean-targets:
 
 models:
   dbt_pipeline:
-    +materialized: ephemeral
+    # Model schemas are for Prod runs. The generate macros will override if not running in Prod and put into target schema.
+
+    # Put all tranformation objects into the transform schema.
+    +materialized:  view
+    +database:      dwh
+    +schema:        transform
+    +tags:          ['stg', 'int', 'transform']
+    +severity:      warn
+
+    marts:
+      +materialized: table
+      +database:     reporting
+      +schema:       marts
+      +tags:         ['marts']
+      +severity:     error
+      +post-hook:    "{% if target.name == 'prod' %}{{ log_model_run() }}{% endif %}"
 
     # Persist docs to the database (relation & column comments)
     +persist_docs:
       relation: true
       columns:  true
 
-    # Model schemas are for Prod runs. The generate macros will override if not running in Prod and put into target schema.
-
-    staging:
-      +materialized: view
-      +database:  dwh
-      +schema:    stg
-      +enabled:   true
-      +tags:      ['stg']
-      +severity:  warn
-
-    intermediate:
-      +materialized: view
-      +database: dwh
-      +schema: int
-      +enabled: true
-      +tags: ['int']
-      +severity: warn
-
-    marts:
-      +materialized: table
-      +database: reporting
-      +schema: marts
-      +enabled: true
-      +tags: ['marts']
-      +severity: error
-      +post-hook: "{% if target.name == 'prod' %}{{ log_model_run() }}{% endif %}"
-
 # ──────────────────────────────────────────────────────────────────────────────
 #  SNAPSHOTS
 # ──────────────────────────────────────────────────────────────────────────────
 snapshots:
   dbt_pipeline:
-    +database: dwh
-    +schema: snapshots 
-    +enabled: "{{ target.name == 'prod' }}"
+    +database:  dwh
+    +schema:    snapshots 
+    +enabled:   "{{ target.name == 'prod' }}"
 
 # -------------------------------------------------------------------
 #  Tests
 # -------------------------------------------------------------------
 tests:
-  +store_failures: false
-  +severity: warn
+  +store_failures:  false
+  +severity:        warn
 
 # -------------------------------------------------------------------
 #  Quoting
@@ -101,11 +89,11 @@ quoting:
 #  Project-level vars
 # -------------------------------------------------------------------
 vars:
-  analyst_role: analyst_role
-  developer_role: developer_role
-  raw_ingest_svc_role: raw_ingest_svc_role
-  reporting_svc_role: reporting_svc_role
-  transform_svc_role: transform_svc_role
+  analyst_role:         analyst_role
+  developer_role:       developer_role
+  raw_ingest_svc_role:  raw_ingest_svc_role
+  reporting_svc_role:   reporting_svc_role
+  transform_svc_role:   transform_svc_role
  
 # -------------------------------------------------------------------
 #  Hooks

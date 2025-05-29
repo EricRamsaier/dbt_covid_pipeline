@@ -1,3 +1,12 @@
+{{
+  config(
+    materialized='incremental',
+    unique_key='sk_owid_iso_code',
+    incremental_strategy='merge',
+    cluster_by = ['observation_dt', 'owid_iso_code']
+  )
+}}
+
 WITH
 owid_data AS (
   SELECT 

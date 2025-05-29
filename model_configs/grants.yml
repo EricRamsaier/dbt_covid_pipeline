@@ -1,0 +1,9 @@
+version: 2
+
+models:
+  dbt_pipeline:      # replace with your actual project name
+    marts:
+      +grants:
+        select:
+          - "{{ var('analyst_role') }}"
+          - "{{ var('developer_role') }}"

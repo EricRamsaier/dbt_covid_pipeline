@@ -1,0 +1,46 @@
+version: 2
+
+snapshots:
+  - name: dim_owid_covid_location_snapshot
+    description: "History of changes to the OWID ISO code dimension."
+    tags:
+      - snapshot
+      - dim 
+      - owid
+      - covid
+    meta:
+      owner: "eramsaier@gmail.com"
+      team: "analytics_engineering"
+      maturity: "high"
+      source: "OWID daily CSV ingest from public GitHub"
+
+    config:
+      unique_key:    owid_iso_code
+      strategy:      check
+      check_cols:
+        - location
+        - continent
+      hard_deletes: new_record
+
+    columns:
+      - name: sk_owid_iso_code
+        description: "{{ doc('sk_owid_iso_code') }}"
+        data_type: VARCHAR
+        tests:
+          - not_null
+          - unique
+      - name: owid_iso_code
+        description: "{{ doc('owid_iso_code') }}"
+        tests:
+          - not_null
+          - unique
+      - name: location
+        description: "{{ doc('owid_location') }}"
+      - name: continent
+        description: "{{ doc('owid_continent') }}"
+      - name: dbt_valid_from
+        description: "{{ doc('dbt_valid_from') }}"
+      - name: dbt_valid_to
+        description: "{{ doc('dbt_valid_to') }}"
+      - name: dbt_is_deleted
+        description: "{{ doc('dbt_is_deleted') }}"

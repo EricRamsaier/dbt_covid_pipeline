@@ -42,3 +42,15 @@ Useful for debugging late-arriving data or slowly changing dimensions (SCDs).
 {% docs dbt_snapshot_ts %}
 Timestamp when the snapshot was **last updated** in the warehouse.
 {% enddocs %}
+
+{% docs dbt_valid_from %}
+Timestamp when the record became valid.
+{% enddocs %}
+
+{% docs dbt_valid_to %}
+Timestamp when the record stopped being valid.
+{% enddocs %}
+
+{% docs dbt_is_deleted %}
+Indicates whether the record was deleted.
+{% enddocs %}

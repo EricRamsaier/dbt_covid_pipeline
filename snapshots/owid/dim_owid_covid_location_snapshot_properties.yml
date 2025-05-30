@@ -21,6 +21,7 @@ snapshots:
         - location
         - continent
       hard_deletes: new_record
+      dbt_valid_to_current: "TO_DATE('9999-12-31')"
 
     columns:
       - name: sk_owid_iso_code

@@ -13,7 +13,15 @@ snapshots:
       team: "analytics_engineering"
       maturity: "high"
       source: "OWID daily CSV ingest from public GitHub"
-      
+
+    config:
+      unique_key:    owid_iso_code
+      strategy:      check
+      check_cols:
+        - location
+        - continent
+      hard_deletes: new_record
+
     columns:
       - name: sk_owid_iso_code
         description: "{{ doc('sk_owid_iso_code') }}"

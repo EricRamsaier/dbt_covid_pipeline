@@ -4,14 +4,6 @@
 --   - Records a history of any changes to descriptive attributes
 
 {% snapshot dim_owid_covid_location_snapshot %}
-{{
-  config(
-    unique_key =    'owid_iso_code',
-    strategy =      'check',
-    check_cols =    ['location', 'continent'],
-    hard_deletes =  'new_record'
-  )
-}}
 
 SELECT
     sk_owid_iso_code,

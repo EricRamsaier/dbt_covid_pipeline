@@ -8,11 +8,6 @@ models:
       the most complete observation per (owid_iso_code, observation_dt), and normalizes
       continent values.
 
-    tags:
-      - int
-      - covid
-      - owid
-
     meta:
       owner: "eramsaier@gmail.com"
       team: "analytics_engineering"

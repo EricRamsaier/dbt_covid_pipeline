@@ -9,14 +9,6 @@ models:
       - Incremental model using 7-day cutoff for recent updates  
       - Enforced contract with `on_schema_change='fail'` for pipeline stability
 
-    tags:
-      - fct
-      - owid
-      - covid
-    config:
-      contract: {enforced: true}
-      on_schema_change: fail
-
     meta:
       owner: "eramsaier@gmail.com"
       team: "analytics_engineering"

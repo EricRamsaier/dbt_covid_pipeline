@@ -1,3 +1,10 @@
+{{
+  config(
+    tags = ['dim', 'marts', 'owid', 'covid'],
+    contract = {"enforced": true}
+  )
+}}
+
 WITH 
 int_data AS (
     SELECT * FROM {{ ref('int_owid_covid') }}

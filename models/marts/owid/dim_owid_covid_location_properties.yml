@@ -10,15 +10,6 @@ models:
       maturity: "high"
       source: "OWID daily CSV ingest from public GitHub"
 
-    tags:
-      - dim
-      - owid
-      - covid
-
-    config:
-      contract:
-        enforced: true
-
     columns:
       - name: sk_owid_iso_code
         description: "{{ doc('sk_owid_iso_code') }}"

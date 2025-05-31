@@ -1,8 +1,8 @@
 selectors:
-  - name: marts
+  - name: core
     definition:
       method: path
-      value: models/marts
+      value: models/core/*
 
   - name: covid
     definition:
@@ -24,12 +24,12 @@ selectors:
       method: tag
       value: fct
 
+  - name: agg
+    definition:
+      method: tag
+      value: agg
+
   - name: tables
     definition:
       method: config
       value: "materialized:table"
-
-  - name: aggs
-    definition:
-      method: path
-      value: models/aggs

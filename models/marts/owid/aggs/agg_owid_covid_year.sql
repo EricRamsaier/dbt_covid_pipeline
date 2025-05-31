@@ -1,3 +1,9 @@
+{{
+  config(
+    tags = ['agg', 'marts', 'owid', 'covid']
+  )
+}}
+
 WITH base AS (
     SELECT *
     FROM {{ ref('fct_owid_covid') }}

@@ -3,7 +3,10 @@
     materialized='incremental',
     unique_key='sk_owid_iso_code',
     incremental_strategy='merge',
-    cluster_by = ['observation_dt', 'owid_iso_code']
+    cluster_by = ['observation_dt', 'owid_iso_code'],
+    tags = ['fct', 'marts', 'owid', 'covid'],
+    contract = {"enforced": true},
+    on_schema_change = "fail"    
   )
 }}
 

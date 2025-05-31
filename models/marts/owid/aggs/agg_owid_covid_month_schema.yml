@@ -12,11 +12,6 @@ models:
       maturity: "medium"
       source: "fct_owid_covid"
 
-    tags:
-      - agg
-      - owid
-      - covid
-
     config:
       materialized: table
 

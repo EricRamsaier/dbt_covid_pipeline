@@ -1,0 +1,35 @@
+selectors:
+  - name: marts
+    definition:
+      method: path
+      value: models/marts
+
+  - name: covid
+    definition:
+      method: tag
+      value: covid
+
+  - name: owid
+    definition:
+      method: tag
+      value: owid
+
+  - name: dim
+    definition:
+      method: tag
+      value: dim
+
+  - name: fct
+    definition:
+      method: tag
+      value: fct
+
+  - name: tables
+    definition:
+      method: config
+      value: "materialized:table"
+
+  - name: aggs
+    definition:
+      method: path
+      value: models/aggs

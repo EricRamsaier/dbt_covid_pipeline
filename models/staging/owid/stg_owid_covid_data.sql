@@ -1,3 +1,9 @@
+{{
+  config(
+    tags = ['stg', 'owid', 'covid']
+  )
+}}
+
 WITH source_data AS (
     SELECT *
     FROM {{ source('owid','owid_covid_data') }}

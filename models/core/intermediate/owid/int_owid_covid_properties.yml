@@ -10,6 +10,6 @@ models:
 
     meta:
       owner: "eramsaier@gmail.com"
-      team: "analytics_engineering"
-      maturity: "high"
+      team: analytics_engineering
+      maturity: high
       source: "OWID daily CSV ingest from public GitHub"

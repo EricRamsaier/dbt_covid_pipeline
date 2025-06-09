@@ -6,7 +6,7 @@ models:
     description: |
       Intermediate staging model that resolves duplicate OWID COVID records by keeping
       the most complete observation per (owid_iso_code, observation_dt), and normalizes
-      continent values. 
+      continent values.  
 
     meta:
       owner: "eramsaier@gmail.com"

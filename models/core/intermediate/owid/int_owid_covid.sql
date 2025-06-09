@@ -4,7 +4,7 @@
   )
 }}
 
-WITH stg_data AS (
+WITH stg_data AS ( 
     SELECT * FROM {{ ref('stg_owid_covid_data') }}
 ),
 

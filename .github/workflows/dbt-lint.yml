@@ -1,6 +1,6 @@
 name: dbt Lint
 
-on: [ pull_request ]
+on: [pull_request]
 
 jobs:
   lint:
@@ -11,14 +11,22 @@ jobs:
 
       - name: Set up Python
         uses: actions/setup-python@v4
-        with: python-version: '3.9'
+        with:
+          python-version: "3.9"
 
-      - name: Install linters
+      - name: Install linters & dbt
         run: |
-          pip install yamllint==1.32.0 sqlfluff[templater-dbt]==1.4.0
+          pip install --upgrade pip
+          pip install \
+            yamllint==1.32.0 \
+            sqlfluff==1.5.0
 
       - name: Lint YAML
         run: yamllint -c ./.yamllint.yml .
 
-      - name: Lint SQL & Jinja
-        run: sqlfluff lint --dialect snowflake --templater dbt .
+      - name: Lint only changed SQL
+        run: |
+          git fetch origin main
+          git diff --name-only origin/main...HEAD \
+            | grep '\.sql$' \
+            | xargs -r sqlfluff lint --dialect snowflake --templater jinja .

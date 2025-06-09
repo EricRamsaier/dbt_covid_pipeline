@@ -5,7 +5,7 @@ snapshots:
     description: "History of changes to the OWID ISO code dimension."
     tags:
       - snapshot
-      - dim 
+      - dim
       - owid
       - covid
     meta:
@@ -15,8 +15,8 @@ snapshots:
       source: "OWID daily CSV ingest from public GitHub"
 
     config:
-      unique_key:    owid_iso_code
-      strategy:      check
+      unique_key: owid_iso_code
+      strategy: check
       check_cols:
         - location
         - continent

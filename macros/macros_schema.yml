@@ -33,7 +33,7 @@ macros:
   - name: generate_database_name
     description: >
       Overrides the default database for models:
-      - Uses `custom_database_name` in production environments  
+      - Uses `custom_database_name` in production environments
       - Falls back to `target.database` in all other environments
     arguments:
       - name: None
@@ -43,7 +43,7 @@ macros:
   - name: generate_schema_name
     description: >
       Overrides the default schema for models:
-      - Uses `custom_schema_name` in production environments  
+      - Uses `custom_schema_name` in production environments
       - Falls back to `target.schema` in all other environments
       - Allows per-folder overrides via `+schema` config
     arguments:
@@ -54,19 +54,19 @@ macros:
   - name: log_model_run
     description: |
       Logs metadata about each dbt model execution to the audit table, capturing:
-       - model name  
-       - run timestamp  
-       - invocation ID  
-       - row count  
-       - table location  
+       - model name
+       - run timestamp
+       - invocation ID
+       - row count
+       - table location
 
-      **Usage:**  
-      Intended as a `post-hook` for fact or dimension models; configure in `dbt_project.yml` under `+post-hook`.  
+      **Usage:**
+      Intended as a `post-hook` for fact or dimension models; configure in `dbt_project.yml` under `+post-hook`.
 
-      **Requirements:**  
-      - The audit table `dwh.audit.model_run_log` must already exist.  
+      **Requirements:**
+      - The audit table `dwh.audit.model_run_log` must already exist.
       - The executing role needs INSERT permissions on that table.
- 
+
     arguments:
       - name: None
         description: "No arguments; intended for use as a post‐hook in `dbt_project.yml`."
@@ -75,9 +75,9 @@ macros:
   - name: standard_audit_columns
     description: >
       Adds standard audit metadata columns to a model’s `SELECT` list:
-      - `dbt_model_name`  
-      - `dbt_run_ts`  
-      - `dbt_record_loaded_ts`  
+      - `dbt_model_name`
+      - `dbt_run_ts`
+      - `dbt_record_loaded_ts`
       - `dbt_invocation_id`
     arguments:
       - name: None

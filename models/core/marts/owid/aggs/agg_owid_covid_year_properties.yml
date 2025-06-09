@@ -1,9 +1,9 @@
 version: 2
 
 models:
-  - name: agg_owid_covid_month
+  - name: agg_owid_covid_year
     description: >
-      Aggregated OWID COVID metrics by country and month.
+      Aggregated OWID COVID metrics by country and year.
       Includes total and new case, death, test, and vaccination metrics.
 
     meta:
@@ -11,9 +11,6 @@ models:
       team: "analytics_engineering"
       maturity: "medium"
       source: "fct_owid_covid"
-
-    config:
-      materialized: table
 
     columns:
       - name: owid_iso_code
@@ -48,3 +45,4 @@ models:
         data_type: number
       - name: population
         description: "{{ doc('owid_population') }}"
+        data_type: number

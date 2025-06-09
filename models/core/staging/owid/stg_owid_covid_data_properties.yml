@@ -7,7 +7,7 @@ models:
       team: "analytics_engineering"
       maturity: "high"
       source: "OWID daily CSV ingest from public GitHub"
-      
+
     columns:
       - name: owid_owid_iso_code
         description: '{{ doc("owid_iso_code") }}'

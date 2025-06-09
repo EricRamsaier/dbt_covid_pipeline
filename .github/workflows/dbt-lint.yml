@@ -21,8 +21,8 @@ jobs:
             yamllint==1.32.0 \
             sqlfluff==1.4.0 \
             sqlfluff-templater-dbt==1.4.0 \
-            dbt-core==1.4.6 \
-            dbt-snowflake==1.4.6
+            dbt-core==1.4.5 \
+            dbt-snowflake==1.4.5
 
       - name: Lint YAML
         run: yamllint -c ./.yamllint.yml .

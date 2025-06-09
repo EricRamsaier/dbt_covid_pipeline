@@ -11,7 +11,7 @@ WITH stg_data AS (
 final AS (
    SELECT
         -- choosing to use exclude since there are many fields in the source table
-        stg_data.* 
+        stg_data.*
         EXCLUDE (continent)
 
         -- adding clear continents when possible for NULL when the location is a continent

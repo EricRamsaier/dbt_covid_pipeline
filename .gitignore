@@ -3,6 +3,6 @@ dbt_packages/
 logs/
  
 .DS_Store
-
+ 
 package-lock.yml
 package-lock.json

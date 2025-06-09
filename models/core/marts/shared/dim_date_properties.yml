@@ -3,7 +3,7 @@ version: 2
 models:
   - name: dim_date
     description: |
-      **Date dimension table** from 2010 to 2030, adding derived fields such as year, quarter, month, weekday, 
+      **Date dimension table** from 2010 to 2030, adding derived fields such as year, quarter, month, weekday,
       and including a placeholder `is_holiday` field for future enrichment.
 
       **Created**: 2024-05-01

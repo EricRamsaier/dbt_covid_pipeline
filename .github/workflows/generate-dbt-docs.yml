@@ -1,4 +1,4 @@
-name: Generate dbt docs 
+name: Generate dbt docs
 
 on:
   push:

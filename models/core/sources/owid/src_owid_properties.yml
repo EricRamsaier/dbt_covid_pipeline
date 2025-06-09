@@ -19,7 +19,7 @@ sources:
         - covid
         - owid
     meta:
-      owner: "eramsaier@gmail.com" 
+      owner: "eramsaier@gmail.com"
       team: "analytics_engineering"
       maturity: "high"
       source: "OWID daily CSV ingest from public GitHub"
@@ -31,15 +31,15 @@ sources:
           freshness: *default_freshness
         meta:
           source_url: "https://covid.ourworldindata.org/data/owid-covid-data.csv"
-          codebook:   "https://github.com/owid/covid-19-data/blob/master/public/data/owid-covid-codebook.csv"
-          loader:     raw_ingest_svc
+          codebook: "https://github.com/owid/covid-19-data/blob/master/public/data/owid-covid-codebook.csv"
+          loader: raw_ingest_svc
 
         columns:
           - name: iso_code
             description: '{{ doc("owid_iso_code") }}'
             tests:
               - not_null:
-                  severity: warn            
+                  severity: warn
           - name: continent
             description: '{{ doc("owid_continent") }}'
           - name: location
@@ -47,8 +47,8 @@ sources:
           - name: date
             description: '{{ doc("owid_observation_dt") }}'
             tests:
-              - not_null:       
-                  severity: warn                   
+              - not_null:
+                  severity: warn
           - name: total_cases
             description: '{{ doc("owid_total_cases") }}'
           - name: new_cases

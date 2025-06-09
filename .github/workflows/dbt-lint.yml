@@ -14,13 +14,15 @@ jobs:
         with:
           python-version: "3.9"
 
-      - name: Install linters
+      - name: Install linters & dbt
         run: |
           pip install --upgrade pip
           pip install \
             yamllint==1.32.0 \
             sqlfluff==1.4.0 \
-            sqlfluff-templater-dbt==1.4.0
+            sqlfluff-templater-dbt==1.4.0 \
+            dbt-core \
+            dbt-snowflake
 
       - name: Lint YAML
         run: yamllint -c ./.yamllint.yml .

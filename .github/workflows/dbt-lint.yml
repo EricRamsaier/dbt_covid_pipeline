@@ -18,8 +18,9 @@ jobs:
         run: |
           pip install --upgrade pip
           pip install \
-            yamllint>=1.32.0,<2.0 \
-            sqlfluff>=3.0,<4.0
+          pip install \
+            "yamllint>=1.32.0,<2.0" \
+            "sqlfluff>=3.0,<4.0"
 
       - name: Lint YAML
         run: yamllint -c ./.yamllint.yml .

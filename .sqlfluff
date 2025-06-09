@@ -1,0 +1,6 @@
+[sqlfluff]
+dialect = snowflake
+templater = dbt
+
+[sqlfluff:rules]
+max_line_length = 120

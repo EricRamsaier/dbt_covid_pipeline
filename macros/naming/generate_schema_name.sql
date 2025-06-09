@@ -9,10 +9,11 @@
 -- Source: https://docs.getdbt.com/docs/build/custom-schemas#an-alternative-pattern-for-generating-schema-names
 
 {% macro generate_schema_name(custom_schema_name, node) -%}
-  {%- if target.name in ['prod','production'] and custom_schema_name is not none -%}
+    {%- if target.name in ['prod','production'] and custom_schema_name is not none -%}
+        
     {{ custom_schema_name }}
-  {%- else -%}
-    {{ target.schema }}
-  {%- endif -%}
+  
+    {%- else -%}
+        {{ target.schema }}
+    {%- endif -%}
 {%- endmacro %}
-

@@ -19,10 +19,7 @@ jobs:
           pip install --upgrade pip
           pip install \
             yamllint==1.32.0 \
-            sqlfluff==1.4.0 \
-            sqlfluff-templater-dbt==1.4.0 \
-            dbt-core==1.4.0 \
-            dbt-snowflake==1.4.0
+            sqlfluff==1.4.0
 
       - name: Lint YAML
         run: yamllint -c ./.yamllint.yml .

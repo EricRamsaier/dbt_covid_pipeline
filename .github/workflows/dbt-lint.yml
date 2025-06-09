@@ -27,4 +27,3 @@ jobs:
 
       - name: Lint SQL & Jinja
         run: sqlfluff lint --dialect snowflake --templater dbt .
-

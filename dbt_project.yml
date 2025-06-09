@@ -39,7 +39,7 @@ clean-targets:
 
 models:
   dbt_pipeline:
-    # Model schemas are for Prod runs. The generate macros will override if not running in Prod and put into target schema.
+    # Model schemas are for Prod runs. The macros will override if not running in Prod and put into target schema.
 
     # Put all tranformation objects into the transform schema.
     +materialized: view
